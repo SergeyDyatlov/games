@@ -1,6 +1,6 @@
 #pragma once
 
-#include "app.h"
+class App;
 
 using namespace std;
 

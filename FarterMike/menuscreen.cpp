@@ -1,11 +1,9 @@
-#include <menuscreen.h>
+#include "menuscreen.h"
 #include "app.h"
-
-using namespace std;
 
 void MenuScreen::init(App& app)
 {
-	
+
 };
 
 void MenuScreen::draw(App& app) const

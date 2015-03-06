@@ -11,14 +11,14 @@ class App
 	public:
 		App();
 		~App();
-		int init();
+		void init();
 		void run();
 		enum ScreenType {stMenu};
 		void setScreen(ScreenType screenType);
+		SDL_Renderer* renderer;
 
 	private:
 		SDL_Window* window;
-		SDL_Renderer* renderer;
 		SDL_Event* event;
 		bool running;
 		ScreenType currentScreen;
