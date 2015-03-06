@@ -3,12 +3,12 @@
 
 void MenuScreen::init(App& app)
 {
-	background = IMG_LoadTexture(app.renderer, "res/background.png");
+	background.loadFromFile(app.renderer, "res/background.png");
 };
 
 void MenuScreen::draw(App& app) const
 {
-	SDL_RenderCopy(app.renderer, background, NULL, NULL);
+	background.render(app.renderer, NULL, NULL);
 };
 
 void MenuScreen::touch(App& app, int x, int y)

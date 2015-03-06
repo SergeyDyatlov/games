@@ -2,6 +2,7 @@
 
 #include "app.h"
 #include "screen.h"
+#include "IMG_image.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_image.h>
@@ -19,5 +20,6 @@ class MenuScreen: public Screen
 		void active(App& app, bool activated);
 
 	private:
-		SDL_Texture* background;
+//		SDL_Texture* background;
+		IMG_Image background;
 };
