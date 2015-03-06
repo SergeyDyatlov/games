@@ -2,7 +2,10 @@
 
 #include "app.h"
 #include "screen.h"
-#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_mixer.h>
+#include <SDL2/SDL_image.h>
+#include <iostream>
 
 using namespace std;
 
@@ -14,4 +17,7 @@ class MenuScreen: public Screen
 		void touch(App& app, int x, int y);
 		void tick(App& app);
 		void active(App& app, bool activated);
+
+	private:
+		SDL_Texture* background;
 };

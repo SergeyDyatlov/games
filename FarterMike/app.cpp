@@ -8,7 +8,7 @@ void App::init()
 {
 	SDL_Init(SDL_INIT_VIDEO);
 	window = SDL_CreateWindow("Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN);
-	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
 	event = new SDL_Event();
 	running = true;
 	setScreen(stMenu);
