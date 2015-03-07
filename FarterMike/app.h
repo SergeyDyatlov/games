@@ -15,10 +15,11 @@ class App
 		void run();
 		enum ScreenType {stMenu};
 		void setScreen(ScreenType screenType);
-		SDL_Renderer* renderer;
+		SDL_Surface* surface;
 
 	private:
 		SDL_Window* window;
+		SDL_Renderer* renderer;
 		SDL_Event* event;
 		bool running;
 		ScreenType currentScreen;

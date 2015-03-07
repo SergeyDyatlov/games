@@ -1,14 +1,31 @@
 #include "menuscreen.h"
-#include "app.h"
 
 void MenuScreen::init(App& app)
 {
-	background.loadFromFile(app.renderer, "res/background.png");
+	string bgPath = "res/background.bmp";
+	string fontPath = "res/font.bmp";
+	background.loadFromFile(bgPath);
+	font.loadFromFile(fontPath);
+
+	options.push_back("NewGame");
+	options.push_back("Exit");
+	
+	choice = 0;
 };
 
-void MenuScreen::draw(App& app) const
+void MenuScreen::draw(App& app)
 {
-	background.render(app.renderer, NULL, NULL);
+	background.draw(app.surface, 0, 0, 640, 480);
+	for (unsigned int i=0; i<options.size(); i++)
+	{
+		string str = options.at(i);
+		int offset = 0;
+		if ((unsigned)choice == i)
+		{
+			offset = 5;
+		}
+		font.drawText(app.surface, 10 + offset, i * 25, str);
+	}
 };
 
 void MenuScreen::touch(App& app, int x, int y)

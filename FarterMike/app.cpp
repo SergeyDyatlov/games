@@ -26,10 +26,15 @@ void App::run()
 	{
 		SDL_PollEvent(event);
 		SDL_RenderClear(renderer);
+		surface = SDL_CreateRGBSurface(0, 640, 480, 32, 0, 0, 0, 0);
 
 		screenList.at(currentScreen) -> tick(*this);
 		screenList.at(currentScreen) -> draw(*this);
 
+		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+		SDL_FreeSurface(surface);
+
+		SDL_RenderCopy(renderer, texture, NULL, NULL);
 		SDL_RenderPresent(renderer);
 	};
 	SDL_DestroyWindow(window);
