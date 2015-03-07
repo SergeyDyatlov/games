@@ -1,13 +1,13 @@
-#include "IMG_image.h"
+#include "imgimage.h"
 
-IMG_Image::IMG_Image()
+IMGImage::IMGImage()
 {
 	texture = NULL;
 	width = 0;
 	height = 0;
 };
 
-void IMG_Image::loadFromFile(SDL_Renderer* renderer, std::string path)
+void IMGImage::loadFromFile(SDL_Renderer* renderer, std::string path)
 {
 	SDL_Surface* surface = IMG_Load(path.c_str());
 	if (surface == NULL)
@@ -31,17 +31,17 @@ void IMG_Image::loadFromFile(SDL_Renderer* renderer, std::string path)
 	SDL_FreeSurface(surface);
 };
 
-void IMG_Image::render(SDL_Renderer* renderer, const SDL_Rect* srcrect, const SDL_Rect* dstrect) const
+void IMGImage::render(SDL_Renderer* renderer, const SDL_Rect* srcrect, const SDL_Rect* dstrect) const
 {
 	SDL_RenderCopy(renderer, texture, srcrect, dstrect);
 };
 
-int IMG_Image::getWidth()
+int IMGImage::getWidth()
 {
 	return width;
 };
 
-int IMG_Image::getHeight()
+int IMGImage::getHeight()
 {
 	return height;
 };

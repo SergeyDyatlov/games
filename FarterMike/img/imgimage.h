@@ -4,10 +4,10 @@
 #include <stdio.h>
 #include <string>
 
-class IMG_Image
+class IMGImage
 {
 	public:
-		IMG_Image();
+		IMGImage();
 		void loadFromFile(SDL_Renderer* renderer, std::string path);
 		void render(SDL_Renderer* renderer, const SDL_Rect* srcrect, const SDL_Rect* dstrect) const;
 		int getWidth();
