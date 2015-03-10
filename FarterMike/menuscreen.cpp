@@ -19,12 +19,13 @@ void MenuScreen::draw(App& app)
 	for (unsigned int i=0; i<options.size(); i++)
 	{
 		string str = options.at(i);
+		int x = (640 / 2) - (font.textWidth(32, str) / 2);
 		int offset = 0;
 		if ((unsigned)choice == i)
 		{
 			offset = 5;
 		}
-		font.drawText(app.surface, 10 + offset, i * 25, str);
+		font.drawText(app.surface, x + offset, i * 25, str);
 	}
 };
 

@@ -80,3 +80,20 @@ void Font::drawText(SDL_Surface* surface, int x, int y, std::string &text)
 		rect.x = rect.x + CharWidth[asciicode];
 	}
 };
+
+int Font::charWidth(int size, int asciicode)
+{
+	return CharWidth[asciicode];
+};
+
+int Font::textWidth(int size, const std::string &text)
+{
+	int stringLength = 0;
+	int asciicode;
+	for (unsigned int i=0; i<text.length(); i++)
+	{
+		asciicode = text[i];
+		stringLength += charWidth(size, asciicode);
+	}
+	return stringLength;
+};
