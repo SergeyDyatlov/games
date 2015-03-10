@@ -19,7 +19,7 @@ void MenuScreen::draw(App& app)
 	for (unsigned int i=0; i<options.size(); i++)
 	{
 		string str = options.at(i);
-		int x = (640 / 2) - (font.textWidth(32, str) / 2);
+		int x = (int)((640 / 2) - (font.textWidth(32, str) / 2));
 		int offset = 0;
 		if ((unsigned)choice == i)
 		{

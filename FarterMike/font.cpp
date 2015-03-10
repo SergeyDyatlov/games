@@ -41,7 +41,7 @@ Font::Font()
 
 };
 
-void Font::loadFromFile(std::string &path)
+void Font::loadFromFile(const std::string &path)
 {
 	bitmap = NULL;
 	bitmap = SDL_LoadBMP(path.c_str());
@@ -67,7 +67,7 @@ void Font::drawChar(SDL_Surface* surface, int x, int y, int asciicode)
 	SDL_BlitSurface(bitmap, &pick, surface, &area);
 };
 
-void Font::drawText(SDL_Surface* surface, int x, int y, std::string &text)
+void Font::drawText(SDL_Surface* surface, int x, int y, const std::string &text)
 {
 	int asciicode;
 	SDL_Rect rect;

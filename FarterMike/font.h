@@ -7,9 +7,9 @@ class Font
 {
 	public:
 		Font();
-		void loadFromFile(std::string &path);
+		void loadFromFile(const std::string &path);
 		void drawChar(SDL_Surface* surface, int x, int y, int asciicode);
-		void drawText(SDL_Surface* surface, int x, int y, std::string &text);
+		void drawText(SDL_Surface* surface, int x, int y, const std::string &text);
 		int charWidth(int size, int asciicode);
 		int textWidth(int size, const std::string &text);
 	private:
