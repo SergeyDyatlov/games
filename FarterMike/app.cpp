@@ -36,12 +36,13 @@ void App::run()
 
 		SDL_RenderCopy(renderer, texture, NULL, NULL);
 		SDL_RenderPresent(renderer);
+		SDL_Delay(30);
 	};
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);	
+	delete event;
 };
 
 App::~App()
 {
-	delete event;
 };
