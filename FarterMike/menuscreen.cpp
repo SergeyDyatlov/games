@@ -1,8 +1,9 @@
 #include "menuscreen.h"
+#include "getresourcepath.h"
 
 void MenuScreen::init(App& app)
 {
-	string fontPath = "res/font.bmp";
+	string fontPath = getResourcePath() + "/font.bmp";
 	font.loadFromFile(fontPath);
 
 	options.push_back("NewGame");

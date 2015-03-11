@@ -19,6 +19,7 @@ void App::setScreen(ScreenType screenType)
 
 void App::run()
 {
+  surface = SDL_CreateRGBSurface(0, 640, 480, 32, 0, 0, 0, 0);
 	while (running && event -> type != SDL_QUIT)
 	{
 		SDL_PollEvent(event);

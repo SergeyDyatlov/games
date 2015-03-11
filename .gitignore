@@ -1,0 +1,7 @@
+/SDL2/include/SDL2/*
+.DS_Store
+*~
+/SDL2/lib/libSDL2.a
+UserInterfaceState.xcuserstate
+/FarterMike/FarterMike
+tmp/
