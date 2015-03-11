@@ -6,7 +6,6 @@ App::App(){
 
 void App::init()
 {
-	event = new SDL_Event();
 	running = true;
 	setScreen(stMenu);
 };
@@ -19,15 +18,31 @@ void App::setScreen(ScreenType screenType)
 
 void App::run()
 {
-	while (running && event -> type != SDL_QUIT)
+	SDL_Event event;
+	int x;
+	int y;
+	while (running)
 	{
-		SDL_PollEvent(event);
+		while (SDL_PollEvent(&event))
+		{
+			switch (event.type)
+			{
+				case SDL_MOUSEMOTION:
+					x = event.motion.x;
+					y = event.motion.y;
+					screenList.at(currentScreen) -> touch(*this, x, y);
+					break;
+
+				case SDL_QUIT:
+					running = false;
+					break;
+			}
+		}
 		graphicEngine.clear();
 		screenList.at(currentScreen) -> tick(*this);
 		screenList.at(currentScreen) -> draw(*this);
 		graphicEngine.render();
 	};
-	delete event;
 	SDL_Quit();
 };
 

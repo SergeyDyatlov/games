@@ -14,12 +14,11 @@ class App
 		~App();
 		void init();
 		void run();
-		enum ScreenType {stMenu};
+		enum ScreenType {stMenu, stLevel1};
 		void setScreen(ScreenType screenType);
 		GraphicEngine graphicEngine;
 
 	private:
-		SDL_Event* event;
 		bool running;
 		ScreenType currentScreen;
 		vector<Screen*> screenList;
