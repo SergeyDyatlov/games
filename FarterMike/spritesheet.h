@@ -5,13 +5,13 @@
 #include <string>
 #include <map>
 
-enum Sprite {Background};
+enum Sprite {Background, PlayButton};
 
 class SpriteSheet
 {
 	public:
 		void loadFromFile(const std::string &path);
-		void draw(SDL_Surface* surface, Sprite &sprite, int x, int y, int frame);
+		void draw(SDL_Surface* surface, Sprite sprite, int x, int y, int frame);
 	private:
 		SDL_Surface* bitmap;
 		std::map<Sprite, Tile> sprites;
