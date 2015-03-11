@@ -2,10 +2,14 @@
 
 #include "app.h"
 #include "screen.h"
+#include "graphicengine.h"
+#include "spritesheet.h"
 #include "font.h"
+#include "button.h"
 #include <SDL2/SDL.h>
 #include <iostream>
 #include <vector>
+#include <map>
 
 using namespace std;
 
@@ -19,7 +23,8 @@ class MenuScreen: public Screen
 		void active(App& app, bool activated);
 
 	private:
-		Font font;
+		SpriteSheet spriteSheet;
 		vector<string> options;
-		int choice;
+		map<int, Button> buttons;
+		Font font;
 };

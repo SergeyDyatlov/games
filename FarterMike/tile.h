@@ -7,12 +7,12 @@ class Tile {
 		int w;
 		int h;
 		int frames;
-		Tile(int x = 0, int y = 0, int w = 0, int h = 0, int frames = 0)
+		Tile(int X = 0, int Y = 0, int W = 0, int H = 0, int Frames = 0)
 		{
-			x = x;
-			y = y;
-			w = w;
-			h = h;
-			frames = frames;
+			x = X;
+			y = Y;
+			w = W;
+			h = H;
+			frames = Frames;
 		}
 };
