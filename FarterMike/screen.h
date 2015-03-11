@@ -2,8 +2,6 @@
 
 class App;
 
-using namespace std;
-
 class Screen
 {
 	public:

@@ -1,9 +1,10 @@
 #include "menuscreen.h"
+#include "getresourcepath.h"
 
 void MenuScreen::init(App& app)
 {
-	string bgPath = "res/background.bmp";
-	string fontPath = "res/font.bmp";
+	string bgPath = getResourcePath() + "/background.bmp";
+	string fontPath = getResourcePath() + "/font.bmp";
 	background.loadFromFile(bgPath);
 	font.loadFromFile(fontPath);
 
