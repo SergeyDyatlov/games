@@ -8,5 +8,5 @@ main.o: main.cpp app.h
 app.o: app.cpp app.h menuscreen.h graphicengine.h
 graphicengine.o: graphicengine.h graphicengine.cpp
 font.o: font.h font.cpp
-menuscreen.o: menuscreen.cpp menuscreen.h app.h sprite.h font.h
+menuscreen.o: menuscreen.cpp menuscreen.h app.h font.h
 getresourcepath.o: getresourcepath.cpp getresourcepath.h
