@@ -2,9 +2,7 @@
 
 void MenuScreen::init(App& app)
 {
-	string bgPath = "res/background.bmp";
 	string fontPath = "res/font.bmp";
-	background.loadFromFile(bgPath);
 	font.loadFromFile(fontPath);
 
 	options.push_back("NewGame");
@@ -15,7 +13,6 @@ void MenuScreen::init(App& app)
 
 void MenuScreen::draw(App& app)
 {
-	background.draw(app.surface, 0, 0, 640, 480);
 	for (unsigned int i=0; i<options.size(); i++)
 	{
 		string str = options.at(i);
@@ -25,7 +22,7 @@ void MenuScreen::draw(App& app)
 		{
 			offset = 5;
 		}
-		font.drawText(app.surface, x + offset, i * 25, str);
+		font.drawText(app.graphicEngine.surface, x + offset, i * 25, str);
 	}
 };
 
