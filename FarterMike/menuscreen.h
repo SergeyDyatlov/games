@@ -2,7 +2,6 @@
 
 #include "app.h"
 #include "screen.h"
-#include "sprite.h"
 #include "font.h"
 #include <SDL2/SDL.h>
 #include <iostream>
@@ -20,7 +19,6 @@ class MenuScreen: public Screen
 		void active(App& app, bool activated);
 
 	private:
-		Sprite background;
 		Font font;
 		vector<string> options;
 		int choice;
