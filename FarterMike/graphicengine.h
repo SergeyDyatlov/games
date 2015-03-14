@@ -11,6 +11,7 @@ class	GraphicEngine
 		~GraphicEngine();
 		void clear();
 		void drawSprite(Sprite* sprite, SDL_Rect* rect);
+		void drawTile(const char ch, int x, int y);
 		void drawText(int x, int y, int size, std::string &text);
 		int textWidth(int size, std::string &text);
 		void render();

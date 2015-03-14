@@ -41,6 +41,27 @@ void GraphicEngine::drawSprite(Sprite* sprite, SDL_Rect* rect)
 
 };
 
+void GraphicEngine::drawTile(const char ch, int x, int y)
+{
+	SDL_Rect rect;
+	rect.x = x * 16;
+	rect.y = y * 16;
+	rect.w = 16;
+	rect.h = 16;
+
+	Uint32 color;
+	color = SDL_MapRGB(surface -> format, 0, 0, 0);
+	if (ch == '*')
+	{
+		color = SDL_MapRGB(surface -> format, 192, 192, 192);
+	}
+	if (ch == '$')
+	{
+		color = SDL_MapRGB(surface -> format, 192, 192, 0);
+	}
+	SDL_FillRect(surface, &rect, color);
+};
+
 void GraphicEngine::drawText(int x, int y, int size, std::string &text)
 {
 

@@ -2,6 +2,7 @@
 
 App::App(){
 	screenList.push_back(new MenuScreen());
+	screenList.push_back(new Level1Screen());
 };
 
 void App::init()
