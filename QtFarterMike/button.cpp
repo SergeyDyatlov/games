@@ -1,10 +1,5 @@
 #include "button.h"
 
-Button::Button()
-{
-
-}
-
 Button::Button(int X, int Y, int Width, int Height)
 {
     Box.x = X;
