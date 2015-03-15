@@ -1,7 +1,7 @@
 #ifndef LEVEL1SCREEN_H
 #define LEVEL1SCREEN_H
 
-#include "game.h"
+#include "screen.h"
 #include <string>
 
 class Level1Screen : public Screen

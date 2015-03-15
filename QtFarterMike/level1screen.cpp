@@ -1,6 +1,11 @@
 #include "level1screen.h"
+#include "game.h"
 
 Level1Screen::Level1Screen()
+{
+}
+
+Level1Screen::~Level1Screen()
 {
 }
 

@@ -16,6 +16,8 @@ private:
     SDL_Renderer* FRenderer;
     SDL_Surface* FSurface;
     std::vector<Screen*> FScreens;
+    MenuScreen FMenuScreen;
+    Level1Screen FLevel1Screen;
 
 public:
     Game();

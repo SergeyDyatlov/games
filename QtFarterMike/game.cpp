@@ -17,8 +17,8 @@ void Game::Init(const char* Caption, int Width, int Height)
     FRenderer = SDL_CreateRenderer(FWindow, -1, SDL_RENDERER_SOFTWARE);
     FSurface = SDL_CreateRGBSurface(0, Width, Height, 32, 0, 0, 0, 0);
 
-    FScreens.push_back(new MenuScreen());
-    FScreens.push_back(new Level1Screen());
+    FScreens.push_back(&FMenuScreen);
+    FScreens.push_back(&FLevel1Screen);
     SetScreen(stMenu);
 
     FRunning = true;

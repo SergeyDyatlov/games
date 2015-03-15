@@ -1,6 +1,11 @@
 #include "menuscreen.h"
+#include "game.h"
 
 MenuScreen::MenuScreen()
+{
+}
+
+MenuScreen::~MenuScreen()
 {
 }
 

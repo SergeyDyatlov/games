@@ -2,7 +2,6 @@
 #define MENUSCREEN_H
 
 #include "screen.h"
-#include "game.h"
 #include <button.h>
 #include <vector>
 #include <string>
