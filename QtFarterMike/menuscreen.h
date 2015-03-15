@@ -11,8 +11,8 @@
 class MenuScreen : public Screen
 {
 private:
-    std::vector<std::string> Options;
-    std::map<int, Button> Buttons;
+    std::vector<std::string> FOptions;
+    std::map<int, Button> FButtons;
 
 public:
     MenuScreen();

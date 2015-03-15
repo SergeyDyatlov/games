@@ -24,7 +24,6 @@ void Level1Screen::Init(Game& AGame)
     FMap[11] = "*              ***   ***     $    $    $     *********   **  **  **            *";
     FMap[12] = "*      ***                                ************~~~~~~~~~~~~~~~~~~~~~~~~~*";
     FMap[13] = "********************************************************************************";
-    FMap[14] = "********************************************************************************";
 
     printf("Level1Screen Init Successful\n");
 }
@@ -73,13 +72,23 @@ void Level1Screen::Draw(Game& AGame)
             Color = SDL_MapRGB(AGame.GetSurface() -> format, 0, 0, 0);
 
             char ch = FMap[col][row];
-            if (ch == '*')
+            switch (ch)
             {
+            case '*':
                 Color = SDL_MapRGB(AGame.GetSurface() -> format, 192, 192, 192);
-            }
-            if (ch == '$')
-            {
+                break;
+            case '$':
                 Color = SDL_MapRGB(AGame.GetSurface() -> format, 192, 192, 0);
+                break;
+            case '~':
+                Color = SDL_MapRGB(AGame.GetSurface() -> format, 0, 0, 192);
+                break;
+            case 'H':
+                Color = SDL_MapRGB(AGame.GetSurface() -> format, 0, 192, 0);
+                break;
+
+            default:
+                break;
             }
 
             SDL_FillRect(AGame.GetSurface(), &Rect, Color);

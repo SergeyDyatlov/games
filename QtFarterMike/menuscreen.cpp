@@ -6,15 +6,16 @@ MenuScreen::MenuScreen()
 
 void MenuScreen::Init(Game& AGame)
 {
-    Options.push_back("New Game");
-    Options.push_back("Exit");
+    FOptions.clear();
+    FOptions.push_back("New Game");
+    FOptions.push_back("Exit");
 
-    for (unsigned I = 0; I < Options.size(); I++)
+    for (unsigned I = 0; I < FOptions.size(); I++)
     {
         int X = AGame.GetSurface()->w / 2;
         int Y = I * 50;
-        Buttons[I] = Button(X, Y, 100, 25);
-        Buttons[I].Clicked = false;
+        FButtons[I] = Button(X, Y, 100, 25);
+        FButtons[I].Clicked = false;
     }
 
     printf("MenuScreen Init Successful\n");
@@ -46,14 +47,15 @@ void MenuScreen::HandleEvents(Game& AGame)
         case SDL_MOUSEBUTTONUP:
             mx = event.button.x;
             my = event.button.y;
-            for (unsigned I = 0; I < Options.size(); I++)
+            for (unsigned I = 0; I < FOptions.size(); I++)
             {
-                Buttons[I].Clicked = false;
-                if ((mx > Buttons[I].Box.x) && (mx < Buttons[I].Box.x + Buttons[I].Box.w))
+                FButtons[I].Clicked = false;
+                if ((mx > FButtons[I].Box.x) && (mx < FButtons[I].Box.x + FButtons[I].Box.w))
                 {
-                    if ((my > Buttons[I].Box.y) && (my < Buttons[I].Box.y + Buttons[I].Box.h))
+                    if ((my > FButtons[I].Box.y) && (my < FButtons[I].Box.y + FButtons[I].Box.h))
                     {
-                        Buttons[I].Clicked = true;
+                        FButtons[I].Clicked = true;
+                        AGame.SetScreen(AGame.stLevel1);
                     }
                 }
             }
@@ -67,16 +69,13 @@ void MenuScreen::HandleEvents(Game& AGame)
 
 void MenuScreen::Update(Game& AGame)
 {
-    if (Buttons[0].Clicked == true)
-    {
-        AGame.SetScreen(AGame.stLevel1);
-    }
+
 }
 
 void MenuScreen::Draw(Game& AGame)
 {
-    for (unsigned I = 0; I < Options.size(); I++)
+    for (unsigned I = 0; I < FOptions.size(); I++)
     {
-        Buttons[I].Draw(AGame.GetSurface());
+        FButtons[I].Draw(AGame.GetSurface());
     }
 }
