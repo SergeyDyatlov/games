@@ -5,7 +5,7 @@
 #include <string>
 #include <map>
 
-enum SpriteType {stCoin, stBackground, stWater};
+enum SpriteType {stCoin, stBackground, stWater, stGround};
 
 class Level1SpriteSheet
 {

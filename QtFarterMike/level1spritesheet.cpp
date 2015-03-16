@@ -18,6 +18,10 @@ Level1SpriteSheet::Level1SpriteSheet()
     Rect.y = 64;
     FSprites[stWater] = Rect;
 
+    Rect.x = 0;
+    Rect.y = 96;
+    FSprites[stGround] = Rect;
+
     FSurface = NULL;
     const std::string path = "res/Level1Sprites.bmp";
     FSurface = SDL_LoadBMP(path.c_str());

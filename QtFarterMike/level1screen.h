@@ -14,7 +14,7 @@ private:
 
     Level1SpriteSheet FSpriteSheet;
 
-    int FOffsetX;
+    float FOffsetX;
 
 public:
     Level1Screen();

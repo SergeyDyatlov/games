@@ -45,7 +45,7 @@ void Game::Update()
 void Game::Draw()
 {
     SDL_RenderClear(FRenderer);
-    SDL_FillRect(FSurface, NULL, 0x000000);
+    SDL_FillRect(FSurface, NULL, SDL_MapRGB(FSurface -> format, 255, 255, 255));
 
     FScreens.at(FCurrentScreen) -> Draw(*this);
 
