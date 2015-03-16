@@ -80,23 +80,21 @@ void Level1Screen::Draw(Game& AGame)
             switch (ch)
             {
             case '*':
-                Color = SDL_MapRGB(AGame.GetSurface() -> format, 192, 192, 192);
+                FSpriteSheet.Draw(AGame.GetSurface(), stBackground, &Rect);
                 break;
             case '$':
-                Color = SDL_MapRGB(AGame.GetSurface() -> format, 192, 192, 0);
+                FSpriteSheet.Draw(AGame.GetSurface(), stCoin, &Rect);
                 break;
             case '~':
-                Color = SDL_MapRGB(AGame.GetSurface() -> format, 0, 0, 192);
+                FSpriteSheet.Draw(AGame.GetSurface(), stWater, &Rect);
                 break;
             case 'H':
                 Color = SDL_MapRGB(AGame.GetSurface() -> format, 0, 192, 0);
+                SDL_FillRect(AGame.GetSurface(), &Rect, Color);
                 break;
-
             default:
                 break;
             }
-
-            SDL_FillRect(AGame.GetSurface(), &Rect, Color);
         }
     }
 }

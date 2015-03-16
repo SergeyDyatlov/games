@@ -2,6 +2,7 @@
 #define LEVEL1SCREEN_H
 
 #include "screen.h"
+#include "level1spritesheet.h"
 #include <string>
 
 class Level1Screen : public Screen
@@ -10,6 +11,9 @@ private:
     std::string FMap[16];
     int FMapHeight;
     int FMapWidth;
+
+    Level1SpriteSheet FSpriteSheet;
+
     int FOffsetX;
 
 public:
