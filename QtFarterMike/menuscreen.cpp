@@ -17,9 +17,11 @@ void MenuScreen::Init(Game& AGame)
 
     for (unsigned I = 0; I < FOptions.size(); I++)
     {
-        int X = AGame.GetSurface()->w / 2;
-        int Y = I * 50;
-        FButtons[I] = Button(X, Y, 100, 25);
+        int BWidth = 160;
+        int BHeight = 40;
+        int X = ((AGame.GetSurface()->w / 2) - (BWidth / 2));
+        int Y = ((AGame.GetSurface()->h / 2) + (I * (BHeight * 2)));
+        FButtons[I] = Button(X, Y, BWidth, BHeight);
         FButtons[I].Clicked = false;
     }
 
