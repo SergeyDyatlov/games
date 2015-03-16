@@ -47,9 +47,6 @@ void MenuScreen::HandleEvents(Game& AGame)
             break;
 
         case SDL_MOUSEBUTTONDOWN:
-            break;
-
-        case SDL_MOUSEBUTTONUP:
             mx = event.button.x;
             my = event.button.y;
             for (unsigned I = 0; I < FOptions.size(); I++)
@@ -60,7 +57,30 @@ void MenuScreen::HandleEvents(Game& AGame)
                     if ((my > FButtons[I].Box.y) && (my < FButtons[I].Box.y + FButtons[I].Box.h))
                     {
                         FButtons[I].Clicked = true;
-                        AGame.SetScreen(AGame.stLevel1);
+                    }
+                }
+            }
+            break;
+
+        case SDL_MOUSEBUTTONUP:
+            mx = event.button.x;
+            my = event.button.y;
+            for (unsigned I = 0; I < FOptions.size(); I++)
+            {
+                if ((mx > FButtons[I].Box.x) && (mx < FButtons[I].Box.x + FButtons[I].Box.w))
+                {
+                    if ((my > FButtons[I].Box.y) && (my < FButtons[I].Box.y + FButtons[I].Box.h))
+                    {
+                        if ((I == 0) && (FButtons[0].Clicked))
+                        {
+                            FButtons[0].Clicked = false;
+                            AGame.SetScreen(AGame.stLevel1);
+                        }
+                        if ((I == 1) && (FButtons[1].Clicked))
+                        {
+                            FButtons[1].Clicked = false;
+                            AGame.Quit();
+                        }
                     }
                 }
             }
