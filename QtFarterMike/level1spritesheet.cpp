@@ -3,8 +3,8 @@
 Level1SpriteSheet::Level1SpriteSheet()
 {
     SDL_Rect Rect;
-    Rect.w = 32;
-    Rect.h = 32;
+    Rect.w = 32 - 1;
+    Rect.h = 32 - 1;
 
     Rect.x = 0;
     Rect.y = 0;
@@ -26,8 +26,10 @@ Level1SpriteSheet::Level1SpriteSheet()
     Rect.y = 128;
     FSprites[stPepper] = Rect;
 
-    Rect.x = 640 - 32;
+    Rect.x = 640 - 128;
     Rect.y = 0;
+    Rect.w = 128;
+    Rect.h = 128;
     FSprites[stBackground] = Rect;
 
     FSurface = NULL;
