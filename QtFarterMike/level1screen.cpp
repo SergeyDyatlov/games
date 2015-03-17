@@ -15,19 +15,24 @@ void Level1Screen::Init(Game& AGame)
     FMapHeight = 14;
     FMapWidth = 80;
 
+    FBgRect.x = 0;
+    FBgRect.y = 0;
+    FBgRect.w = AGame.GetSurface()->w;
+    FBgRect.h = AGame.GetSurface()->h;
+
     FMap[0]  = "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
     FMap[1]  = "|                                                                              |";
     FMap[2]  = "|        $                  $                                                  |";
     FMap[3]  = "|                           $                                                  |";
     FMap[4]  = "|      $   $      $  $      $                                                  |";
     FMap[5]  = "|          *  *   *  *   *** ** ***      $                                     |";
-    FMap[6]  = "|                                                                              |";
+    FMap[6]  = "|                                     p                                        |";
     FMap[7]  = "|                     $              ***   ***                                 |";
-    FMap[8]  = "|                     $                  $                                  H  |";
+    FMap[8]  = "|                     $                  $                                  p  |";
     FMap[9]  = "|                    * *                           ***                    *****|";
-    FMap[10] = "|                                               ******      $  $               |";
-    FMap[11] = "|               $          *  $        $     *********   **  **  **            |";
-    FMap[12] = "|             *                           ************~~~~~~~~~~~~~~~~~~~~~~~~~|";
+    FMap[10] = "|                                                           $  $               |";
+    FMap[11] = "|               $          *  $        $     ****        **  **  **            |";
+    FMap[12] = "|  p         *         p                  *********p**~~~~~~~~~~~~~~~~~~~~~~~~~|";
     FMap[13] = "###############~~~##############################################################";
 
     printf("Level1Screen Init Successful\n");
@@ -67,6 +72,8 @@ void Level1Screen::Update(Game& AGame)
 
 void Level1Screen::Draw(Game& AGame)
 {
+    FSpriteSheet.Draw(AGame.GetSurface(), stBackground, &FBgRect);
+
     for (int row = 0; row < FMapWidth ; row++)
     {
         for (int col = 0; col < FMapHeight; col++)
@@ -81,7 +88,7 @@ void Level1Screen::Draw(Game& AGame)
             switch (ch)
             {
             case '*':
-                FSpriteSheet.Draw(AGame.GetSurface(), stBackground, &Rect);
+                FSpriteSheet.Draw(AGame.GetSurface(), stBlock, &Rect);
                 break;
             case '$':
                 FSpriteSheet.Draw(AGame.GetSurface(), stCoin, &Rect);
@@ -91,6 +98,9 @@ void Level1Screen::Draw(Game& AGame)
                 break;
             case '#':
                 FSpriteSheet.Draw(AGame.GetSurface(), stGround, &Rect);
+                break;
+            case 'p':
+                FSpriteSheet.Draw(AGame.GetSurface(), stPepper, &Rect);
                 break;
             default:
                 break;

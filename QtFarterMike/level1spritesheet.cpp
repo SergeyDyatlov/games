@@ -12,7 +12,7 @@ Level1SpriteSheet::Level1SpriteSheet()
 
     Rect.x = 0;
     Rect.y = 32;
-    FSprites[stBackground] = Rect;
+    FSprites[stBlock] = Rect;
 
     Rect.x = 0;
     Rect.y = 64;
@@ -21,6 +21,14 @@ Level1SpriteSheet::Level1SpriteSheet()
     Rect.x = 0;
     Rect.y = 96;
     FSprites[stGround] = Rect;
+
+    Rect.x = 0;
+    Rect.y = 128;
+    FSprites[stPepper] = Rect;
+
+    Rect.x = 640 - 32;
+    Rect.y = 0;
+    FSprites[stBackground] = Rect;
 
     FSurface = NULL;
     const std::string path = "res/Level1Sprites.bmp";
@@ -36,5 +44,5 @@ void Level1SpriteSheet::Draw(SDL_Surface* Surface, SpriteType Type, SDL_Rect* Re
 {
     SDL_Rect Pick = FSprites.at(Type);
 
-    SDL_BlitSurface(FSurface, &Pick, Surface, Rect);
+    SDL_BlitScaled(FSurface, &Pick, Surface, Rect);
 }

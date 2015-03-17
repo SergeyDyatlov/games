@@ -12,6 +12,8 @@ private:
     int FMapHeight;
     int FMapWidth;
 
+    SDL_Rect FBgRect;
+
     Level1SpriteSheet FSpriteSheet;
 
     float FOffsetX;
