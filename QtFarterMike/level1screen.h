@@ -3,6 +3,7 @@
 
 #include "screen.h"
 #include "level1spritesheet.h"
+#include "hero.h"
 #include <string>
 
 class Level1Screen : public Screen
@@ -15,6 +16,8 @@ private:
     SDL_Rect FBgRect;
 
     Level1SpriteSheet FSpriteSheet;
+
+    Hero FHero;
 
     float FOffsetX;
 

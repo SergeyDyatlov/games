@@ -11,7 +11,8 @@ SOURCES += main.cpp \
     menuscreen.cpp \
     button.cpp \
     level1screen.cpp \
-    level1spritesheet.cpp
+    level1spritesheet.cpp \
+    hero.cpp
 
 include(deployment.pri)
 qtcAddDeployment()
@@ -22,5 +23,6 @@ HEADERS += \
     menuscreen.h \
     button.h \
     level1screen.h \
-    level1spritesheet.h
+    level1spritesheet.h \
+    hero.h
 

@@ -35,6 +35,11 @@ void Level1Screen::Init(Game& AGame)
     FMap[12] = "|  p         *         p                  *********p**~~~~~~~~~~~~~~~~~~~~~~~~~|";
     FMap[13] = "###############~~~##############################################################";
 
+    FHero.Rect.x = 100;
+    FHero.Rect.y = 100;
+    FHero.Rect.w = 32;
+    FHero.Rect.h = 64;
+
     printf("Level1Screen Init Successful\n");
 }
 
@@ -55,6 +60,18 @@ void Level1Screen::HandleEvents(Game& AGame)
             AGame.Quit();
             break;
 
+        case SDL_KEYDOWN:
+            switch (event.key.keysym.sym)
+            {
+            case SDLK_LEFT:
+                FHero.Rect.x -= 10;
+                break;
+
+            case SDLK_RIGHT:
+                FHero.Rect.x += 10;
+                break;
+            }
+
         default:
             break;
         }
@@ -63,10 +80,12 @@ void Level1Screen::HandleEvents(Game& AGame)
 
 void Level1Screen::Update(Game& AGame)
 {
-    FOffsetX += 0.1;
-    if (FOffsetX + AGame.GetSurface()->w / 32 > FMapWidth)
+    if (FHero.Rect.x > AGame.GetSurface()->w / 2)
     {
-        FOffsetX = 0;
+        if (FHero.Rect.x < ((FMapWidth * 32) - AGame.GetSurface()->w / 2))
+        {
+            FOffsetX = FHero.Rect.x - AGame.GetSurface()->w / 2;
+        }
     }
 }
 
@@ -74,12 +93,12 @@ void Level1Screen::Draw(Game& AGame)
 {
     FSpriteSheet.Draw(AGame.GetSurface(), stBackground, &FBgRect);
 
-    for (int row = 0; row < FMapWidth ; row++)
+    for (int row = FOffsetX / 32 - 1; row < (FOffsetX + AGame.GetSurface()->w) / 32 ; row++)
     {
         for (int col = 0; col < FMapHeight; col++)
         {
             SDL_Rect Rect;
-            Rect.x = (row - FOffsetX) * 32;
+            Rect.x = (row * 32) - FOffsetX;
             Rect.y = col * 32;
             Rect.w = 32;
             Rect.h = 32;
@@ -107,4 +126,9 @@ void Level1Screen::Draw(Game& AGame)
             }
         }
     }
+
+    SDL_Rect SRect = FHero.Rect;
+    SRect.x -= FOffsetX;
+
+    FSpriteSheet.Draw(AGame.GetSurface(), stHero, &SRect);
 }

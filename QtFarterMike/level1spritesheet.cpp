@@ -26,6 +26,12 @@ Level1SpriteSheet::Level1SpriteSheet()
     Rect.y = 128;
     FSprites[stPepper] = Rect;
 
+    Rect.x = 0;
+    Rect.y = 160;
+    Rect.w = 32;
+    Rect.h = 64;
+    FSprites[stHero] = Rect;
+
     Rect.x = 640 - 128;
     Rect.y = 0;
     Rect.w = 128;
