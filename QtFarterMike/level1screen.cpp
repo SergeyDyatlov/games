@@ -23,17 +23,31 @@ void Level1Screen::Init(Game& AGame)
     FMap[0]  = "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
     FMap[1]  = "|                                                                              |";
     FMap[2]  = "|        $                  $                                                  |";
-    FMap[3]  = "|                           $                            $   $                 |";
+    FMap[3]  = "|                           $    E                       $   $                 |";
     FMap[4]  = "|      $   $      $  $      $                            $$ $$                 |";
     FMap[5]  = "|          *  *   *  *   *** ** ***      $               $ $ $                 |";
     FMap[6]  = "|                                     p                  $   $                 |";
     FMap[7]  = "|                     $              ***   ***           $   $                 |";
     FMap[8]  = "|                     $                  $                                  p  |";
-    FMap[9]  = "|                    * *                           ***                    *****|";
-    FMap[10] = "|                                                           $  $               |";
-    FMap[11] = "|               $          *  $        $     ****        **  **  **            |";
+    FMap[9]  = "|                    * *                           ***           E        *****|";
+    FMap[10] = "|                                          E                $  $               |";
+    FMap[11] = "|               $          *  $  E     $     ****        **  **  **            |";
     FMap[12] = "|  p         *         p                  *********p**~~~~~~~~~~~~~~~~~~~~~~~~~|";
     FMap[13] = "###############~~~##############################################################";
+
+    for (int row = 0; row < FMapWidth; ++row) {
+        for (int col = 0; col < FMapHeight; ++col) {
+            char ch = FMap[col][row];
+            if (ch == 'E') {
+                Enemy enemy;
+                enemy.Rect.x = row * 32;
+                enemy.Rect.y = col * 32;
+                enemy.Rect.w = 32;
+                enemy.Rect.h = 64;
+                FEnemies.push_back(enemy);
+            }
+        }
+    }
 
     FHero.Rect.x = 100;
     FHero.Rect.y = 100;
@@ -125,6 +139,12 @@ void Level1Screen::Draw(Game& AGame)
                 break;
             }
         }
+    }
+
+    for (unsigned I = 0; I < FEnemies.size(); ++I) {
+        SDL_Rect Rect = FEnemies[I].Rect;
+        Rect.x -= FOffsetX;
+        FSpriteSheet.Draw(AGame.GetSurface(), stHero, &Rect);
     }
 
     SDL_Rect SRect = FHero.Rect;
