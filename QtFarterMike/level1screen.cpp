@@ -28,7 +28,7 @@ void Level1Screen::Init(Game& AGame)
     FMap[5]  = "|          *  *   *  *   *** ** ***      $               $ $ $                 |";
     FMap[6]  = "|                                     p                  $   $                 |";
     FMap[7]  = "|                     $              ***   ***           $   $                 |";
-    FMap[8]  = "|                     $                  $                                  p  |";
+    FMap[8]  = "|                     $                  $                                  H  |";
     FMap[9]  = "|                    * *                           ***           E        *****|";
     FMap[10] = "|                                          E                $  $               |";
     FMap[11] = "|               $          *  $  E     $     ****        **  **  **            |";
@@ -50,7 +50,7 @@ void Level1Screen::Init(Game& AGame)
     }
 
     FHero.Rect.x = 100;
-    FHero.Rect.y = 100;
+    FHero.Rect.y = 8 * 32;
     FHero.Rect.w = 32;
     FHero.Rect.h = 64;
 
@@ -99,6 +99,20 @@ void Level1Screen::Update(Game& AGame)
         if (FHero.Rect.x < ((FMapWidth * 32) - AGame.GetSurface()->w / 2))
         {
             FOffsetX = FHero.Rect.x - AGame.GetSurface()->w / 2;
+        }
+    }
+
+    SDL_Rect Rect = FHero.Rect;
+    for (int row = Rect.x / 32; row < (Rect.x + Rect.w) / 32; ++row) {
+        for (int col = Rect.y / 32; col < (Rect.y + Rect.h) / 32; ++col) {
+            char ch = FMap[col][row];
+            switch (ch) {
+            case 'H':
+                AGame.SetScreen(AGame.stMenu);
+                break;
+            default:
+                break;
+            }
         }
     }
 }
