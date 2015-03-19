@@ -18,6 +18,7 @@ void Game::Init(const char* Caption, int Width, int Height)
     FSurface = SDL_CreateRGBSurface(0, Width, Height, 32, 0, 0, 0, 0);
 
     FScreens.push_back(&FMenuScreen);
+    FScreens.push_back(&FSelectLevelScreen);
     FScreens.push_back(&FLevel1Screen);
     SetScreen(stMenu);
 

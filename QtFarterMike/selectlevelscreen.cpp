@@ -1,39 +1,43 @@
-#include "menuscreen.h"
+#include "selectlevelscreen.h"
 #include "game.h"
 
-MenuScreen::MenuScreen()
+SelectLevelScreen::SelectLevelScreen()
 {
 }
 
-MenuScreen::~MenuScreen()
+SelectLevelScreen::~SelectLevelScreen()
 {
 }
 
-void MenuScreen::Init(Game& AGame)
+void SelectLevelScreen::Init(Game& AGame)
 {
     FOptions.clear();
-    FOptions.push_back("New Game");
-    FOptions.push_back("Exit");
+    FOptions.push_back("1");
+    FOptions.push_back("2");
+    FOptions.push_back("3");
+    FOptions.push_back("4");
+    FOptions.push_back("5");
+    FOptions.push_back("6");
 
     for (unsigned I = 0; I < FOptions.size(); I++)
     {
-        int BWidth = 160;
+        int BWidth = 40;
         int BHeight = 40;
-        int X = ((AGame.GetSurface()->w / 2) - (BWidth / 2));
-        int Y = ((AGame.GetSurface()->h / 2) + (I * (BHeight * 2)));
+        int X = ((AGame.GetSurface()->w / 6) + (I * BWidth * 2));
+        int Y = ((AGame.GetSurface()->h / 6) + (BHeight * 2));
         FButtons[I] = Button(X, Y, BWidth, BHeight);
         FButtons[I].Clicked = false;
     }
 
-    printf("MenuScreen Init Successful\n");
+    printf("SelectLevelScreen Init Successful\n");
 }
 
-void MenuScreen::Clean()
+void SelectLevelScreen::Clean()
 {
-    printf("MenuScreen Clean Successful\n");
+    printf("SelectLevelScreen Clean Successful\n");
 }
 
-void MenuScreen::HandleEvents(Game& AGame)
+void SelectLevelScreen::HandleEvents(Game& AGame)
 {
     SDL_Event event;
 
@@ -76,12 +80,27 @@ void MenuScreen::HandleEvents(Game& AGame)
                         if ((I == 0) && (FButtons[0].Clicked))
                         {
                             FButtons[0].Clicked = false;
-                            AGame.SetScreen(AGame.stSelectLevelScreen);
+                            AGame.SetScreen(AGame.stLevel1);
                         }
                         if ((I == 1) && (FButtons[1].Clicked))
                         {
                             FButtons[1].Clicked = false;
-                            AGame.Quit();
+                        }
+                        if ((I == 2) && (FButtons[2].Clicked))
+                        {
+                            FButtons[2].Clicked = false;
+                        }
+                        if ((I == 3) && (FButtons[3].Clicked))
+                        {
+                            FButtons[3].Clicked = false;
+                        }
+                        if ((I == 4) && (FButtons[4].Clicked))
+                        {
+                            FButtons[4].Clicked = false;
+                        }
+                        if ((I == 5) && (FButtons[5].Clicked))
+                        {
+                            FButtons[5].Clicked = false;
                         }
                     }
                 }
@@ -94,12 +113,12 @@ void MenuScreen::HandleEvents(Game& AGame)
     }
 }
 
-void MenuScreen::Update(Game& AGame)
+void SelectLevelScreen::Update(Game& AGame)
 {
 
 }
 
-void MenuScreen::Draw(Game& AGame)
+void SelectLevelScreen::Draw(Game& AGame)
 {
     for (unsigned I = 0; I < FOptions.size(); I++)
     {
