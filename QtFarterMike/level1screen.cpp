@@ -158,7 +158,7 @@ void Level1Screen::Draw(Game& AGame)
     for (unsigned I = 0; I < FEnemies.size(); ++I) {
         SDL_Rect Rect = FEnemies[I].Rect;
         Rect.x -= FOffsetX;
-        FSpriteSheet.Draw(AGame.GetSurface(), stHero, &Rect);
+        FSpriteSheet.Draw(AGame.GetSurface(), stEnemy, &Rect);
     }
 
     SDL_Rect SRect = FHero.Rect;
