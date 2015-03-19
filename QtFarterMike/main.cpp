@@ -7,7 +7,7 @@ int main() {
 
     Game game;
 
-    game.Init("Game", 640, 480);
+    game.Init("Game", 640 , 360);
 
     while (game.IsRunning())
     {

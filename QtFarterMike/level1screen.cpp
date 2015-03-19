@@ -1,6 +1,8 @@
 #include "level1screen.h"
 #include "game.h"
 
+const int TILE_SIZE = 24;
+
 Level1Screen::Level1Screen()
 {
 }
@@ -40,19 +42,19 @@ void Level1Screen::Init(Game& AGame)
             char ch = FMap[col][row];
             if (ch == 'E') {
                 Enemy enemy;
-                enemy.Rect.x = row * 32;
-                enemy.Rect.y = col * 32;
-                enemy.Rect.w = 32;
-                enemy.Rect.h = 64;
+                enemy.Rect.x = row * TILE_SIZE;
+                enemy.Rect.y = col * TILE_SIZE;
+                enemy.Rect.w = TILE_SIZE;
+                enemy.Rect.h = TILE_SIZE * 2;
                 FEnemies.push_back(enemy);
             }
         }
     }
 
     FHero.Rect.x = 100;
-    FHero.Rect.y = 8 * 32;
-    FHero.Rect.w = 32;
-    FHero.Rect.h = 64;
+    FHero.Rect.y = 8 * TILE_SIZE;
+    FHero.Rect.w = TILE_SIZE;
+    FHero.Rect.h = TILE_SIZE * 2;
 
     printf("Level1Screen Init Successful\n");
 }
@@ -96,15 +98,15 @@ void Level1Screen::Update(Game& AGame)
 {
     if (FHero.Rect.x > AGame.GetSurface()->w / 2)
     {
-        if (FHero.Rect.x < ((FMapWidth * 32) - AGame.GetSurface()->w / 2))
+        if (FHero.Rect.x < ((FMapWidth * TILE_SIZE) - AGame.GetSurface()->w / 2))
         {
             FOffsetX = FHero.Rect.x - AGame.GetSurface()->w / 2;
         }
     }
 
     SDL_Rect Rect = FHero.Rect;
-    for (int row = Rect.x / 32; row < (Rect.x + Rect.w) / 32; ++row) {
-        for (int col = Rect.y / 32; col < (Rect.y + Rect.h) / 32; ++col) {
+    for (int row = Rect.x / TILE_SIZE; row < (Rect.x + Rect.w) / TILE_SIZE; ++row) {
+        for (int col = Rect.y / TILE_SIZE; col < (Rect.y + Rect.h) / TILE_SIZE; ++col) {
             char ch = FMap[col][row];
             switch (ch) {
             case 'H':
@@ -121,15 +123,15 @@ void Level1Screen::Draw(Game& AGame)
 {
     FSpriteSheet.Draw(AGame.GetSurface(), stBackground, &FBgRect);
 
-    for (int row = FOffsetX / 32 - 1; row < (FOffsetX + AGame.GetSurface()->w) / 32 ; row++)
+    for (int row = FOffsetX / TILE_SIZE - 1; row < (FOffsetX + AGame.GetSurface()->w) / TILE_SIZE ; row++)
     {
         for (int col = 0; col < FMapHeight; col++)
         {
             SDL_Rect Rect;
-            Rect.x = (row * 32) - FOffsetX;
-            Rect.y = col * 32;
-            Rect.w = 32;
-            Rect.h = 32;
+            Rect.x = (row * TILE_SIZE) - FOffsetX;
+            Rect.y = col * TILE_SIZE;
+            Rect.w = TILE_SIZE;
+            Rect.h = TILE_SIZE;
 
             char ch = FMap[col][row];
             switch (ch)

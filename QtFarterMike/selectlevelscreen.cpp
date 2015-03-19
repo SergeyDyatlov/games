@@ -21,8 +21,8 @@ void SelectLevelScreen::Init(Game& AGame)
 
     for (unsigned I = 0; I < FOptions.size(); I++)
     {
-        int BWidth = 40;
-        int BHeight = 40;
+        int BWidth = AGame.GetSurface()->w / 16;
+        int BHeight = AGame.GetSurface()->h / 9;
         int X = ((AGame.GetSurface()->w / 6) + (I * BWidth * 2));
         int Y = ((AGame.GetSurface()->h / 6) + (BHeight * 2));
         FButtons[I] = Button(X, Y, BWidth, BHeight);
