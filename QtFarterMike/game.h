@@ -5,6 +5,7 @@
 #include "menuscreen.h"
 #include "selectlevelscreen.h"
 #include "level1screen.h"
+#include "level2screen.h"
 #include <SDL2/SDL.h>
 #include <vector>
 #include <string>
@@ -17,13 +18,16 @@ private:
     SDL_Renderer* FRenderer;
     SDL_Surface* FSurface;
     std::vector<Screen*> FScreens;
+
     MenuScreen FMenuScreen;
     SelectLevelScreen FSelectLevelScreen;
+
     Level1Screen FLevel1Screen;
+    Level2Screen FLevel2Screen;
 
 public:
     Game();
-    enum ScreenType {stMenu, stSelectLevelScreen, stLevel1};
+    enum ScreenType {stMenu, stSelectLevelScreen, stLevel1, stLevel2};
     ScreenType FCurrentScreen;
 
     void Init(const char* Caption, int Width, int Height);

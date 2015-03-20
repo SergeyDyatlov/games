@@ -1,18 +1,18 @@
-#ifndef LEVEL1SCREEN_H
-#define LEVEL1SCREEN_H
+#ifndef LEVEL2SCREEN_H
+#define LEVEL2SCREEN_H
 
 #include "levelscreen.h"
 #include "level1spritesheet.h"
 
-class Level1Screen : public LevelScreen
+class Level2Screen : public LevelScreen
 {
 private:
     SDL_Rect FBgRect;
     Level1SpriteSheet FSpriteSheet;
 
 public:
-    Level1Screen();
-    ~Level1Screen();
+    Level2Screen();
+    ~Level2Screen();
     void Init(Game& AGame);
     void Clean();
 
@@ -21,4 +21,4 @@ public:
     void Draw(Game& AGame);
 };
 
-#endif // LEVEL1SCREEN_H
+#endif // LEVEL2SCREEN_H

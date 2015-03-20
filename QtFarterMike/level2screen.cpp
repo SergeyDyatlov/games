@@ -1,15 +1,15 @@
-#include "level1screen.h"
+#include "level2screen.h"
 #include "game.h"
 
-Level1Screen::Level1Screen()
+Level2Screen::Level2Screen()
 {
 }
 
-Level1Screen::~Level1Screen()
+Level2Screen::~Level2Screen()
 {
 }
 
-void Level1Screen::Init(Game& AGame)
+void Level2Screen::Init(Game& AGame)
 {
     FBgRect.x = 0;
     FBgRect.y = 0;
@@ -24,39 +24,23 @@ void Level1Screen::Init(Game& AGame)
     Map[5]  = "|                                                                              |";
     Map[6]  = "|                                                                              |";
     Map[7]  = "|                                                                              |";
-    Map[8]  = "|                                                                           H  |";
-    Map[9]  = "|                             $E$                                        ******|";
-    Map[10] = "|                 $                           $  $                     ********|";
-    Map[11] = "|  P        $$$   $    p    *******  $$$     $  $  $         E       **********|";
-    Map[12] = "|     $$$       *****      ********* $$$  ******** $ ****$ $    $ $************|";
+    Map[8]  = "|                                                                              |";
+    Map[9]  = "|                                                                              |";
+    Map[10] = "|                                                                              |";
+    Map[11] = "|                                                                              |";
+    Map[12] = "|                                                                              |";
     Map[13] = "################################################################################";
 
     MapWidth = Map[0].length();
     MapHeight = 14;
-
-    for (int row = 0; row < MapWidth; ++row) {
-        for (int col = 0; col < MapHeight; ++col) {
-            char ch = Map[col][row];
-            if (ch == 'E') {
-                Enemy enemy;
-                enemy.Rect.x = row * TILE_SIZE;
-                enemy.Rect.y = col * TILE_SIZE;
-                enemy.Rect.w = TILE_SIZE;
-                enemy.Rect.h = TILE_SIZE * 2;
-                Enemies.push_back(enemy);
-            }
-        }
-    }
-
-    printf("Level1Screen Init Successful\n");
 }
 
-void Level1Screen::Clean()
+void Level2Screen::Clean()
 {
-    printf("Level1Screen Clean Successful\n");
+
 }
 
-void Level1Screen::HandleEvents(Game& AGame)
+void Level2Screen::HandleEvents(Game& AGame)
 {
     SDL_Event event;
 
@@ -86,26 +70,12 @@ void Level1Screen::HandleEvents(Game& AGame)
     }
 }
 
-void Level1Screen::Update(Game& AGame)
+void Level2Screen::Update(Game& AGame)
 {
     LevelScreen::Update(AGame);
-
-    SDL_Rect Rect = Player.Rect;
-    for (int row = Rect.x / TILE_SIZE; row < (Rect.x + Rect.w) / TILE_SIZE; ++row) {
-        for (int col = Rect.y / TILE_SIZE; col < (Rect.y + Rect.h) / TILE_SIZE; ++col) {
-            char ch = Map[col][row];
-            switch (ch) {
-            case 'H':
-                AGame.SetScreen(AGame.stSelectLevelScreen);
-                break;
-            default:
-                break;
-            }
-        }
-    }
 }
 
-void Level1Screen::Draw(Game& AGame)
+void Level2Screen::Draw(Game& AGame)
 {
     FSpriteSheet.Draw(AGame.GetSurface(), stBackground, &FBgRect);
 

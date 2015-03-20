@@ -20,6 +20,7 @@ void Game::Init(const char* Caption, int Width, int Height)
     FScreens.push_back(&FMenuScreen);
     FScreens.push_back(&FSelectLevelScreen);
     FScreens.push_back(&FLevel1Screen);
+    FScreens.push_back(&FLevel2Screen);
     SetScreen(stMenu);
 
     FRunning = true;
