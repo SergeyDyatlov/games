@@ -101,6 +101,7 @@ void Level1Screen::Update(Game& AGame)
         if (FHero.Rect.x < ((FMapWidth * TILE_SIZE) - AGame.GetSurface()->w / 2))
         {
             FOffsetX = FHero.Rect.x - AGame.GetSurface()->w / 2;
+            FOffsetX += FHero.Rect.w / 2;
         }
     }
 
