@@ -101,8 +101,8 @@ void MenuScreen::Update(Game& AGame)
 
 void MenuScreen::Draw(Game& AGame)
 {
-    for (unsigned I = 0; I < FOptions.size(); I++)
-    {
-        FButtons[I].Draw(AGame.GetSurface());
-    }
+    FButtons[0].Draw(AGame.GetSurface());
+    FSpriteSheet.Draw(AGame.GetSurface(), stStart, &FButtons[0].Box);
+    FButtons[1].Draw(AGame.GetSurface());
+    FSpriteSheet.Draw(AGame.GetSurface(), stExit, &FButtons[1].Box);
 }

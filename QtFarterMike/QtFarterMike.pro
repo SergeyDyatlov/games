@@ -16,7 +16,8 @@ SOURCES += main.cpp \
     enemy.cpp \
     selectlevelscreen.cpp \
     levelscreen.cpp \
-    level2screen.cpp
+    level2screen.cpp \
+    menuspritesheet.cpp
 
 include(deployment.pri)
 qtcAddDeployment()
@@ -32,5 +33,6 @@ HEADERS += \
     enemy.h \
     selectlevelscreen.h \
     levelscreen.h \
-    level2screen.h
+    level2screen.h \
+    menuspritesheet.h
 

@@ -3,6 +3,7 @@
 
 #include "screen.h"
 #include "button.h"
+#include "menuspritesheet.h"
 #include <vector>
 #include <string>
 #include <map>
@@ -12,6 +13,7 @@ class MenuScreen : public Screen
 private:
     std::vector<std::string> FOptions;
     std::map<int, Button> FButtons;
+    MenuSpriteSheet FSpriteSheet;
 
 public:
     MenuScreen();
