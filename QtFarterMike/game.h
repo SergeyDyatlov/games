@@ -32,6 +32,7 @@ public:
     enum ScreenType {stMenu, stSelectLevelScreen, stScoreScreen, stLevel1, stLevel2};
     ScreenType FCurrentScreen;
     int CurrentLevel;
+    TScores Scores;
 
     void Init(const char* Caption, int Width, int Height);
 

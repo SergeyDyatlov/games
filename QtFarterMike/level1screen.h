@@ -3,6 +3,8 @@
 
 #include "levelscreen.h"
 #include "level1spritesheet.h"
+#include <iostream>
+#include <fstream>
 
 class Level1Screen : public LevelScreen
 {

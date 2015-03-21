@@ -18,6 +18,13 @@ ScoreSpriteSheet::ScoreSpriteSheet()
     Rect.y = 64;
     FSprites[stNext] = Rect;
 
+    Rect.w = 32;
+    Rect.h = 32;
+
+    Rect.x = 0;
+    Rect.y = 96;
+    FSprites[stCoins] = Rect;
+
     FSurface = NULL;
     const std::string path = "res/ScoreSprites.bmp";
     FSurface = SDL_LoadBMP(path.c_str());

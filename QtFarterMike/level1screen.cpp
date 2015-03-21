@@ -103,13 +103,10 @@ void Level1Screen::Update(Game& AGame)
             char ch = Map[col][row];
             switch (ch) {
             case 'H':
-                printf("Scores\n");
-                printf("Coins: %d\n", Scores.Coins);
-                printf("Killed: %d\n", Scores.Killed);
                 AGame.SetScreen(AGame.stScoreScreen);
                 break;
             case '$':
-                Scores.Coins += 1;
+                AGame.Scores.Coins += 1;
                 Map[col][row] = ' ';
                 break;
             default:

@@ -19,8 +19,8 @@ void LevelScreen::Init(Game& AGame)
     Player.Rect.w = TILE_SIZE;
     Player.Rect.h = TILE_SIZE * 2;
 
-    Scores.Coins = 0;
-    Scores.Killed = 0;
+    AGame.Scores.Coins = 0;
+    AGame.Scores.Killed = 0;
 }
 
 void LevelScreen::Clean()

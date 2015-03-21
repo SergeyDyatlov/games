@@ -34,8 +34,6 @@ public:
 
     std::vector<Enemy> Enemies;
     Hero Player;
-
-    TScores Scores;
 };
 
 #endif // LEVELSCREEN_H

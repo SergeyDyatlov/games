@@ -26,6 +26,11 @@ void ScoreScreen::Init(Game& AGame)
         FButtons[I].Clicked = false;
     }
 
+    printf("\n Scores{\n");
+    printf("\t Coins: %d\n", AGame.Scores.Coins);
+    printf("\t Killed: %d\n", AGame.Scores.Killed);
+    printf(" }\n\n");
+
     printf("ScoreScreen Init Successful\n");
 }
 
@@ -107,6 +112,13 @@ void ScoreScreen::Update(Game& AGame)
 
 void ScoreScreen::Draw(Game& AGame)
 {
+    SDL_Rect Rect;
+    Rect.x = AGame.GetSurface()->w / 6;
+    Rect.y = AGame.GetSurface()->h / 4;
+    Rect.w = 64;
+    Rect.h = 64;
+    FSpriteSheet.Draw(AGame.GetSurface(), stCoins, &Rect);
+
     FButtons[0].Draw(AGame.GetSurface());
     FSpriteSheet.Draw(AGame.GetSurface(), stMenu, &FButtons[0].Rect);
 

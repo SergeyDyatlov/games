@@ -5,7 +5,7 @@
 #include <string>
 #include <map>
 
-enum ScoreSpriteType {stMenu, stRestart, stNext};
+enum ScoreSpriteType {stMenu, stRestart, stNext, stCoins};
 
 class ScoreSpriteSheet
 {

@@ -6,6 +6,7 @@
 #include "scorespritesheet.h"
 #include <vector>
 #include <string>
+#include <fstream>
 
 class ScoreScreen : public Screen
 {
