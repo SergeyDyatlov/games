@@ -54,9 +54,9 @@ void MenuScreen::HandleEvents(Game& AGame)
             for (unsigned I = 0; I < FOptions.size(); I++)
             {
                 FButtons[I].Clicked = false;
-                if ((mx > FButtons[I].Box.x) && (mx < FButtons[I].Box.x + FButtons[I].Box.w))
+                if ((mx > FButtons[I].Rect.x) && (mx < FButtons[I].Rect.x + FButtons[I].Rect.w))
                 {
-                    if ((my > FButtons[I].Box.y) && (my < FButtons[I].Box.y + FButtons[I].Box.h))
+                    if ((my > FButtons[I].Rect.y) && (my < FButtons[I].Rect.y + FButtons[I].Rect.h))
                     {
                         FButtons[I].Clicked = true;
                     }
@@ -69,9 +69,9 @@ void MenuScreen::HandleEvents(Game& AGame)
             my = event.button.y;
             for (unsigned I = 0; I < FOptions.size(); I++)
             {
-                if ((mx > FButtons[I].Box.x) && (mx < FButtons[I].Box.x + FButtons[I].Box.w))
+                if ((mx > FButtons[I].Rect.x) && (mx < FButtons[I].Rect.x + FButtons[I].Rect.w))
                 {
-                    if ((my > FButtons[I].Box.y) && (my < FButtons[I].Box.y + FButtons[I].Box.h))
+                    if ((my > FButtons[I].Rect.y) && (my < FButtons[I].Rect.y + FButtons[I].Rect.h))
                     {
                         if ((I == 0) && (FButtons[0].Clicked))
                         {
@@ -102,7 +102,7 @@ void MenuScreen::Update(Game& AGame)
 void MenuScreen::Draw(Game& AGame)
 {
     FButtons[0].Draw(AGame.GetSurface());
-    FSpriteSheet.Draw(AGame.GetSurface(), stStart, &FButtons[0].Box);
+    FSpriteSheet.Draw(AGame.GetSurface(), stStart, &FButtons[0].Rect);
     FButtons[1].Draw(AGame.GetSurface());
-    FSpriteSheet.Draw(AGame.GetSurface(), stExit, &FButtons[1].Box);
+    FSpriteSheet.Draw(AGame.GetSurface(), stExit, &FButtons[1].Rect);
 }

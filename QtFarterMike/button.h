@@ -8,7 +8,7 @@ class Button
 public:
     Button(int X = 0, int Y = 0, int Width = 0, int Height = 0);
     void Draw(SDL_Surface* ASurface);
-    SDL_Rect Box;
+    SDL_Rect Rect;
     bool Clicked;
 };
 

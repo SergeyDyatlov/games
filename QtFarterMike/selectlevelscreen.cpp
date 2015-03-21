@@ -29,6 +29,15 @@ void SelectLevelScreen::Init(Game& AGame)
         FButtons[I].Clicked = false;
     }
 
+    FSurface = NULL;
+    const std::string path = "res/SelectLevelSprites.bmp";
+    FSurface = SDL_LoadBMP(path.c_str());
+    if (FSurface == NULL)
+    {
+        printf("Unable to load bitmap: SelectLevelSprites.bmp");
+    }
+    SDL_SetColorKey(FSurface, SDL_RLEACCEL, SDL_MapRGB(FSurface->format, 255, 255, 255));
+
     printf("SelectLevelScreen Init Successful\n");
 }
 
@@ -58,9 +67,9 @@ void SelectLevelScreen::HandleEvents(Game& AGame)
             for (unsigned I = 0; I < FOptions.size(); I++)
             {
                 FButtons[I].Clicked = false;
-                if ((mx > FButtons[I].Box.x) && (mx < FButtons[I].Box.x + FButtons[I].Box.w))
+                if ((mx > FButtons[I].Rect.x) && (mx < FButtons[I].Rect.x + FButtons[I].Rect.w))
                 {
-                    if ((my > FButtons[I].Box.y) && (my < FButtons[I].Box.y + FButtons[I].Box.h))
+                    if ((my > FButtons[I].Rect.y) && (my < FButtons[I].Rect.y + FButtons[I].Rect.h))
                     {
                         FButtons[I].Clicked = true;
                     }
@@ -73,9 +82,9 @@ void SelectLevelScreen::HandleEvents(Game& AGame)
             my = event.button.y;
             for (unsigned I = 0; I < FOptions.size(); I++)
             {
-                if ((mx > FButtons[I].Box.x) && (mx < FButtons[I].Box.x + FButtons[I].Box.w))
+                if ((mx > FButtons[I].Rect.x) && (mx < FButtons[I].Rect.x + FButtons[I].Rect.w))
                 {
-                    if ((my > FButtons[I].Box.y) && (my < FButtons[I].Box.y + FButtons[I].Box.h))
+                    if ((my > FButtons[I].Rect.y) && (my < FButtons[I].Rect.y + FButtons[I].Rect.h))
                     {
                         if ((I == 0) && (FButtons[0].Clicked))
                         {
@@ -124,5 +133,12 @@ void SelectLevelScreen::Draw(Game& AGame)
     for (unsigned I = 0; I < FOptions.size(); I++)
     {
         FButtons[I].Draw(AGame.GetSurface());
+
+        SDL_Rect Pick;
+        Pick.x = 0;
+        Pick.y = I * 32;
+        Pick.w = 32;
+        Pick.h = 32;
+        SDL_BlitScaled(FSurface, &Pick, AGame.GetSurface(), &FButtons[I].Rect);
     }
 }
