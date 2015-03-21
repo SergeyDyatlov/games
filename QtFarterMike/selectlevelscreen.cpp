@@ -12,12 +12,12 @@ SelectLevelScreen::~SelectLevelScreen()
 void SelectLevelScreen::Init(Game& AGame)
 {
     FOptions.clear();
-    FOptions.push_back("1");
-    FOptions.push_back("2");
-    FOptions.push_back("3");
-    FOptions.push_back("4");
-    FOptions.push_back("5");
-    FOptions.push_back("6");
+    FOptions.push_back(1);
+    FOptions.push_back(0);
+    FOptions.push_back(0);
+    FOptions.push_back(0);
+    FOptions.push_back(0);
+    FOptions.push_back(0);
 
     for (unsigned I = 0; I < FOptions.size(); I++)
     {
@@ -86,29 +86,29 @@ void SelectLevelScreen::HandleEvents(Game& AGame)
                 {
                     if ((my > FButtons[I].Rect.y) && (my < FButtons[I].Rect.y + FButtons[I].Rect.h))
                     {
-                        if ((I == 0) && (FButtons[0].Clicked))
+                        if ((I == 0) && (FButtons[I].Clicked) && FOptions[I] > 0)
                         {
                             FButtons[0].Clicked = false;
                             AGame.SetScreen(AGame.stLevel1);
                         }
-                        if ((I == 1) && (FButtons[1].Clicked))
+                        if ((I == 1) && (FButtons[I].Clicked) && FOptions[I] > 0)
                         {
                             FButtons[1].Clicked = false;
                             AGame.SetScreen(AGame.stLevel2);
                         }
-                        if ((I == 2) && (FButtons[2].Clicked))
+                        if ((I == 2) && (FButtons[I].Clicked) && FOptions[I] > 0)
                         {
                             FButtons[2].Clicked = false;
                         }
-                        if ((I == 3) && (FButtons[3].Clicked))
+                        if ((I == 3) && (FButtons[I].Clicked) && FOptions[I] > 0)
                         {
                             FButtons[3].Clicked = false;
                         }
-                        if ((I == 4) && (FButtons[4].Clicked))
+                        if ((I == 4) && (FButtons[I].Clicked) && FOptions[I] > 0)
                         {
                             FButtons[4].Clicked = false;
                         }
-                        if ((I == 5) && (FButtons[5].Clicked))
+                        if ((I == 5) && (FButtons[I].Clicked) && FOptions[I] > 0)
                         {
                             FButtons[5].Clicked = false;
                         }
@@ -136,7 +136,12 @@ void SelectLevelScreen::Draw(Game& AGame)
 
         SDL_Rect Pick;
         Pick.x = 0;
-        Pick.y = I * 32;
+        Pick.y = 0;
+
+        if (FOptions[I] > 0) {
+            Pick.y = (I + 1) * 32;
+        }
+
         Pick.w = 32;
         Pick.h = 32;
         SDL_BlitScaled(FSurface, &Pick, AGame.GetSurface(), &FButtons[I].Rect);
