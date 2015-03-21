@@ -4,6 +4,7 @@
 #include "screen.h"
 #include "menuscreen.h"
 #include "selectlevelscreen.h"
+#include "scorescreen.h"
 #include "level1screen.h"
 #include "level2screen.h"
 #include <SDL2/SDL.h>
@@ -21,18 +22,21 @@ private:
 
     MenuScreen FMenuScreen;
     SelectLevelScreen FSelectLevelScreen;
+    ScoreScreen FScoreScreen;
 
     Level1Screen FLevel1Screen;
     Level2Screen FLevel2Screen;
 
 public:
     Game();
-    enum ScreenType {stMenu, stSelectLevelScreen, stLevel1, stLevel2};
+    enum ScreenType {stMenu, stSelectLevelScreen, stScoreScreen, stLevel1, stLevel2};
     ScreenType FCurrentScreen;
 
     void Init(const char* Caption, int Width, int Height);
 
     void SetScreen(ScreenType screen);
+    void PreviousScreen();
+    void NextScreen();
 
     void HandleEvents();
     void Update();

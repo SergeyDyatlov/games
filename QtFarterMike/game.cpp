@@ -19,6 +19,8 @@ void Game::Init(const char* Caption, int Width, int Height)
 
     FScreens.push_back(&FMenuScreen);
     FScreens.push_back(&FSelectLevelScreen);
+    FScreens.push_back(&FScoreScreen);
+
     FScreens.push_back(&FLevel1Screen);
     FScreens.push_back(&FLevel2Screen);
     SetScreen(stMenu);
@@ -32,6 +34,16 @@ void Game::SetScreen(ScreenType AScreenType)
 {
     FCurrentScreen = AScreenType;
     FScreens.at(FCurrentScreen) -> Init(*this);
+}
+
+void Game::PreviousScreen()
+{
+
+}
+
+void Game::NextScreen()
+{
+
 }
 
 void Game::HandleEvents()

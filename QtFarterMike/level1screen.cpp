@@ -96,7 +96,7 @@ void Level1Screen::Update(Game& AGame)
             char ch = Map[col][row];
             switch (ch) {
             case 'H':
-                AGame.SetScreen(AGame.stSelectLevelScreen);
+                AGame.SetScreen(AGame.stScoreScreen);
                 break;
             default:
                 break;
