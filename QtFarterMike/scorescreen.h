@@ -7,11 +7,6 @@
 #include <vector>
 #include <string>
 
-struct Scores {
-    int Coins;
-    int Killed;
-};
-
 class ScoreScreen : public Screen
 {
 private:

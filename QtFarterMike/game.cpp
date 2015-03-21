@@ -2,6 +2,7 @@
 
 Game::Game()
 {
+    CurrentLevel = 0;
 }
 
 void Game::Init(const char* Caption, int Width, int Height)
@@ -36,14 +37,20 @@ void Game::SetScreen(ScreenType AScreenType)
     FScreens.at(FCurrentScreen) -> Init(*this);
 }
 
-void Game::PreviousScreen()
+void Game::SetLevel(int LevelNum)
 {
 
 }
 
-void Game::NextScreen()
+void Game::RestartLevel()
 {
+    SetLevel(CurrentLevel);
+}
 
+void Game::NextLevel()
+{
+    CurrentLevel += 1;
+    SetLevel(CurrentLevel);
 }
 
 void Game::HandleEvents()

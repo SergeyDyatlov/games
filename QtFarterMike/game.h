@@ -31,12 +31,15 @@ public:
     Game();
     enum ScreenType {stMenu, stSelectLevelScreen, stScoreScreen, stLevel1, stLevel2};
     ScreenType FCurrentScreen;
+    int CurrentLevel;
 
     void Init(const char* Caption, int Width, int Height);
 
     void SetScreen(ScreenType screen);
-    void PreviousScreen();
-    void NextScreen();
+
+    void SetLevel(int LevelNum);
+    void RestartLevel();
+    void NextLevel();
 
     void HandleEvents();
     void Update();

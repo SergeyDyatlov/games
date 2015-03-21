@@ -82,12 +82,12 @@ void ScoreScreen::HandleEvents(Game& AGame)
                         if ((I == 1) && (FButtons[I].Clicked))
                         {
                             FButtons[I].Clicked = false;
-                            AGame.PreviousScreen();
+                            AGame.RestartLevel();
                         }
                         if ((I == 2) && (FButtons[I].Clicked))
                         {
                             FButtons[I].Clicked = false;
-                            AGame.NextScreen();
+                            AGame.NextLevel();
                         }
                     }
                 }

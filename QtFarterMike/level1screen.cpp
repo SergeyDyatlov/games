@@ -78,8 +78,13 @@ void Level1Screen::HandleEvents(Game& AGame)
             case SDLK_RIGHT:
                 Player.Rect.x += 10;
                 break;
+            case SDLK_UP:
+                Player.Rect.y -= 10;
+                break;
+            case SDLK_DOWN:
+                Player.Rect.y += 10;
+                break;
             }
-
         default:
             break;
         }
@@ -91,12 +96,19 @@ void Level1Screen::Update(Game& AGame)
     LevelScreen::Update(AGame);
 
     SDL_Rect Rect = Player.Rect;
-    for (int row = Rect.x / TILE_SIZE; row < (Rect.x + Rect.w) / TILE_SIZE; ++row) {
-        for (int col = Rect.y / TILE_SIZE; col < (Rect.y + Rect.h) / TILE_SIZE; ++col) {
+    for (int row = Rect.x / TILE_SIZE; row <= (Rect.x + Rect.w) / TILE_SIZE; ++row) {
+        for (int col = Rect.y / TILE_SIZE; col <= (Rect.y + Rect.h) / TILE_SIZE; ++col) {
             char ch = Map[col][row];
             switch (ch) {
             case 'H':
+                printf("Scores\n");
+                printf("Coins: %d\n", Scores.Coins);
+                printf("Killed: %d\n", Scores.Killed);
                 AGame.SetScreen(AGame.stScoreScreen);
+                break;
+            case '$':
+                Scores.Coins += 1;
+                Map[col][row] = ' ';
                 break;
             default:
                 break;

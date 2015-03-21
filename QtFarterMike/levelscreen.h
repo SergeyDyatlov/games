@@ -7,6 +7,11 @@
 #include <string>
 #include <vector>
 
+struct TScores {
+    int Coins;
+    int Killed;
+};
+
 const int TILE_SIZE = 24;
 
 class LevelScreen : public Screen
@@ -29,6 +34,8 @@ public:
 
     std::vector<Enemy> Enemies;
     Hero Player;
+
+    TScores Scores;
 };
 
 #endif // LEVELSCREEN_H
