@@ -39,7 +39,8 @@ void Game::SetScreen(ScreenType AScreenType)
 
 void Game::SetLevel(int LevelNum)
 {
-
+    ScreenType Screen = static_cast<Game::ScreenType>(stLevel1 + (LevelNum));
+    SetScreen(Screen);
 }
 
 void Game::RestartLevel()

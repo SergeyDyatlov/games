@@ -3,11 +3,7 @@
 
 LevelScreen::LevelScreen()
 {
-    OffsetX = 0;
-    Player.Rect.x = 100;
-    Player.Rect.y = 8 * TILE_SIZE;
-    Player.Rect.w = TILE_SIZE;
-    Player.Rect.h = TILE_SIZE * 2;
+
 }
 
 LevelScreen::~LevelScreen()
@@ -16,7 +12,15 @@ LevelScreen::~LevelScreen()
 
 void LevelScreen::Init(Game& AGame)
 {
+    OffsetX = 0;
 
+    Player.Rect.x = 100;
+    Player.Rect.y = 8 * TILE_SIZE;
+    Player.Rect.w = TILE_SIZE;
+    Player.Rect.h = TILE_SIZE * 2;
+
+    Scores.Coins = 0;
+    Scores.Killed = 0;
 }
 
 void LevelScreen::Clean()

@@ -11,6 +11,8 @@ Level2Screen::~Level2Screen()
 
 void Level2Screen::Init(Game& AGame)
 {
+    LevelScreen::Init(AGame);
+
     FBgRect.x = 0;
     FBgRect.y = 0;
     FBgRect.w = AGame.GetSurface()->w;
@@ -33,11 +35,13 @@ void Level2Screen::Init(Game& AGame)
 
     MapWidth = Map[0].length();
     MapHeight = 14;
+
+    printf("Level2Screen Init Successful\n");
 }
 
 void Level2Screen::Clean()
 {
-
+    printf("Level2Screen Clean Successful\n");
 }
 
 void Level2Screen::HandleEvents(Game& AGame)

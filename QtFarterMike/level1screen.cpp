@@ -11,6 +11,8 @@ Level1Screen::~Level1Screen()
 
 void Level1Screen::Init(Game& AGame)
 {
+    LevelScreen::Init(AGame);
+
     FBgRect.x = 0;
     FBgRect.y = 0;
     FBgRect.w = AGame.GetSurface()->w;
