@@ -19,7 +19,8 @@ SOURCES += main.cpp \
     level2screen.cpp \
     menuspritesheet.cpp \
     scorescreen.cpp \
-    scorespritesheet.cpp
+    scorespritesheet.cpp \
+    font.cpp
 
 include(deployment.pri)
 qtcAddDeployment()
@@ -38,5 +39,6 @@ HEADERS += \
     level2screen.h \
     menuspritesheet.h \
     scorescreen.h \
-    scorespritesheet.h
+    scorespritesheet.h \
+    font.h
 

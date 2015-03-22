@@ -119,6 +119,10 @@ void ScoreScreen::Draw(Game& AGame)
     Rect.h = 64;
     FSpriteSheet.Draw(AGame.GetSurface(), stCoins, &Rect);
 
+    AGame.Font.Height = 32;
+    int x = Rect.x + Rect.w * 2;
+    AGame.Font.DrawText(AGame.GetSurface(), x, 100, "BAD");
+
     FButtons[0].Draw(AGame.GetSurface());
     FSpriteSheet.Draw(AGame.GetSurface(), stMenu, &FButtons[0].Rect);
 

@@ -26,6 +26,8 @@ void Game::Init(const char* Caption, int Width, int Height)
     FScreens.push_back(&FLevel2Screen);
     SetScreen(stMenu);
 
+    Font.LoadFromFile("res/font.bmp");
+
     FRunning = true;
 
     printf("Game Init Successful\n");

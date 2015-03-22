@@ -7,6 +7,7 @@
 #include "scorescreen.h"
 #include "level1screen.h"
 #include "level2screen.h"
+#include "font.h"
 #include <SDL2/SDL.h>
 #include <vector>
 #include <string>
@@ -33,6 +34,8 @@ public:
     ScreenType FCurrentScreen;
     int CurrentLevel;
     TScores Scores;
+
+    TFont Font;
 
     void Init(const char* Caption, int Width, int Height);
 
