@@ -18,52 +18,59 @@ void Game::Init(const char* Caption, int Width, int Height)
     FRenderer = SDL_CreateRenderer(FWindow, -1, SDL_RENDERER_SOFTWARE);
     FSurface = SDL_CreateRGBSurface(0, Width, Height, 32, 0, 0, 0, 0);
 
-    FScreens.push_back(&FMenuScreen);
-    FScreens.push_back(&FSelectLevelScreen);
-    FScreens.push_back(&FScoreScreen);
-
-    FScreens.push_back(&FLevel1Screen);
-    FScreens.push_back(&FLevel2Screen);
-    SetScreen(stMenu);
-
     Font.LoadFromFile("res/font.bmp");
 
     FRunning = true;
 
+    SetMenuScreen();
+
     printf("Game Init Successful\n");
 }
 
-void Game::SetScreen(ScreenType AScreenType)
+void Game::SetMenuScreen()
 {
-    FCurrentScreen = AScreenType;
-    FScreens.at(FCurrentScreen) -> Init(*this);
+    CurrentScreen = &FMenuScreen;
+    CurrentScreen->Init(*this);
 }
 
-void Game::SetLevel(int LevelNum)
+void Game::SetScoreScreen()
 {
-    ScreenType Screen = static_cast<Game::ScreenType>(stLevel1 + (LevelNum));
-    SetScreen(Screen);
+    CurrentScreen = &FScoreScreen;
+    CurrentScreen->Init(*this);
 }
 
-void Game::RestartLevel()
+void Game::SetLevelSelectionScreen()
 {
-    SetLevel(CurrentLevel);
+    CurrentScreen = &FLevelSelectionScreen;
+    CurrentScreen->Init(*this);
 }
 
-void Game::NextLevel()
+void Game::SetLevelScreen(int Level)
 {
-    CurrentLevel += 1;
-    SetLevel(CurrentLevel);
+    switch (Level) {
+    case 1:
+        CurrentLevel = Level;
+        CurrentScreen = &FLevel1Screen;
+        CurrentScreen->Init(*this);
+        break;
+    case 2:
+        CurrentLevel = Level;
+        CurrentScreen = &FLevel2Screen;
+        CurrentScreen->Init(*this);
+        break;
+    default:
+        break;
+    }
 }
 
 void Game::HandleEvents()
 {
-    FScreens.at(FCurrentScreen) -> HandleEvents(*this);
+    CurrentScreen->HandleEvents(*this);
 }
 
 void Game::Update()
 {
-    FScreens.at(FCurrentScreen) -> Update(*this);
+    CurrentScreen->Update(*this);
 }
 
 void Game::Draw()
@@ -71,7 +78,7 @@ void Game::Draw()
     SDL_RenderClear(FRenderer);
     SDL_FillRect(FSurface, NULL, SDL_MapRGB(FSurface -> format, 255, 255, 255));
 
-    FScreens.at(FCurrentScreen) -> Draw(*this);
+    CurrentScreen->Draw(*this);
 
     SDL_Texture* Texture = SDL_CreateTextureFromSurface(FRenderer, FSurface);
     SDL_RenderCopy(FRenderer, Texture, NULL, NULL);
@@ -87,11 +94,6 @@ void Game::Quit()
 
 void Game::Clean()
 {
-    while (!FScreens.empty())
-    {
-        FScreens.back() -> Clean();
-        FScreens.pop_back();
-    }
     SDL_FreeSurface(FSurface);
     SDL_DestroyRenderer(FRenderer);
     SDL_DestroyWindow(FWindow);

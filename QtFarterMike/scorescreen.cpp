@@ -82,17 +82,17 @@ void ScoreScreen::HandleEvents(Game& AGame)
                         if ((I == 0) && (FButtons[I].Clicked))
                         {
                             FButtons[I].Clicked = false;
-                            AGame.SetScreen(AGame.stMenu);
+                            AGame.SetMenuScreen();
                         }
                         if ((I == 1) && (FButtons[I].Clicked))
                         {
                             FButtons[I].Clicked = false;
-                            AGame.RestartLevel();
+                            AGame.SetLevelScreen(AGame.CurrentLevel);
                         }
                         if ((I == 2) && (FButtons[I].Clicked))
                         {
                             FButtons[I].Clicked = false;
-                            AGame.NextLevel();
+                            AGame.SetLevelScreen(AGame.CurrentLevel + 1);
                         }
                     }
                 }

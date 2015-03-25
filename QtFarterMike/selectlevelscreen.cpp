@@ -89,12 +89,12 @@ void SelectLevelScreen::HandleEvents(Game& AGame)
                         if ((I == 0) && (FButtons[I].Clicked) && FOptions[I] > 0)
                         {
                             FButtons[0].Clicked = false;
-                            AGame.SetScreen(AGame.stLevel1);
+                            AGame.SetLevelScreen(1);
                         }
                         if ((I == 1) && (FButtons[I].Clicked) && FOptions[I] > 0)
                         {
                             FButtons[1].Clicked = false;
-                            AGame.SetScreen(AGame.stLevel2);
+                            AGame.SetLevelScreen(2);
                         }
                         if ((I == 2) && (FButtons[I].Clicked) && FOptions[I] > 0)
                         {

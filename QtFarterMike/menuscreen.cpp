@@ -76,7 +76,7 @@ void MenuScreen::HandleEvents(Game& AGame)
                         if ((I == 0) && (FButtons[0].Clicked))
                         {
                             FButtons[0].Clicked = false;
-                            AGame.SetScreen(AGame.stSelectLevelScreen);
+                            AGame.SetLevelScreen(1);
                         }
                         if ((I == 1) && (FButtons[1].Clicked))
                         {

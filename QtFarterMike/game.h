@@ -19,10 +19,9 @@ private:
     SDL_Window* FWindow;
     SDL_Renderer* FRenderer;
     SDL_Surface* FSurface;
-    std::vector<Screen*> FScreens;
 
     MenuScreen FMenuScreen;
-    SelectLevelScreen FSelectLevelScreen;
+    SelectLevelScreen FLevelSelectionScreen;
     ScoreScreen FScoreScreen;
 
     Level1Screen FLevel1Screen;
@@ -30,8 +29,8 @@ private:
 
 public:
     Game();
-    enum ScreenType {stMenu, stSelectLevelScreen, stScoreScreen, stLevel1, stLevel2};
-    ScreenType FCurrentScreen;
+
+    Screen* CurrentScreen;
     int CurrentLevel;
     TScores Scores;
 
@@ -39,11 +38,10 @@ public:
 
     void Init(const char* Caption, int Width, int Height);
 
-    void SetScreen(ScreenType screen);
-
-    void SetLevel(int LevelNum);
-    void RestartLevel();
-    void NextLevel();
+    void SetMenuScreen();
+    void SetLevelSelectionScreen();
+    void SetScoreScreen();
+    void SetLevelScreen(int Level);
 
     void HandleEvents();
     void Update();

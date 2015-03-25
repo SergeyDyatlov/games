@@ -103,7 +103,7 @@ void Level1Screen::Update(Game& AGame)
             char ch = Map[col][row];
             switch (ch) {
             case 'H':
-                AGame.SetScreen(AGame.stScoreScreen);
+                AGame.SetScoreScreen();
                 break;
             case '$':
                 AGame.Scores.Coins += 1;
