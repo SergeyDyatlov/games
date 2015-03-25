@@ -49,6 +49,7 @@ void TFont::LoadFromFile(const std::string &path)
     {
         printf("Unable to load bitmap %s! Error: %s\n", path.c_str(), SDL_GetError());
     };
+    SDL_SetColorKey(FBitmap, SDL_RLEACCEL, SDL_MapRGB(FBitmap->format, 255, 255, 255));
 }
 
 void TFont::DrawChar(SDL_Surface* Surface, int X, int Y, int asciicode)
