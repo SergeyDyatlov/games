@@ -40,5 +40,6 @@ HEADERS += \
     menuspritesheet.h \
     scorescreen.h \
     scorespritesheet.h \
-    font.h
+    font.h \
+    sprite.h
 

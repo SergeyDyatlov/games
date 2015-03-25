@@ -81,21 +81,19 @@ void ScoreScreen::HandleEvents(Game& AGame)
                     {
                         if ((I == 0) && (FButtons[I].Clicked))
                         {
-                            FButtons[I].Clicked = false;
                             AGame.SetMenuScreen();
                         }
                         if ((I == 1) && (FButtons[I].Clicked))
                         {
-                            FButtons[I].Clicked = false;
                             AGame.SetLevelScreen(AGame.CurrentLevel);
                         }
                         if ((I == 2) && (FButtons[I].Clicked))
                         {
-                            FButtons[I].Clicked = false;
                             AGame.SetLevelScreen(AGame.CurrentLevel + 1);
                         }
                     }
                 }
+                FButtons[I].Clicked = false;
             }
             break;
 
@@ -117,7 +115,7 @@ void ScoreScreen::Draw(Game& AGame)
     Rect.y = AGame.GetSurface()->h / 4;
     Rect.w = 64;
     Rect.h = 64;
-    FSpriteSheet.Draw(AGame.GetSurface(), stCoins, &Rect);
+    FSpriteSheet.Draw(AGame.GetSurface(), stCoins, 0, &Rect);
 
     AGame.Font.Height = 32;
     int x = Rect.x + Rect.w * 2;
@@ -126,12 +124,28 @@ void ScoreScreen::Draw(Game& AGame)
     AGame.Font.DrawText(AGame.GetSurface(), x, 100, ss.str());
 
 
+    int Frame;
     FButtons[0].Draw(AGame.GetSurface());
-    FSpriteSheet.Draw(AGame.GetSurface(), stMenu, &FButtons[0].Rect);
+    Frame = 0;
+    if (FButtons[0].Clicked)
+    {
+        Frame = 1;
+    }
+    FSpriteSheet.Draw(AGame.GetSurface(), stMenu, Frame, &FButtons[0].Rect);
 
     FButtons[1].Draw(AGame.GetSurface());
-    FSpriteSheet.Draw(AGame.GetSurface(), stRestart, &FButtons[1].Rect);
+    Frame = 0;
+    if (FButtons[1].Clicked)
+    {
+        Frame = 1;
+    }
+    FSpriteSheet.Draw(AGame.GetSurface(), stRestart, Frame, &FButtons[1].Rect);
 
     FButtons[2].Draw(AGame.GetSurface());
-    FSpriteSheet.Draw(AGame.GetSurface(), stNext, &FButtons[2].Rect);
+    Frame = 0;
+    if (FButtons[2].Clicked)
+    {
+        Frame = 1;
+    }
+    FSpriteSheet.Draw(AGame.GetSurface(), stNext, Frame, &FButtons[2].Rect);
 }

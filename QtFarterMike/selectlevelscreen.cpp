@@ -88,32 +88,31 @@ void SelectLevelScreen::HandleEvents(Game& AGame)
                     {
                         if ((I == 0) && (FButtons[I].Clicked) && FOptions[I] > 0)
                         {
-                            FButtons[0].Clicked = false;
                             AGame.SetLevelScreen(1);
                         }
                         if ((I == 1) && (FButtons[I].Clicked) && FOptions[I] > 0)
                         {
-                            FButtons[1].Clicked = false;
                             AGame.SetLevelScreen(2);
                         }
                         if ((I == 2) && (FButtons[I].Clicked) && FOptions[I] > 0)
                         {
-                            FButtons[2].Clicked = false;
+
                         }
                         if ((I == 3) && (FButtons[I].Clicked) && FOptions[I] > 0)
                         {
-                            FButtons[3].Clicked = false;
+
                         }
                         if ((I == 4) && (FButtons[I].Clicked) && FOptions[I] > 0)
                         {
-                            FButtons[4].Clicked = false;
+
                         }
                         if ((I == 5) && (FButtons[I].Clicked) && FOptions[I] > 0)
                         {
-                            FButtons[5].Clicked = false;
+
                         }
                     }
                 }
+                FButtons[I].Clicked = false;
             }
             break;
 
@@ -140,6 +139,11 @@ void SelectLevelScreen::Draw(Game& AGame)
 
         if (FOptions[I] > 0) {
             Pick.y = (I + 1) * 32;
+        }
+
+        if (FButtons[I].Clicked)
+        {
+            Pick.x = 32;
         }
 
         Pick.w = 32;

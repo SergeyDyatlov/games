@@ -2,17 +2,19 @@
 
 MenuSpriteSheet::MenuSpriteSheet()
 {
-    SDL_Rect Rect;
-    Rect.w = 64 - 1;
-    Rect.h = 32 - 1;
+    Sprite ASprite;
+    ASprite.Rect.w = 64 - 1;
+    ASprite.Rect.h = 32 - 1;
 
-    Rect.x = 0;
-    Rect.y = 0;
-    FSprites[stStart] = Rect;
+    ASprite.Frames = 1;
+    ASprite.Rect.x = 0;
+    ASprite.Rect.y = 0;
+    FSprites[stStart] = ASprite;
 
-    Rect.x = 0;
-    Rect.y = 32;
-    FSprites[stExit] = Rect;
+    ASprite.Frames = 1;
+    ASprite.Rect.x = 0;
+    ASprite.Rect.y = 32;
+    FSprites[stExit] = ASprite;
 
     FSurface = NULL;
     const std::string path = "res/MenuSprites.bmp";
@@ -24,9 +26,10 @@ MenuSpriteSheet::MenuSpriteSheet()
     SDL_SetColorKey(FSurface, SDL_RLEACCEL, SDL_MapRGB(FSurface->format, 255, 255, 255));
 }
 
-void MenuSpriteSheet::Draw(SDL_Surface* Surface, MenuSpriteType Type, SDL_Rect* Rect)
+void MenuSpriteSheet::Draw(SDL_Surface* Surface, MenuSpriteType Type, int Frame, SDL_Rect* Rect)
 {
-    SDL_Rect Pick = FSprites.at(Type);
+    Sprite Pick = FSprites.at(Type);
+    Pick.Rect.x += Frame * 64;
 
-    SDL_BlitScaled(FSurface, &Pick, Surface, Rect);
+    SDL_BlitScaled(FSurface, &Pick.Rect, Surface, Rect);
 }

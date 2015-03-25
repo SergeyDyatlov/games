@@ -73,18 +73,17 @@ void MenuScreen::HandleEvents(Game& AGame)
                 {
                     if ((my > FButtons[I].Rect.y) && (my < FButtons[I].Rect.y + FButtons[I].Rect.h))
                     {
-                        if ((I == 0) && (FButtons[0].Clicked))
+                        if ((I == 0) && (FButtons[I].Clicked))
                         {
-                            FButtons[0].Clicked = false;
-                            AGame.SetLevelScreen(1);
+                            AGame.SetLevelSelectionScreen();
                         }
-                        if ((I == 1) && (FButtons[1].Clicked))
+                        if ((I == 1) && (FButtons[I].Clicked))
                         {
-                            FButtons[1].Clicked = false;
                             AGame.Quit();
                         }
                     }
                 }
+                FButtons[I].Clicked = false;
             }
             break;
 
@@ -101,8 +100,21 @@ void MenuScreen::Update(Game& AGame)
 
 void MenuScreen::Draw(Game& AGame)
 {
+    int Frame;
+
     FButtons[0].Draw(AGame.GetSurface());
-    FSpriteSheet.Draw(AGame.GetSurface(), stStart, &FButtons[0].Rect);
+    Frame = 0;
+    if (FButtons[0].Clicked)
+    {
+        Frame = 1;
+    }
+    FSpriteSheet.Draw(AGame.GetSurface(), stStart, Frame, &FButtons[0].Rect);
+
     FButtons[1].Draw(AGame.GetSurface());
-    FSpriteSheet.Draw(AGame.GetSurface(), stExit, &FButtons[1].Rect);
+    Frame = 0;
+    if (FButtons[1].Clicked)
+    {
+        Frame = 1;
+    }
+    FSpriteSheet.Draw(AGame.GetSurface(), stExit, Frame, &FButtons[1].Rect);
 }

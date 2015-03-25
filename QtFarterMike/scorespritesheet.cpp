@@ -2,28 +2,31 @@
 
 ScoreSpriteSheet::ScoreSpriteSheet()
 {
-    SDL_Rect Rect;
-    Rect.w = 64;
-    Rect.h = 32;
+    Sprite ASprite;
+    ASprite.Rect.w = 64;
+    ASprite.Rect.h = 32;
 
-    Rect.x = 0;
-    Rect.y = 0;
-    FSprites[stMenu] = Rect;
+    ASprite.Frames = 1;
+    ASprite.Rect.x = 0;
+    ASprite.Rect.y = 0;
+    FSprites[stMenu] = ASprite;
 
-    Rect.x = 0;
-    Rect.y = 32;
-    FSprites[stRestart] = Rect;
+    ASprite.Frames = 1;
+    ASprite.Rect.x = 0;
+    ASprite.Rect.y = 32;
+    FSprites[stRestart] = ASprite;
 
-    Rect.x = 0;
-    Rect.y = 64;
-    FSprites[stNext] = Rect;
+    ASprite.Frames = 1;
+    ASprite.Rect.x = 0;
+    ASprite.Rect.y = 64;
+    FSprites[stNext] = ASprite;
 
-    Rect.w = 32;
-    Rect.h = 32;
+    ASprite.Rect.w = 32;
+    ASprite.Rect.h = 32;
 
-    Rect.x = 0;
-    Rect.y = 96;
-    FSprites[stCoins] = Rect;
+    ASprite.Rect.x = 0;
+    ASprite.Rect.y = 96;
+    FSprites[stCoins] = ASprite;
 
     FSurface = NULL;
     const std::string path = "res/ScoreSprites.bmp";
@@ -35,9 +38,13 @@ ScoreSpriteSheet::ScoreSpriteSheet()
     SDL_SetColorKey(FSurface, SDL_RLEACCEL, SDL_MapRGB(FSurface->format, 255, 255, 255));
 }
 
-void ScoreSpriteSheet::Draw(SDL_Surface* Surface, ScoreSpriteType Type, SDL_Rect* Rect)
+void ScoreSpriteSheet::Draw(SDL_Surface* Surface, ScoreSpriteType Type, int Frame, SDL_Rect* Rect)
 {
-    SDL_Rect Pick = FSprites.at(Type);
+    Sprite Pick = FSprites.at(Type);
+    if (Type != stCoins)
+    {
+        Pick.Rect.x += Frame * 64;
+    }
 
-    SDL_BlitScaled(FSurface, &Pick, Surface, Rect);
+    SDL_BlitScaled(FSurface, &Pick.Rect, Surface, Rect);
 }
