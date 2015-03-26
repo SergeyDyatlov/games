@@ -11,6 +11,15 @@ ScoreScreen::~ScoreScreen()
 
 void ScoreScreen::Init(Game& AGame)
 {
+    FBackgroundSurface = NULL;
+    const std::string path = "res/ScoreBackground.bmp";
+    FBackgroundSurface = SDL_LoadBMP(path.c_str());
+    if (FBackgroundSurface == NULL)
+    {
+        printf("Unable to load bitmap: ScoreBackground.bmp");
+    }
+    SDL_SetColorKey(FBackgroundSurface, SDL_RLEACCEL, SDL_MapRGB(FBackgroundSurface->format, 255, 255, 255));
+
     FOptions.clear();
     FOptions.push_back("Select Level");
     FOptions.push_back("Restart Level");
@@ -110,6 +119,8 @@ void ScoreScreen::Update(Game& AGame)
 
 void ScoreScreen::Draw(Game& AGame)
 {
+    SDL_BlitScaled(FBackgroundSurface, NULL, AGame.GetSurface(), NULL);
+
     SDL_Rect Rect;
     Rect.x = AGame.GetSurface()->w / 6;
     Rect.y = AGame.GetSurface()->h / 4;

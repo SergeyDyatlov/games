@@ -11,6 +11,15 @@ SelectLevelScreen::~SelectLevelScreen()
 
 void SelectLevelScreen::Init(Game& AGame)
 {
+    FBackgroundSurface = NULL;
+    const std::string path = "res/SelectLevelBackground.bmp";
+    FBackgroundSurface = SDL_LoadBMP(path.c_str());
+    if (FBackgroundSurface == NULL)
+    {
+        printf("Unable to load bitmap: SelectLevelBackground.bmp");
+    }
+    SDL_SetColorKey(FBackgroundSurface, SDL_RLEACCEL, SDL_MapRGB(FBackgroundSurface->format, 255, 255, 255));
+
     FOptions.clear();
     FOptions.push_back(1);
     FOptions.push_back(0);
@@ -30,8 +39,8 @@ void SelectLevelScreen::Init(Game& AGame)
     }
 
     FSurface = NULL;
-    const std::string path = "res/SelectLevelSprites.bmp";
-    FSurface = SDL_LoadBMP(path.c_str());
+    const std::string spritespath = "res/SelectLevelSprites.bmp";
+    FSurface = SDL_LoadBMP(spritespath.c_str());
     if (FSurface == NULL)
     {
         printf("Unable to load bitmap: SelectLevelSprites.bmp");
@@ -129,6 +138,8 @@ void SelectLevelScreen::Update(Game& AGame)
 
 void SelectLevelScreen::Draw(Game& AGame)
 {
+    SDL_BlitScaled(FBackgroundSurface, NULL, AGame.GetSurface(), NULL);
+
     for (unsigned I = 0; I < FOptions.size(); I++)
     {
         FButtons[I].Draw(AGame.GetSurface());

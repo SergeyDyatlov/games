@@ -11,6 +11,7 @@
 class MenuScreen : public Screen
 {
 private:
+    SDL_Surface* FBackgroundSurface;
     std::vector<std::string> FOptions;
     std::map<int, Button> FButtons;
     MenuSpriteSheet FSpriteSheet;

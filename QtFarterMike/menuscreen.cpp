@@ -11,6 +11,15 @@ MenuScreen::~MenuScreen()
 
 void MenuScreen::Init(Game& AGame)
 {
+    FBackgroundSurface = NULL;
+    const std::string path = "res/MenuBackground.bmp";
+    FBackgroundSurface = SDL_LoadBMP(path.c_str());
+    if (FBackgroundSurface == NULL)
+    {
+        printf("Unable to load bitmap: MenuBackground.bmp");
+    }
+    SDL_SetColorKey(FBackgroundSurface, SDL_RLEACCEL, SDL_MapRGB(FBackgroundSurface->format, 255, 255, 255));
+
     FOptions.clear();
     FOptions.push_back("New Game");
     FOptions.push_back("Exit");
@@ -100,6 +109,8 @@ void MenuScreen::Update(Game& AGame)
 
 void MenuScreen::Draw(Game& AGame)
 {
+    SDL_BlitScaled(FBackgroundSurface, NULL, AGame.GetSurface(), NULL);
+
     int Frame;
 
     FButtons[0].Draw(AGame.GetSurface());
