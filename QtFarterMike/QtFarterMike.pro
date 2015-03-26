@@ -3,6 +3,8 @@ CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
 
+QMAKE_CXXFLAGS += -std=c++1y
+
 INCLUDEPATH += /usr/include/SDL2
 LIBS += -L /usr/lib -lSDL2
 

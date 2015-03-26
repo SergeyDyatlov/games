@@ -130,9 +130,7 @@ void ScoreScreen::Draw(Game& AGame)
 
     AGame.Font.Height = 32;
     int x = Rect.x + Rect.w * 2;
-    std::stringstream ss;
-    ss << AGame.Scores.Coins;
-    AGame.Font.DrawText(AGame.GetSurface(), x, 100, ss.str());
+    AGame.Font.DrawText(AGame.GetSurface(), x, 100, std::to_string(AGame.Scores.Coins));
 
 
     int Frame;
