@@ -22,7 +22,9 @@ SOURCES += main.cpp \
     menuspritesheet.cpp \
     scorescreen.cpp \
     scorespritesheet.cpp \
-    font.cpp
+    font.cpp \
+    schedule.cpp \
+    conditionlist.cpp
 
 include(deployment.pri)
 qtcAddDeployment()
@@ -43,5 +45,7 @@ HEADERS += \
     scorescreen.h \
     scorespritesheet.h \
     font.h \
-    sprite.h
+    sprite.h \
+    schedule.h \
+    conditionlist.h
 

@@ -114,6 +114,11 @@ void Level1Screen::Update(Game& AGame)
             }
         }
     }
+
+    for (std::vector<Enemy>::iterator it = Enemies.begin(); it != Enemies.end(); ++it)
+    {
+        it->Update();
+    }
 }
 
 void Level1Screen::Draw(Game& AGame)
