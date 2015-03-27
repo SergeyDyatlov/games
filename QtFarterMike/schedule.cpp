@@ -70,3 +70,9 @@ bool Schedule::IsCompleted(ConditionList AConditionList)
 
     return FCompleted;
 }
+
+void Schedule::Reset()
+{
+    FTaskIndex = 0;
+    FCompleted = false;
+}

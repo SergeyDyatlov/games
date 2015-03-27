@@ -5,8 +5,15 @@
 
 class Hero
 {
+private:
+    int FHealth;
+    bool FDead;
+
 public:
     Hero();
+    void Hit();
+    bool IsDead();
+
     SDL_Rect Rect;
 };
 

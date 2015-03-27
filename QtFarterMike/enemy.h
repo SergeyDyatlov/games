@@ -18,6 +18,13 @@ const int CONDITION_ENEMY = 2;
 const int CONDITION_ATTACK = 3;
 const int CONDITION_OBSTACLE = 4;
 
+const int SCHEDULE_STAND = 0;
+const int SCHEDULE_WALK = 1;
+const int SCHEDULE_PURSUIT = 2;
+const int SCHEDULE_ATTACK = 3;
+
+class Hero;
+
 class Enemy
 {
 private:
@@ -38,9 +45,12 @@ private:
     bool FAlert;
     int FAlertInterval;
 
+    Hero* FTarget;
+
     void Think();
     void GetConditions();
     void SelectNewSchedule();
+    void SetSchedule(int ASchedule);
 
     bool InitStand();
     bool Stand();

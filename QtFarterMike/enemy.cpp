@@ -1,35 +1,59 @@
 #include "enemy.h"
+#include "hero.h"
 
 Enemy::Enemy()
 {
     std::vector<func> StandTasks;
     StandTasks.push_back(&Enemy::InitStand);
     StandTasks.push_back(&Enemy::Stand);
+    FStand.Type = SCHEDULE_STAND;
     FStand.AddTasks(StandTasks);
+    std::vector<int> StandConditions;
+    StandConditions.push_back(CONDITION_ENEMY);
+    StandConditions.push_back(CONDITION_ATTACK);
+    FPursuit.AddInterrupts(StandConditions);
 
     std::vector<func> WalkTasks;
     WalkTasks.push_back(&Enemy::InitWalk);
     WalkTasks.push_back(&Enemy::Walk);
+    FWalk.Type = SCHEDULE_WALK;
     FWalk.AddTasks(WalkTasks);
+    std::vector<int> WalkConditions;
+    WalkConditions.push_back(CONDITION_OBSTACLE);
+    WalkConditions.push_back(CONDITION_ATTACK);
+    WalkConditions.push_back(CONDITION_ENEMY);
+    FPursuit.AddInterrupts(WalkConditions);
 
     std::vector<func> PursuitTasks;
     PursuitTasks.push_back(&Enemy::InitPursuit);
     PursuitTasks.push_back(&Enemy::Pursuit);
+    FPursuit.Type = SCHEDULE_PURSUIT;
     FPursuit.AddTasks(PursuitTasks);
+    std::vector<int> PersuitConditions;
+    PersuitConditions.push_back(CONDITION_OBSTACLE);
+    PersuitConditions.push_back(CONDITION_ATTACK);
+    FPursuit.AddInterrupts(PersuitConditions);
 
     std::vector<func> AttackTasks;
     AttackTasks.push_back(&Enemy::InitAttack);
     AttackTasks.push_back(&Enemy::Attack);
+    FAttack.Type = SCHEDULE_ATTACK;
     FAttack.AddTasks(AttackTasks);
 
-    FCurrentSchedule = FWalk;
-    FCurrentState = STATE_WALK;
+    FSchedules.push_back(FStand);
+    FSchedules.push_back(FWalk);
+    FSchedules.push_back(FPursuit);
+    FSchedules.push_back(FAttack);
+
+    SetSchedule(SCHEDULE_STAND);
 
     FActionDelay = 0;
     FThinkInterval = 0;
 
     FAlert = false;
     FAlertInterval = 0;
+
+    FTarget = NULL;
 }
 
 void Enemy::Think()
@@ -55,50 +79,65 @@ void Enemy::SelectNewSchedule()
     case STATE_STAND:
         if (FConditions.Contains(CONDITION_ATTACK))
         {
-            FCurrentSchedule = FAttack;
-            FCurrentState = STATE_ATTACK;
-        }
-        else
-        if (FConditions.Contains(CONDITION_ENEMY) && !FConditions.Contains(CONDITION_ATTACK))
+            SetSchedule(SCHEDULE_ATTACK);
+        } else if (FConditions.Contains(CONDITION_ENEMY) && !FConditions.Contains(CONDITION_ATTACK))
         {
-            FCurrentSchedule = FPursuit;
-            FCurrentState = STATE_PURSUIT;
-        }
-        else
-        if (FConditions.Contains(CONDITION_WALK) && !FConditions.Contains(CONDITION_OBSTACLE))
+            SetSchedule(SCHEDULE_PURSUIT);
+        } else if (FConditions.Contains(CONDITION_WALK) && !FConditions.Contains(CONDITION_OBSTACLE))
         {
-            FCurrentSchedule = FWalk;
-            FCurrentState = STATE_WALK;
-        }
-        else
+            SetSchedule(SCHEDULE_WALK);
+        } else
         {
-            FCurrentSchedule = FStand;
-            FCurrentState = STATE_STAND;
+            SetSchedule(SCHEDULE_STAND);
         }
         break;
     case STATE_WALK:
-        FCurrentSchedule = FWalk;
-        FCurrentState = STATE_WALK;
+        SetSchedule(SCHEDULE_WALK);
         break;
     case STATE_PURSUIT:
+        SetSchedule(SCHEDULE_PURSUIT);
         break;
     case STATE_ATTACK:
         if (FConditions.Contains(CONDITION_ATTACK))
         {
-            FCurrentSchedule = FAttack;
-            FCurrentState = STATE_ATTACK;
-        }
-        else
-        if (FConditions.Contains(CONDITION_ENEMY) && !FConditions.Contains(CONDITION_ATTACK) && !FConditions.Contains(CONDITION_OBSTACLE))
+            SetSchedule(SCHEDULE_ATTACK);
+        } else if (FConditions.Contains(CONDITION_ENEMY) && !FConditions.Contains(CONDITION_ATTACK) && !FConditions.Contains(CONDITION_OBSTACLE))
         {
-            FCurrentSchedule = FPursuit;
-            FCurrentState = STATE_PURSUIT;
-        }
-        else
+            SetSchedule(SCHEDULE_PURSUIT);
+        } else
         {
-            FCurrentSchedule = FStand;
-            FCurrentState = STATE_STAND;
+            SetSchedule(SCHEDULE_STAND);
         }
+        break;
+    default:
+        break;
+    }
+}
+
+void Enemy::SetSchedule(int ASchedule)
+{
+    for (std::vector<Schedule>::iterator item = FSchedules.begin(); item != FSchedules.end(); item++)
+    {
+        Schedule schedule = *item;
+        if (schedule.Type == ASchedule)
+        {
+            FCurrentSchedule = schedule;
+            FCurrentSchedule.Reset();
+        }
+    }
+
+    switch (ASchedule) {
+    case SCHEDULE_STAND:
+        FCurrentState = STATE_STAND;
+        break;
+    case SCHEDULE_WALK:
+        FCurrentState = STATE_WALK;
+        break;
+    case SCHEDULE_PURSUIT:
+        FCurrentState = STATE_PURSUIT;
+        break;
+    case SCHEDULE_ATTACK:
+        FCurrentState = STATE_ATTACK;
         break;
     default:
         break;
@@ -174,7 +213,6 @@ bool Enemy::InitAttack()
 {
     printf("InitAttack");
 
-    FActionDelay = rand() % 50 + 25;
     return true;
 }
 
@@ -182,13 +220,19 @@ bool Enemy::Attack()
 {
     printf("Attack");
 
-    FActionDelay--;
-    if (FActionDelay <= 0)
+    if (FTarget != NULL)
     {
-        return true;
+        FTarget->Hit();
+
+        if (FTarget->IsDead())
+        {
+            FTarget = NULL;
+            FAlert = false;
+            FAlertInterval = 0;
+        }
     }
 
-    return false;
+    return true;
 }
 
 void Enemy::Update()

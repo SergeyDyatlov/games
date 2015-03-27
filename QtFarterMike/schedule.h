@@ -18,6 +18,7 @@ private:
 
 public:
     Schedule();
+    int Type;
     void AddTask(func ATask);
     void AddTasks(std::vector<func> ATasks);
     void AddInterrupt(int AInterrupt);
@@ -25,6 +26,7 @@ public:
     void Update(Enemy* enemy);
     void Complete();
     bool IsCompleted(ConditionList AConditionList);
+    void Reset();
 };
 
 #endif // SCHEDULE_H
