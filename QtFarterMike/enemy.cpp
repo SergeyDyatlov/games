@@ -55,6 +55,8 @@ Enemy::Enemy()
     FAlertInterval = 0;
 
     FTarget = NULL;
+
+    CurrentFrame = 0;
 }
 
 void Enemy::Think()
@@ -189,9 +191,12 @@ bool Enemy::InitStand()
 {
     printf("InitStand\n");
 
+    CurrentFrame = 0;
+    FStartTime = SDL_GetTicks();
+
     Direction = rand() % 2;
 
-    FActionDelay = rand() % 25 + 25;
+    FActionDelay = rand() % 50 + 50;
     return true;
 }
 
@@ -205,6 +210,8 @@ bool Enemy::Stand()
         return true;
     }
 
+    NextFrame();
+
     return false;
 }
 
@@ -212,7 +219,10 @@ bool Enemy::InitWalk()
 {
     printf("InitWalk\n");
 
-    FActionDelay = rand() % 25 + 25;
+    CurrentFrame = 0;
+    FStartTime = SDL_GetTicks();
+
+    FActionDelay = rand() % 50 + 50;
     return true;
 }
 
@@ -228,14 +238,16 @@ bool Enemy::Walk()
 
     switch (Direction) {
     case 0:
-        Rect.x -= 3;
+        Rect.x -= 2;
         break;
     case 1:
-        Rect.x += 3;
+        Rect.x += 2;
         break;
     default:
         break;
     }
+
+    NextFrame();
 
     return false;
 }
@@ -244,7 +256,10 @@ bool Enemy::InitPursuit()
 {
     printf("InitPursuit\n");
 
-    FActionDelay = rand() % 25 + 25;
+    CurrentFrame = 0;
+    FStartTime = SDL_GetTicks();
+
+    FActionDelay = rand() % 50 + 50;
     return true;
 }
 
@@ -269,14 +284,16 @@ bool Enemy::Pursuit()
 
     switch (Direction) {
     case 0:
-        Rect.x -= 3;
+        Rect.x -= 2;
         break;
     case 1:
-        Rect.x += 3;
+        Rect.x += 2;
         break;
     default:
         break;
     }
+
+    NextFrame();
 
     return false;
 }
@@ -284,6 +301,9 @@ bool Enemy::Pursuit()
 bool Enemy::InitAttack()
 {
     printf("InitAttack\n");
+
+    CurrentFrame = 0;
+    FStartTime = SDL_GetTicks();
 
     return true;
 }
@@ -304,7 +324,24 @@ bool Enemy::Attack()
         }
     }
 
+    NextFrame();
+
     return true;
+}
+
+void Enemy::NextFrame()
+{
+    long Elapsed = (SDL_GetTicks() - FStartTime);
+    if (Elapsed >= 300)
+    {
+        CurrentFrame++;
+        FStartTime = SDL_GetTicks();
+        printf("\t\t\t\t %d \n", Elapsed);
+    }
+    if (CurrentFrame > 5)
+    {
+        CurrentFrame = 0;
+    }
 }
 
 void Enemy::Update()

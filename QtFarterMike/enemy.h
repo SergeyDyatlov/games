@@ -48,6 +48,8 @@ private:
 
     Hero* FTarget;
 
+    long FStartTime;
+
     void Think();
     void GetConditions();
     void SelectNewSchedule();
@@ -63,6 +65,8 @@ private:
     bool InitAttack();
     bool Attack();
 
+    void NextFrame();
+
 public:
     Enemy();
     void Update();
@@ -71,6 +75,7 @@ public:
     SDL_Rect Rect;
     SDL_Rect Dummy;
     int Direction;
+    int CurrentFrame;
 };
 
 #endif // ENEMY_H

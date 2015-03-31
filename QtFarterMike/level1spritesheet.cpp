@@ -2,47 +2,47 @@
 
 Level1SpriteSheet::Level1SpriteSheet()
 {
-    SDL_Rect Rect;
-    Rect.w = 32 - 1;
-    Rect.h = 32 - 1;
+    Sprite ASprite;
+    ASprite.Rect.w = 32 - 1;
+    ASprite.Rect.h = 32 - 1;
 
-    Rect.x = 0;
-    Rect.y = 0;
-    FSprites[stCoin] = Rect;
+    ASprite.Rect.x = 0;
+    ASprite.Rect.y = 0;
+    FSprites[stCoin] = ASprite;
 
-    Rect.x = 0;
-    Rect.y = 32;
-    FSprites[stBlock] = Rect;
+    ASprite.Rect.x = 0;
+    ASprite.Rect.y = 32;
+    FSprites[stBlock] = ASprite;
 
-    Rect.x = 0;
-    Rect.y = 64;
-    FSprites[stWater] = Rect;
+    ASprite.Rect.x = 0;
+    ASprite.Rect.y = 64;
+    FSprites[stWater] = ASprite;
 
-    Rect.x = 0;
-    Rect.y = 96;
-    FSprites[stGround] = Rect;
+    ASprite.Rect.x = 0;
+    ASprite.Rect.y = 96;
+    FSprites[stGround] = ASprite;
 
-    Rect.x = 0;
-    Rect.y = 128;
-    FSprites[stPepper] = Rect;
+    ASprite.Rect.x = 0;
+    ASprite.Rect.y = 128;
+    FSprites[stPepper] = ASprite;
 
-    Rect.x = 0;
-    Rect.y = 160;
-    Rect.w = 32;
-    Rect.h = 64;
-    FSprites[stHero] = Rect;
+    ASprite.Rect.x = 0;
+    ASprite.Rect.y = 160;
+    ASprite.Rect.w = 32;
+    ASprite.Rect.h = 64;
+    FSprites[stHero] = ASprite;
 
-    Rect.x = 0;
-    Rect.y = 224;
-    Rect.w = 32;
-    Rect.h = 64;
-    FSprites[stEnemy] = Rect;
+    ASprite.Rect.x = 0;
+    ASprite.Rect.y = 224;
+    ASprite.Rect.w = 32;
+    ASprite.Rect.h = 64;
+    FSprites[stEnemy] = ASprite;
 
-    Rect.x = 640 - 128;
-    Rect.y = 0;
-    Rect.w = 128;
-    Rect.h = 128;
-    FSprites[stBackground] = Rect;
+    ASprite.Rect.x = 640 - 128;
+    ASprite.Rect.y = 0;
+    ASprite.Rect.w = 128;
+    ASprite.Rect.h = 128;
+    FSprites[stBackground] = ASprite;
 
     FSurface = NULL;
     const std::string path = "res/Level1Sprites.bmp";
@@ -54,9 +54,11 @@ Level1SpriteSheet::Level1SpriteSheet()
     SDL_SetColorKey(FSurface, SDL_RLEACCEL, SDL_MapRGB(FSurface->format, 255, 255, 255));
 }
 
-void Level1SpriteSheet::Draw(SDL_Surface* Surface, SpriteType Type, SDL_Rect* Rect)
+void Level1SpriteSheet::Draw(SDL_Surface* Surface, SpriteType Type, int Frame, SDL_Rect* Rect)
 {
-    SDL_Rect Pick = FSprites.at(Type);
+    Sprite Pick = FSprites.at(Type);
 
-    SDL_BlitScaled(FSurface, &Pick, Surface, Rect);
+    Pick.Rect.x += Frame * 32;
+
+    SDL_BlitScaled(FSurface, &Pick.Rect, Surface, Rect);
 }
