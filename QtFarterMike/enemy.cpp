@@ -82,25 +82,42 @@ void Enemy::SelectNewSchedule()
 {
     switch (FCurrentState) {
     case STATE_STAND:
-        if (FConditions.Contains(CONDITION_CAN_WALK) && !FConditions.Contains(CONDITION_OBSTACLE))
+        if (FConditions.Contains(CONDITION_SEE_ENEMY) && !FConditions.Contains(CONDITION_OBSTACLE))
+        {
+            SetSchedule(SCHEDULE_PURSUIT);
+        }
+        else if (!FConditions.Contains(CONDITION_OBSTACLE))
         {
             SetSchedule(SCHEDULE_WALK);
-        } else
+        }
+        else
         {
             SetSchedule(SCHEDULE_STAND);
         }
         break;
     case STATE_WALK:
-        if (FConditions.Contains(CONDITION_OBSTACLE))
+        if (FConditions.Contains(CONDITION_SEE_ENEMY) && !FConditions.Contains(CONDITION_OBSTACLE))
+        {
+            SetSchedule(SCHEDULE_PURSUIT);
+        }
+        else if (FConditions.Contains(CONDITION_OBSTACLE))
         {
             SetSchedule(SCHEDULE_STAND);
-        } else
+        }
+        else
         {
             SetSchedule(SCHEDULE_WALK);
         }
         break;
     case STATE_PURSUIT:
-        SetSchedule(SCHEDULE_PURSUIT);
+        if (!FConditions.Contains(CONDITION_SEE_ENEMY) || FConditions.Contains(CONDITION_OBSTACLE))
+        {
+            SetSchedule(SCHEDULE_STAND);
+        }
+        else
+        {
+            SetSchedule(SCHEDULE_PURSUIT);
+        }
         break;
     case STATE_ATTACK:
         SetSchedule(SCHEDULE_ATTACK);
@@ -154,6 +171,18 @@ void Enemy::Sense()
             }
         }
     }
+
+    int x1 = Rect.x;
+    int y1 = Rect.y;
+    int x2 = Level->Player.Rect.x;
+    int y2 = Level->Player.Rect.y;
+
+    int dist = hypot(x1 - x2, y1 - y2);
+    if (dist < 200)
+    {
+        FConditions.Add(CONDITION_SEE_ENEMY);
+    }
+
 }
 
 bool Enemy::InitStand()
@@ -227,6 +256,26 @@ bool Enemy::Pursuit()
     if (FActionDelay <= 0)
     {
         return true;
+    }
+
+    if (Level->Player.Rect.x < Rect.x)
+    {
+        Direction = 0;
+    }
+    else
+    {
+        Direction = 1;
+    }
+
+    switch (Direction) {
+    case 0:
+        Rect.x -= 3;
+        break;
+    case 1:
+        Rect.x += 3;
+        break;
+    default:
+        break;
     }
 
     return false;
