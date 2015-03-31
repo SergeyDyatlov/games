@@ -1,5 +1,6 @@
 #include "enemy.h"
 #include "hero.h"
+#include "levelscreen.h"
 
 Enemy::Enemy()
 {
@@ -9,9 +10,9 @@ Enemy::Enemy()
     FStand.Type = SCHEDULE_STAND;
     FStand.AddTasks(StandTasks);
     std::vector<int> StandConditions;
-    StandConditions.push_back(CONDITION_ENEMY);
-    StandConditions.push_back(CONDITION_ATTACK);
-    FPursuit.AddInterrupts(StandConditions);
+    StandConditions.push_back(CONDITION_SEE_ENEMY);
+    StandConditions.push_back(CONDITION_CAN_ATTACK);
+    FStand.AddInterrupts(StandConditions);
 
     std::vector<func> WalkTasks;
     WalkTasks.push_back(&Enemy::InitWalk);
@@ -20,9 +21,9 @@ Enemy::Enemy()
     FWalk.AddTasks(WalkTasks);
     std::vector<int> WalkConditions;
     WalkConditions.push_back(CONDITION_OBSTACLE);
-    WalkConditions.push_back(CONDITION_ATTACK);
-    WalkConditions.push_back(CONDITION_ENEMY);
-    FPursuit.AddInterrupts(WalkConditions);
+    WalkConditions.push_back(CONDITION_CAN_ATTACK);
+    WalkConditions.push_back(CONDITION_SEE_ENEMY);
+    FWalk.AddInterrupts(WalkConditions);
 
     std::vector<func> PursuitTasks;
     PursuitTasks.push_back(&Enemy::InitPursuit);
@@ -31,7 +32,7 @@ Enemy::Enemy()
     FPursuit.AddTasks(PursuitTasks);
     std::vector<int> PersuitConditions;
     PersuitConditions.push_back(CONDITION_OBSTACLE);
-    PersuitConditions.push_back(CONDITION_ATTACK);
+    PersuitConditions.push_back(CONDITION_CAN_ATTACK);
     FPursuit.AddInterrupts(PersuitConditions);
 
     std::vector<func> AttackTasks;
@@ -58,6 +59,7 @@ Enemy::Enemy()
 
 void Enemy::Think()
 {
+    printf("Think!");
     GetConditions();
     if (FCurrentSchedule.IsCompleted(FConditions))
     {
@@ -67,23 +69,20 @@ void Enemy::Think()
 
 void Enemy::GetConditions()
 {
+    printf("GetConditions!\n");
     FConditions.Clear();
 
-    FConditions.Add(CONDITION_STAND);
-    FConditions.Add(CONDITION_WALK);
+    Sense();
+
+    FConditions.Add(CONDITION_CAN_STAND);
+    FConditions.Add(CONDITION_CAN_WALK);
 }
 
 void Enemy::SelectNewSchedule()
 {
     switch (FCurrentState) {
     case STATE_STAND:
-        if (FConditions.Contains(CONDITION_ATTACK))
-        {
-            SetSchedule(SCHEDULE_ATTACK);
-        } else if (FConditions.Contains(CONDITION_ENEMY) && !FConditions.Contains(CONDITION_ATTACK))
-        {
-            SetSchedule(SCHEDULE_PURSUIT);
-        } else if (FConditions.Contains(CONDITION_WALK) && !FConditions.Contains(CONDITION_OBSTACLE))
+        if (FConditions.Contains(CONDITION_CAN_WALK) && !FConditions.Contains(CONDITION_OBSTACLE))
         {
             SetSchedule(SCHEDULE_WALK);
         } else
@@ -92,22 +91,19 @@ void Enemy::SelectNewSchedule()
         }
         break;
     case STATE_WALK:
-        SetSchedule(SCHEDULE_WALK);
+        if (FConditions.Contains(CONDITION_OBSTACLE))
+        {
+            SetSchedule(SCHEDULE_STAND);
+        } else
+        {
+            SetSchedule(SCHEDULE_WALK);
+        }
         break;
     case STATE_PURSUIT:
         SetSchedule(SCHEDULE_PURSUIT);
         break;
     case STATE_ATTACK:
-        if (FConditions.Contains(CONDITION_ATTACK))
-        {
-            SetSchedule(SCHEDULE_ATTACK);
-        } else if (FConditions.Contains(CONDITION_ENEMY) && !FConditions.Contains(CONDITION_ATTACK) && !FConditions.Contains(CONDITION_OBSTACLE))
-        {
-            SetSchedule(SCHEDULE_PURSUIT);
-        } else
-        {
-            SetSchedule(SCHEDULE_STAND);
-        }
+        SetSchedule(SCHEDULE_ATTACK);
         break;
     default:
         break;
@@ -144,17 +140,35 @@ void Enemy::SetSchedule(int ASchedule)
     }
 }
 
+void Enemy::Sense()
+{
+    for (int row = Dummy.x / TILE_SIZE; row <= (Dummy.x + Dummy.w) / TILE_SIZE; ++row) {
+        for (int col = Dummy.y / TILE_SIZE; col <= (Dummy.y + Dummy.h) / TILE_SIZE; ++col) {
+            char ch = Level->Map[col][row];
+            switch (ch) {
+            case '*':
+                FConditions.Add(CONDITION_OBSTACLE);
+                break;
+            default:
+                break;
+            }
+        }
+    }
+}
+
 bool Enemy::InitStand()
 {
-    printf("InitStand");
+    printf("InitStand\n");
 
-    FActionDelay = rand() % 50 + 25;
+    Direction = rand() % 2;
+
+    FActionDelay = rand() % 25 + 25;
     return true;
 }
 
 bool Enemy::Stand()
 {
-    printf("Stand");
+    printf("Stand\n");
 
     FActionDelay--;
     if (FActionDelay <= 0)
@@ -167,17 +181,15 @@ bool Enemy::Stand()
 
 bool Enemy::InitWalk()
 {
-    printf("InitWalk");
+    printf("InitWalk\n");
 
-    FActionDelay = rand() % 50 + 25;
+    FActionDelay = rand() % 25 + 25;
     return true;
 }
 
 bool Enemy::Walk()
 {
-    printf("Walk");
-
-    Rect.x += 1;
+    printf("Walk\n");
 
     FActionDelay--;
     if (FActionDelay <= 0)
@@ -185,20 +197,31 @@ bool Enemy::Walk()
         return true;
     }
 
+    switch (Direction) {
+    case 0:
+        Rect.x -= 3;
+        break;
+    case 1:
+        Rect.x += 3;
+        break;
+    default:
+        break;
+    }
+
     return false;
 }
 
 bool Enemy::InitPursuit()
 {
-    printf("InitPursuit");
+    printf("InitPursuit\n");
 
-    FActionDelay = rand() % 50 + 25;
+    FActionDelay = rand() % 25 + 25;
     return true;
 }
 
 bool Enemy::Pursuit()
 {
-    printf("Pursuit");
+    printf("Pursuit\n");
 
     FActionDelay--;
     if (FActionDelay <= 0)
@@ -211,14 +234,14 @@ bool Enemy::Pursuit()
 
 bool Enemy::InitAttack()
 {
-    printf("InitAttack");
+    printf("InitAttack\n");
 
     return true;
 }
 
 bool Enemy::Attack()
 {
-    printf("Attack");
+    printf("Attack\n");
 
     if (FTarget != NULL)
     {
@@ -247,6 +270,21 @@ void Enemy::Update()
     if (&FCurrentSchedule != NULL)
     {
         FCurrentSchedule.Update(this);
+    }
+
+    switch (Direction) {
+    case 0:
+        Dummy = Rect;
+        Dummy.h = Rect.h - 2;
+        Dummy.x -= 5;
+        break;
+    case 1:
+        Dummy = Rect;
+        Dummy.h = Rect.h - 2;
+        Dummy.x += 5;
+        break;
+    default:
+        break;
     }
 
     if (FAlert)

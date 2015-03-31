@@ -1,4 +1,5 @@
 #include "hero.h"
+#include "levelscreen.h"
 
 Hero::Hero()
 {

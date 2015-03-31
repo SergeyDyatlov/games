@@ -41,10 +41,12 @@ void Level1Screen::Init(Game& AGame)
             char ch = Map[col][row];
             if (ch == 'E') {
                 Enemy enemy;
+                enemy.Level = this;
                 enemy.Rect.x = row * TILE_SIZE;
                 enemy.Rect.y = col * TILE_SIZE;
                 enemy.Rect.w = TILE_SIZE;
                 enemy.Rect.h = TILE_SIZE * 2;
+                enemy.Dummy = enemy.Rect;
                 Enemies.push_back(enemy);
             }
         }
@@ -161,8 +163,11 @@ void Level1Screen::Draw(Game& AGame)
 
     for (unsigned I = 0; I < Enemies.size(); ++I) {
         SDL_Rect Rect = Enemies[I].Rect;
+        SDL_Rect Dummy = Enemies[I].Dummy;
         Rect.x -= OffsetX;
         FSpriteSheet.Draw(AGame.GetSurface(), stEnemy, &Rect);
+        Dummy.x -= OffsetX;
+        SDL_FillRect(AGame.GetSurface(), &Dummy, SDL_MapRGB(AGame.GetSurface() -> format, 0, 255, 0));
     }
 
     SDL_Rect SRect = Player.Rect;

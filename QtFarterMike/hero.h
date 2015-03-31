@@ -3,6 +3,8 @@
 
 #include <SDL2/SDL.h>
 
+class LevelScreen;
+
 class Hero
 {
 private:
@@ -14,6 +16,7 @@ public:
     void Hit();
     bool IsDead();
 
+    LevelScreen* Level;
     SDL_Rect Rect;
 };
 
