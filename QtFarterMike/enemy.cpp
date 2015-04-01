@@ -338,7 +338,7 @@ void Enemy::NextFrame()
         FStartTime = SDL_GetTicks();
         printf("\t\t\t\t %d \n", Elapsed);
     }
-    if (CurrentFrame > 5)
+    if (CurrentFrame > 7)
     {
         CurrentFrame = 0;
     }

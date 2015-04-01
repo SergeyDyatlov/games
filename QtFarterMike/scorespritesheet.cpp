@@ -6,17 +6,14 @@ ScoreSpriteSheet::ScoreSpriteSheet()
     ASprite.Rect.w = 64;
     ASprite.Rect.h = 32;
 
-    ASprite.Frames = 1;
     ASprite.Rect.x = 0;
     ASprite.Rect.y = 0;
     FSprites[stMenu] = ASprite;
 
-    ASprite.Frames = 1;
     ASprite.Rect.x = 0;
     ASprite.Rect.y = 32;
     FSprites[stRestart] = ASprite;
 
-    ASprite.Frames = 1;
     ASprite.Rect.x = 0;
     ASprite.Rect.y = 64;
     FSprites[stNext] = ASprite;

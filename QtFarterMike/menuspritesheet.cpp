@@ -6,12 +6,10 @@ MenuSpriteSheet::MenuSpriteSheet()
     ASprite.Rect.w = 64 - 1;
     ASprite.Rect.h = 32 - 1;
 
-    ASprite.Frames = 1;
     ASprite.Rect.x = 0;
     ASprite.Rect.y = 0;
     FSprites[stStart] = ASprite;
 
-    ASprite.Frames = 1;
     ASprite.Rect.x = 0;
     ASprite.Rect.y = 32;
     FSprites[stExit] = ASprite;

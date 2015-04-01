@@ -36,10 +36,16 @@ void Level1Screen::Init(Game& AGame)
     MapWidth = Map[0].length();
     MapHeight = 14;
 
+    Enemies.clear();
+
+    Coins.clear();
+
     for (int row = 0; row < MapWidth; ++row) {
         for (int col = 0; col < MapHeight; ++col) {
             char ch = Map[col][row];
-            if (ch == 'E') {
+            switch (ch) {
+            case 'E':
+            {
                 Enemy enemy;
                 enemy.Level = this;
                 enemy.Rect.x = row * TILE_SIZE;
@@ -48,6 +54,24 @@ void Level1Screen::Init(Game& AGame)
                 enemy.Rect.h = TILE_SIZE * 2;
                 enemy.Dummy = enemy.Rect;
                 Enemies.push_back(enemy);
+            }
+                break;
+
+            case '$':
+            {
+                Sprite coin;
+                coin.Frames.CurFrame = 0;
+                coin.Frames.MinFrame = 0;
+                coin.Frames.MaxFrame = 10;
+                coin.Rect.w = TILE_SIZE;
+                coin.Rect.h = TILE_SIZE;
+                coin.Rect.x = row * TILE_SIZE;
+                coin.Rect.y = col * TILE_SIZE;
+                Coins.push_back(coin);
+            }
+                break;
+            default:
+                break;
             }
         }
     }
@@ -107,19 +131,25 @@ void Level1Screen::Update(Game& AGame)
             case 'H':
                 AGame.SetScoreScreen();
                 break;
-            case '$':
-                AGame.Scores.Coins += 1;
-                Map[col][row] = ' ';
-                break;
             default:
                 break;
             }
         }
     }
 
-    for (std::vector<Enemy>::iterator it = Enemies.begin(); it != Enemies.end(); ++it)
+    for (std::vector<Enemy>::iterator enemy = Enemies.begin(); enemy != Enemies.end(); ++enemy)
     {
-        it->Update();
+        enemy->Update();
+    }
+
+    for (std::vector<Sprite>::iterator coin = Coins.begin(); coin != Coins.end(); ++coin)
+    {
+        coin->Update();
+        if (SDL_HasIntersection(&Player.Rect, &coin->Rect))
+        {
+            AGame.Scores.Coins += 1;
+            Coins.erase(coin);
+        }
     }
 }
 
@@ -143,9 +173,6 @@ void Level1Screen::Draw(Game& AGame)
             case '*':
                 FSpriteSheet.Draw(AGame.GetSurface(), stBlock, 0, &Rect);
                 break;
-            case '$':
-                FSpriteSheet.Draw(AGame.GetSurface(), stCoin, 0, &Rect);
-                break;
             case '~':
                 FSpriteSheet.Draw(AGame.GetSurface(), stWater, 0, &Rect);
                 break;
@@ -160,6 +187,20 @@ void Level1Screen::Draw(Game& AGame)
             }
         }
     }
+
+    for (std::vector<Sprite>::iterator it = Coins.begin(); it != Coins.end(); ++it)
+    {
+        SDL_Rect Rect = it->Rect;
+        Rect.x -= OffsetX;
+        FSpriteSheet.Draw(AGame.GetSurface(), stCoin, it->Frames.CurFrame, &Rect);
+    }
+
+//    for (unsigned I = 0; I < Coins.size(); ++I)
+//    {
+//        SDL_Rect Rect = Coins[I].Rect;
+//        Rect.x -= OffsetX;
+//        FSpriteSheet.Draw(AGame.GetSurface(), stCoin, Coins[I].Frames.CurFrame, &Rect);
+//    }
 
     for (unsigned I = 0; I < Enemies.size(); ++I) {
         SDL_Rect Rect = Enemies[I].Rect;

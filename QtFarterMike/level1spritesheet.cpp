@@ -8,6 +8,9 @@ Level1SpriteSheet::Level1SpriteSheet()
 
     ASprite.Rect.x = 0;
     ASprite.Rect.y = 0;
+    ASprite.Frames.CurFrame = 0;
+    ASprite.Frames.MinFrame = 0;
+    ASprite.Frames.MaxFrame = 10;
     FSprites[stCoin] = ASprite;
 
     ASprite.Rect.x = 0;
@@ -45,7 +48,7 @@ Level1SpriteSheet::Level1SpriteSheet()
     FSprites[stBackground] = ASprite;
 
     FSurface = NULL;
-    const std::string path = "res/Level1Sprites.bmp";
+    const std::string path = "res/Level1Sprites_.bmp";
     FSurface = SDL_LoadBMP(path.c_str());
     if (FSurface == NULL)
     {

@@ -4,6 +4,7 @@
 #include "screen.h"
 #include "hero.h"
 #include "enemy.h"
+#include "sprite.h"
 #include <string>
 #include <vector>
 
@@ -34,6 +35,8 @@ public:
 
     std::vector<Enemy> Enemies;
     Hero Player;
+
+    std::vector<Sprite> Coins;
 };
 
 #endif // LEVELSCREEN_H
