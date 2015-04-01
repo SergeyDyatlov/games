@@ -195,13 +195,6 @@ void Level1Screen::Draw(Game& AGame)
         FSpriteSheet.Draw(AGame.GetSurface(), stCoin, it->Frames.CurFrame, &Rect);
     }
 
-//    for (unsigned I = 0; I < Coins.size(); ++I)
-//    {
-//        SDL_Rect Rect = Coins[I].Rect;
-//        Rect.x -= OffsetX;
-//        FSpriteSheet.Draw(AGame.GetSurface(), stCoin, Coins[I].Frames.CurFrame, &Rect);
-//    }
-
     for (unsigned I = 0; I < Enemies.size(); ++I) {
         SDL_Rect Rect = Enemies[I].Rect;
         SDL_Rect Dummy = Enemies[I].Dummy;

@@ -24,8 +24,7 @@ SOURCES += main.cpp \
     scorespritesheet.cpp \
     font.cpp \
     schedule.cpp \
-    conditionlist.cpp \
-    coin.cpp
+    conditionlist.cpp
 
 include(deployment.pri)
 qtcAddDeployment()
@@ -48,6 +47,5 @@ HEADERS += \
     font.h \
     sprite.h \
     schedule.h \
-    conditionlist.h \
-    coin.h
+    conditionlist.h
 
