@@ -21,6 +21,6 @@ void Animation::Animate()
     }
     if (Frame >= EndFrame)
     {
-        Frame = 0;
+        Frame = StartFrame;
     }
 }

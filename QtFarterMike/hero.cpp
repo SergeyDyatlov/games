@@ -5,6 +5,13 @@ Hero::Hero()
 {
     FHealth = 100;
     FDead = false;
+
+    StartFrame = 1;
+    EndFrame = 2;
+    Frame = 0;
+
+    Direction = 1;
+    Action = paStand;
 }
 
 void Hero::Hit()
@@ -26,17 +33,38 @@ bool Hero::IsDead()
 
 void Hero::Left()
 {
-    Fvx = -10.0f;
+    Fvx = -20.0f;
+    Direction = 0;
+    StartFrame = 0;
+    EndFrame = 6;
+    Action = paMoveLeft;
 }
 
 void Hero::Right()
 {
-    Fvx = 10.0f;
+    Fvx = 20.0f;
+    Direction = 1;
+    StartFrame = 0;
+    EndFrame = 6;
+    Action = paMoveRight;
 }
 
 void Hero::Stop()
 {
     Fvx = 0;
+    switch (Direction) {
+    case 0:
+        StartFrame = 1;
+        EndFrame = 2;
+        break;
+    case 1:
+        StartFrame = 0;
+        EndFrame = 1;
+        break;
+    default:
+        break;
+    }
+    Action = paStand;
 }
 
 void Hero::Jump()

@@ -168,6 +168,7 @@ void Level1Screen::Update(Game& AGame)
         enemy->Update();
     }
 
+    Player.Animate();
     Player.Update();
 
     for (auto &coin: Coins)
@@ -234,5 +235,17 @@ void Level1Screen::Draw(Game& AGame)
     SDL_Rect SRect = Player.GetRect();
     SRect.x -= OffsetX;
 
-    FSpriteSheet.Draw(AGame.GetSurface(), stHero, 0, &SRect);
+    switch (Player.Action) {
+    case paMoveLeft:
+        FPlayerSheet.Draw(AGame.GetSurface(), stLeft, Player.Frame, &SRect);
+        break;
+    case paMoveRight:
+        FPlayerSheet.Draw(AGame.GetSurface(), stRight, Player.Frame, &SRect);
+        break;
+    case paStand:
+        FPlayerSheet.Draw(AGame.GetSurface(), stStand, Player.Frame, &SRect);
+        break;
+    default:
+        break;
+    }
 }
