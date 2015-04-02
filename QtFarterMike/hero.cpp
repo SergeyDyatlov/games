@@ -86,10 +86,8 @@ void Hero::Update()
         if (hasCollision)
             break;
     }
-    SDL_Log("x %f, y %f Fx %f Fy %f", x, y, Fx, Fy);
     if (!hasCollision)
     {
-        SDL_Log("Move");
         Fx = x;
         Fy = y;
         FRect.x = Fx;
@@ -97,7 +95,6 @@ void Hero::Update()
     }
     else
     {
-        SDL_Log("Collision");
         Fvy = -0.5f * Fvy;
         FDidJump = false;
     }
@@ -105,7 +102,6 @@ void Hero::Update()
 
 void Hero::SetRect(const SDL_Rect &rect)
 {
-    SDL_Log("SetRect");
     FRect = rect;
     Fx = FRect.x;
     Fy = FRect.y;

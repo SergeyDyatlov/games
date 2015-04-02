@@ -116,7 +116,6 @@ void Level1Screen::HandleEvents(Game& AGame)
             {
             case SDLK_LEFT:
             case SDLK_RIGHT:
-            case SDLK_UP:
                 Player.Stop();
                 break;
             }
