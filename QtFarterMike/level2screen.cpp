@@ -60,13 +60,23 @@ void Level2Screen::HandleEvents(Game& AGame)
             switch (event.key.keysym.sym)
             {
             case SDLK_LEFT:
-                Player.Rect.x -= 10;
+                Player.Left();
                 break;
 
             case SDLK_RIGHT:
-                Player.Rect.x += 10;
+                Player.Right();
                 break;
             }
+            break;
+        case SDL_KEYUP:
+            switch (event.key.keysym.sym)
+            {
+            case SDLK_LEFT:
+            case SDLK_RIGHT:
+                Player.Stop();
+                break;
+            }
+            break;
 
         default:
             break;
@@ -123,7 +133,7 @@ void Level2Screen::Draw(Game& AGame)
         FSpriteSheet.Draw(AGame.GetSurface(), stEnemy, 0, &Rect);
     }
 
-    SDL_Rect SRect = Player.Rect;
+    SDL_Rect SRect = Player.GetRect();
     SRect.x -= OffsetX;
 
     FSpriteSheet.Draw(AGame.GetSurface(), stHero, 0, &SRect);

@@ -176,8 +176,8 @@ void Enemy::Sense()
 
     int x1 = Rect.x;
     int y1 = Rect.y;
-    int x2 = Level->Player.Rect.x;
-    int y2 = Level->Player.Rect.y;
+    int x2 = Level->Player.GetRect().x;
+    int y2 = Level->Player.GetRect().y;
 
     int dist = hypot(x1 - x2, y1 - y2);
     if (dist < 200)
@@ -273,7 +273,7 @@ bool Enemy::Pursuit()
         return true;
     }
 
-    if (Level->Player.Rect.x < Rect.x)
+    if (Level->Player.GetRect().x < Rect.x)
     {
         Direction = 0;
     }
