@@ -23,3 +23,95 @@ bool Hero::IsDead()
 {
     return FDead;
 }
+
+void Hero::Left()
+{
+    Fvx = -10.0f;
+}
+
+void Hero::Right()
+{
+    Fvx = 10.0f;
+}
+
+void Hero::Stop()
+{
+    Fvx = 0;
+}
+
+void Hero::Jump()
+{
+    if (!FDidJump)
+    {
+        Fvy -= 20.0f;
+        FDidJump = true;
+    }
+}
+
+void Hero::Update()
+{
+    auto Dt = 1.0f / 5.0f;
+    auto x = Fx + Fvx * Dt;
+    auto y = Fy + Fvy * Dt;
+    Fvy += 9.81 * Dt;
+    bool hasCollision = false;
+    for (int row = y / TILE_SIZE; row <= (y + FRect.h) / TILE_SIZE; ++row)
+    {
+        if (row < 0 || row >= static_cast<int>(sizeof(Level->Map) / sizeof(*Level->Map)))
+        {
+            hasCollision = true;
+            break;
+        }
+        for (int col = x / TILE_SIZE; col <= (x + FRect.w) / TILE_SIZE; ++col)
+        {
+            if (col < 0 || col >= static_cast<int>(Level->Map[row].size()))
+            {
+                hasCollision = true;
+                break;
+            }
+            char ch = Level->Map[row][col];
+            switch (ch)
+            {
+            case '#':
+            case '|':
+            case '*':
+                hasCollision = true;
+                break;
+            default:
+                break;
+            }
+            if (hasCollision)
+                break;
+        }
+        if (hasCollision)
+            break;
+    }
+    SDL_Log("x %f, y %f Fx %f Fy %f", x, y, Fx, Fy);
+    if (!hasCollision)
+    {
+        SDL_Log("Move");
+        Fx = x;
+        Fy = y;
+        FRect.x = Fx;
+        FRect.y = Fy;
+    }
+    else
+    {
+        SDL_Log("Collision");
+        Fvy = -0.5f * Fvy;
+        FDidJump = false;
+    }
+}
+
+void Hero::SetRect(const SDL_Rect &rect)
+{
+    SDL_Log("SetRect");
+    FRect = rect;
+    Fx = FRect.x;
+    Fy = FRect.y;
+}
+
+const SDL_Rect &Hero::GetRect() const
+{
+    return FRect;
+}

@@ -17,7 +17,20 @@ public:
     bool IsDead();
 
     LevelScreen* Level;
-    SDL_Rect Rect;
+    void Left();
+    void Right();
+    void Stop();
+    void Jump();
+    void Update();
+    void SetRect(const SDL_Rect &);
+    const SDL_Rect &GetRect() const;
+private:
+    SDL_Rect FRect;
+    float Fx = 0.0f;
+    float Fy = 0.0f;
+    float Fvx = 0.0f;
+    float Fvy = 0.0f;
+    bool FDidJump = false;
 };
 
 #endif // HERO_H

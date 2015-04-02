@@ -100,19 +100,27 @@ void Level1Screen::HandleEvents(Game& AGame)
             switch (event.key.keysym.sym)
             {
             case SDLK_LEFT:
-                Player.Rect.x -= 10;
+                Player.Left();
                 break;
 
             case SDLK_RIGHT:
-                Player.Rect.x += 10;
+                Player.Right();
                 break;
             case SDLK_UP:
-                Player.Rect.y -= 10;
-                break;
-            case SDLK_DOWN:
-                Player.Rect.y += 10;
+                Player.Jump();
                 break;
             }
+            break;
+        case SDL_KEYUP:
+            switch (event.key.keysym.sym)
+            {
+            case SDLK_LEFT:
+            case SDLK_RIGHT:
+            case SDLK_UP:
+                Player.Stop();
+                break;
+            }
+            break;
         default:
             break;
         }
@@ -123,7 +131,7 @@ void Level1Screen::Update(Game& AGame)
 {
     LevelScreen::Update(AGame);
 
-    SDL_Rect Rect = Player.Rect;
+    SDL_Rect Rect = Player.GetRect();
     for (int row = Rect.x / TILE_SIZE; row <= (Rect.x + Rect.w) / TILE_SIZE; ++row) {
         for (int col = Rect.y / TILE_SIZE; col <= (Rect.y + Rect.h) / TILE_SIZE; ++col) {
             char ch = Map[col][row];
@@ -142,15 +150,17 @@ void Level1Screen::Update(Game& AGame)
         enemy->Update();
     }
 
-    for (std::vector<Sprite>::iterator coin = Coins.begin(); coin != Coins.end(); ++coin)
-    {
-        coin->Update();
-        if (SDL_HasIntersection(&Player.Rect, &coin->Rect))
+    Player.Update();
+
+    for (auto &coin: Coins)
+      coin.Update();
+    auto localHasIntersection = [this](const Sprite &coin)
         {
-            AGame.Scores.Coins += 1;
-            Coins.erase(coin);
-        }
-    }
+            auto tmp = Player.GetRect();
+            return SDL_HasIntersection(&tmp, &coin.Rect);
+        };
+    AGame.Scores.Coins += std::count_if(std::begin(Coins), std::end(Coins), localHasIntersection);
+    Coins.erase(std::remove_if(std::begin(Coins), std::end(Coins), localHasIntersection), std::end(Coins));
 }
 
 void Level1Screen::Draw(Game& AGame)
@@ -197,14 +207,13 @@ void Level1Screen::Draw(Game& AGame)
 
     for (unsigned I = 0; I < Enemies.size(); ++I) {
         SDL_Rect Rect = Enemies[I].Rect;
-        SDL_Rect Dummy = Enemies[I].Dummy;
         Rect.x -= OffsetX;
         FSpriteSheet.Draw(AGame.GetSurface(), stEnemy, Enemies[I].CurrentFrame, &Rect);
         //Dummy.x -= OffsetX;
         //SDL_FillRect(AGame.GetSurface(), &Dummy, SDL_MapRGB(AGame.GetSurface() -> format, 0, 255, 0));
     }
 
-    SDL_Rect SRect = Player.Rect;
+    SDL_Rect SRect = Player.GetRect();
     SRect.x -= OffsetX;
 
     FSpriteSheet.Draw(AGame.GetSurface(), stHero, 0, &SRect);
