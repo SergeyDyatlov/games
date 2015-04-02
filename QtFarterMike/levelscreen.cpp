@@ -14,7 +14,7 @@ void LevelScreen::Init(Game& AGame)
 {
     OffsetX = 0;
 
-    Player.SetRect(SDL_Rect{100, 8 * TILE_SIZE, TILE_SIZE, TILE_SIZE * 2});
+    Player.SetRect(SDL_Rect{100, 2 * TILE_SIZE, TILE_SIZE, TILE_SIZE * 2});
     Player.Level = this;
     AGame.Scores.Coins = 0;
     AGame.Scores.Killed = 0;

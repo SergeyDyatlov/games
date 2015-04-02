@@ -13,7 +13,7 @@ struct TScores {
     int Killed;
 };
 
-const int TILE_SIZE = 24;
+const int TILE_SIZE = 36;
 
 class LevelScreen : public Screen
 {
@@ -27,7 +27,7 @@ public:
     virtual void Update(Game& AGame);
     virtual void Draw(Game& AGame);
 
-    std::string Map[14];
+    std::string Map[10];
     int MapWidth;
     int MapHeight;
 
