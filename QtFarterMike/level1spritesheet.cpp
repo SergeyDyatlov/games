@@ -8,9 +8,9 @@ Level1SpriteSheet::Level1SpriteSheet()
 
     ASprite.Rect.x = 0;
     ASprite.Rect.y = 0;
-    ASprite.Frames.CurFrame = 0;
-    ASprite.Frames.MinFrame = 0;
-    ASprite.Frames.MaxFrame = 10;
+    ASprite.Frame = 0;
+    ASprite.StartFrame = 0;
+    ASprite.EndFrame = 9;
     FSprites[stCoin] = ASprite;
 
     ASprite.Rect.x = 0;

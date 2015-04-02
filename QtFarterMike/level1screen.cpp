@@ -62,9 +62,9 @@ void Level1Screen::Init(Game& AGame)
             case '$':
             {
                 Sprite coin;
-                coin.Frames.CurFrame = 0;
-                coin.Frames.MinFrame = 0;
-                coin.Frames.MaxFrame = 10;
+                coin.Frame = 0;
+                coin.StartFrame = 0;
+                coin.EndFrame = 9;
                 coin.Rect.w = TILE_SIZE;
                 coin.Rect.h = TILE_SIZE;
                 coin.Rect.x = row * TILE_SIZE;
@@ -171,7 +171,7 @@ void Level1Screen::Update(Game& AGame)
     Player.Update();
 
     for (auto &coin: Coins)
-      coin.Update();
+      coin.Animate();
     auto localHasIntersection = [this](const Sprite &coin)
         {
             auto tmp = Player.GetRect();
@@ -216,17 +216,17 @@ void Level1Screen::Draw(Game& AGame)
         }
     }
 
-    for (std::vector<Sprite>::iterator it = Coins.begin(); it != Coins.end(); ++it)
+    for (std::vector<Sprite>::iterator coin = Coins.begin(); coin != Coins.end(); ++coin)
     {
-        SDL_Rect Rect = it->Rect;
+        SDL_Rect Rect = coin->Rect;
         Rect.x -= OffsetX;
-        FSpriteSheet.Draw(AGame.GetSurface(), stCoin, it->Frames.CurFrame, &Rect);
+        FSpriteSheet.Draw(AGame.GetSurface(), stCoin, coin->Frame, &Rect);
     }
 
     for (unsigned I = 0; I < Enemies.size(); ++I) {
         SDL_Rect Rect = Enemies[I].Rect;
         Rect.x -= OffsetX;
-        FSpriteSheet.Draw(AGame.GetSurface(), stEnemy, Enemies[I].CurrentFrame, &Rect);
+        FSpriteSheet.Draw(AGame.GetSurface(), stEnemy, Enemies[I].Frame, &Rect);
         //Dummy.x -= OffsetX;
         //SDL_FillRect(AGame.GetSurface(), &Dummy, SDL_MapRGB(AGame.GetSurface() -> format, 0, 255, 0));
     }

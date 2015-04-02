@@ -1,6 +1,7 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
+#include "animation.h"
 #include "schedule.h"
 #include <SDL2/SDL.h>
 #include <vector>
@@ -26,7 +27,7 @@ const int SCHEDULE_ATTACK = 3;
 class Hero;
 class LevelScreen;
 
-class Enemy
+class Enemy: public Animation
 {
 private:
     Schedule FStand;
@@ -48,8 +49,6 @@ private:
 
     Hero* FTarget;
 
-    long FStartTime;
-
     void Think();
     void GetConditions();
     void SelectNewSchedule();
@@ -65,8 +64,6 @@ private:
     bool InitAttack();
     bool Attack();
 
-    void NextFrame();
-
 public:
     Enemy();
     void Update();
@@ -75,7 +72,6 @@ public:
     SDL_Rect Rect;
     SDL_Rect Dummy;
     int Direction;
-    int CurrentFrame;
 };
 
 #endif // ENEMY_H
