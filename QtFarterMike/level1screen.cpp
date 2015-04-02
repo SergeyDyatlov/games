@@ -3,6 +3,8 @@
 
 Level1Screen::Level1Screen()
 {
+    FLeft = false;
+    FRight = false;
 }
 
 Level1Screen::~Level1Screen()
@@ -100,12 +102,13 @@ void Level1Screen::HandleEvents(Game& AGame)
             switch (event.key.keysym.sym)
             {
             case SDLK_LEFT:
-                Player.Left();
+                FLeft = true;
                 break;
 
             case SDLK_RIGHT:
-                Player.Right();
+                FRight = true;
                 break;
+
             case SDLK_UP:
                 Player.Jump();
                 break;
@@ -115,8 +118,11 @@ void Level1Screen::HandleEvents(Game& AGame)
             switch (event.key.keysym.sym)
             {
             case SDLK_LEFT:
+                FLeft = false;
+                break;
+
             case SDLK_RIGHT:
-                Player.Stop();
+                FRight = false;
                 break;
             }
             break;
@@ -129,6 +135,19 @@ void Level1Screen::HandleEvents(Game& AGame)
 void Level1Screen::Update(Game& AGame)
 {
     LevelScreen::Update(AGame);
+
+    if (FLeft == true)
+    {
+        Player.Left();
+    }
+    else if (FRight == true)
+    {
+        Player.Right();
+    }
+    else if (FLeft == false && FRight == false)
+    {
+        Player.Stop();
+    }
 
     SDL_Rect Rect = Player.GetRect();
     for (int row = Rect.x / TILE_SIZE; row <= (Rect.x + Rect.w) / TILE_SIZE; ++row) {

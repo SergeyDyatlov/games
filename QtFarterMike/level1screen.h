@@ -12,6 +12,9 @@ private:
     SDL_Rect FBgRect;
     Level1SpriteSheet FSpriteSheet;
 
+    bool FLeft;
+    bool FRight;
+
 public:
     Level1Screen();
     ~Level1Screen();
