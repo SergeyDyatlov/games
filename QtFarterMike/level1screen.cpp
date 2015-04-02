@@ -227,7 +227,19 @@ void Level1Screen::Draw(Game& AGame)
     for (unsigned I = 0; I < Enemies.size(); ++I) {
         SDL_Rect Rect = Enemies[I].Rect;
         Rect.x -= OffsetX;
-        FSpriteSheet.Draw(AGame.GetSurface(), stEnemy, Enemies[I].Frame, &Rect);
+        switch (Enemies[I].Action) {
+        case eaMoveLeft:
+            FEnemySheet.Draw(AGame.GetSurface(), estLeft, Enemies[I].Frame, &Rect);
+            break;
+        case eaMoveRight:
+            FEnemySheet.Draw(AGame.GetSurface(), estRight, Enemies[I].Frame, &Rect);
+            break;
+        case eaStand:
+            FEnemySheet.Draw(AGame.GetSurface(), estStand, Enemies[I].Frame, &Rect);
+            break;
+        default:
+            break;
+        }
         //Dummy.x -= OffsetX;
         //SDL_FillRect(AGame.GetSurface(), &Dummy, SDL_MapRGB(AGame.GetSurface() -> format, 0, 255, 0));
     }

@@ -59,6 +59,9 @@ Enemy::Enemy()
     StartFrame = 0;
     EndFrame = 6;
     Frame = 0;
+
+    Direction = 0;
+    Action = eaStand;
 }
 
 void Enemy::Think()
@@ -195,6 +198,9 @@ bool Enemy::InitStand()
 
     Direction = rand() % 2;
 
+    StartFrame = 0;
+    EndFrame = 1;
+
     FActionDelay = rand() % 50 + 50;
     return true;
 }
@@ -202,6 +208,8 @@ bool Enemy::InitStand()
 bool Enemy::Stand()
 {
     printf("Stand\n");
+
+    Action = eaStand;
 
     FActionDelay--;
     if (FActionDelay <= 0)
@@ -217,6 +225,9 @@ bool Enemy::Stand()
 bool Enemy::InitWalk()
 {
     printf("InitWalk\n");
+
+    StartFrame = 1;
+    EndFrame = 10;
 
     FActionDelay = rand() % 50 + 50;
     return true;
@@ -234,9 +245,11 @@ bool Enemy::Walk()
 
     switch (Direction) {
     case 0:
+        Action = eaMoveLeft;
         Rect.x -= 2;
         break;
     case 1:
+        Action = eaMoveRight;
         Rect.x += 2;
         break;
     default:
@@ -251,6 +264,9 @@ bool Enemy::Walk()
 bool Enemy::InitPursuit()
 {
     printf("InitPursuit\n");
+
+    StartFrame = 1;
+    EndFrame = 10;
 
     FActionDelay = rand() % 50 + 50;
     return true;
@@ -277,9 +293,11 @@ bool Enemy::Pursuit()
 
     switch (Direction) {
     case 0:
+        Action = eaMoveLeft;
         Rect.x -= 2;
         break;
     case 1:
+        Action = eaMoveRight;
         Rect.x += 2;
         break;
     default:
