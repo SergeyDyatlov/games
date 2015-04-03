@@ -24,10 +24,10 @@ void Level1Screen::Init(Game& AGame)
     Map[1]  = "|                                                                              |";
     Map[2]  = "|                                                                              |";
     Map[3]  = "|                                                                              |";
-    Map[4]  = "|  P                                                                        H  |";
-    Map[5]  = "|                             $E$                                        ******|";
-    Map[6]  = "|                 $                           $  $                     ********|";
-    Map[7]  = "|           $$$   $    p    *******  $$$     $  $  $         E       **********|";
+    Map[4]  = "|  P                           E                                            H  |";
+    Map[5]  = "|                             $ $                                        ******|";
+    Map[6]  = "|                 $                           $  $           E         ********|";
+    Map[7]  = "|           $$$   $    p    *******  $$$     $  $  $                 **********|";
     Map[8]  = "|     $$$       *****      ********* $$$  ******** $ ****$ $    $ $************|";
     Map[9]  = "################################################################################";
 
@@ -46,11 +46,13 @@ void Level1Screen::Init(Game& AGame)
             {
                 Enemy enemy;
                 enemy.Level = this;
-                enemy.Rect.x = row * TILE_SIZE;
-                enemy.Rect.y = col * TILE_SIZE;
-                enemy.Rect.w = TILE_SIZE;
-                enemy.Rect.h = TILE_SIZE * 2;
-                enemy.Dummy = enemy.Rect;
+                SDL_Rect Rect;
+                Rect.x = row * TILE_SIZE;
+                Rect.y = col * TILE_SIZE;
+                Rect.w = TILE_SIZE;
+                Rect.h = TILE_SIZE * 2;
+                enemy.SetRect(Rect);
+                enemy.Dummy = enemy.GetRect();
                 Enemies.push_back(enemy);
             }
                 break;
@@ -221,7 +223,7 @@ void Level1Screen::Draw(Game& AGame)
     }
 
     for (unsigned I = 0; I < Enemies.size(); ++I) {
-        SDL_Rect Rect = Enemies[I].Rect;
+        SDL_Rect Rect = Enemies[I].GetRect();
         Rect.x -= OffsetX;
         switch (Enemies[I].Action) {
         case eaMoveLeft:

@@ -70,8 +70,8 @@ public:
     Enemy();
     void Update();
 
-    LevelScreen* Level;
-    SDL_Rect Rect;
+//    LevelScreen* Level;
+//    SDL_Rect Rect;
     SDL_Rect Dummy;
     int Direction;
     EnemyAction Action;

@@ -89,7 +89,7 @@ void Enemy::SelectNewSchedule()
 {
     switch (FCurrentState) {
     case STATE_STAND:
-        if (FConditions.Contains(CONDITION_SEE_ENEMY) && !FConditions.Contains(CONDITION_OBSTACLE))
+        if (FConditions.Contains(CONDITION_SEE_ENEMY))
         {
             SetSchedule(SCHEDULE_PURSUIT);
         }
@@ -179,8 +179,8 @@ void Enemy::Sense()
         }
     }
 
-    int x1 = Rect.x;
-    int y1 = Rect.y;
+    int x1 = GetRect().x;
+    int y1 = GetRect().y;
     int x2 = Level->Player.GetRect().x;
     int y2 = Level->Player.GetRect().y;
 
@@ -218,6 +218,7 @@ bool Enemy::Stand()
     }
 
     Animate();
+    CheckCollision();
 
     return false;
 }
@@ -246,17 +247,18 @@ bool Enemy::Walk()
     switch (Direction) {
     case 0:
         Action = eaMoveLeft;
-        Rect.x -= 2;
+        MoveLeft();
         break;
     case 1:
         Action = eaMoveRight;
-        Rect.x += 2;
+        MoveRight();
         break;
     default:
         break;
     }
 
     Animate();
+    CheckCollision();
 
     return false;
 }
@@ -282,6 +284,7 @@ bool Enemy::Pursuit()
         return true;
     }
 
+    SDL_Rect Rect = GetRect();
     if (Level->Player.GetRect().x < Rect.x)
     {
         Direction = 0;
@@ -294,17 +297,18 @@ bool Enemy::Pursuit()
     switch (Direction) {
     case 0:
         Action = eaMoveLeft;
-        Rect.x -= 2;
+        MoveLeft();
         break;
     case 1:
         Action = eaMoveRight;
-        Rect.x += 2;
+        MoveRight();
         break;
     default:
         break;
     }
 
     Animate();
+    CheckCollision();
 
     return false;
 }
@@ -333,6 +337,7 @@ bool Enemy::Attack()
     }
 
     Animate();
+    CheckCollision();
 
     return true;
 }
@@ -351,6 +356,7 @@ void Enemy::Update()
         FCurrentSchedule.Update(this);
     }
 
+    SDL_Rect Rect = GetRect();
     switch (Direction) {
     case 0:
         Dummy = Rect;

@@ -124,7 +124,7 @@ void Level2Screen::Draw(Game& AGame)
     }
 
     for (unsigned I = 0; I < Enemies.size(); ++I) {
-        SDL_Rect Rect = Enemies[I].Rect;
+        SDL_Rect Rect = Enemies[I].GetRect();
         Rect.x -= OffsetX;
         FSpriteSheet.Draw(AGame.GetSurface(), stEnemy, 0, &Rect);
     }

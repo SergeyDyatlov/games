@@ -1,9 +1,10 @@
 #ifndef ANIMATION_H
 #define ANIMATION_H
 
+#include "movable.h"
 #include <SDL2/SDL.h>
 
-class Animation
+class Animation: public Movable
 {
 private:
     long FStartTime;
