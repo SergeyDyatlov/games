@@ -230,6 +230,8 @@ bool Enemy::InitWalk()
     StartFrame = 1;
     EndFrame = 10;
 
+    SetSpeed(10.0f);
+
     FActionDelay = rand() % 50 + 50;
     return true;
 }
@@ -269,6 +271,8 @@ bool Enemy::InitPursuit()
 
     StartFrame = 1;
     EndFrame = 10;
+
+    SetSpeed(15.0f);
 
     FActionDelay = rand() % 50 + 50;
     return true;

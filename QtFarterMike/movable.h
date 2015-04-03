@@ -13,6 +13,7 @@ private:
     float Fy = 0.0f;
     float Fvx = 0.0f;
     float Fvy = 0.0f;
+    float FSpeed;
     bool FDidJump = false;
     bool HasCollision(float x, float y) const;
 
@@ -22,6 +23,7 @@ public:
     void SetRect(const SDL_Rect &);
     const SDL_Rect &GetRect() const;
 
+    void SetSpeed(float ASpeed);
     void MoveLeft();
     void MoveRight();
 

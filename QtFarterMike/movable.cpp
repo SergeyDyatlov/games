@@ -17,14 +17,19 @@ const SDL_Rect &Movable::GetRect() const
     return FRect;
 }
 
+void Movable::SetSpeed(float ASpeed)
+{
+    FSpeed = ASpeed;
+}
+
 void Movable::MoveLeft()
 {
-    Fvx = -15.0f;
+    Fvx = -FSpeed;
 }
 
 void Movable::MoveRight()
 {
-    Fvx = 15.0f;
+    Fvx = FSpeed;
 }
 
 bool Movable::HasCollision(float x, float y) const
