@@ -3,6 +3,8 @@
 
 Level1Screen::Level1Screen()
 {
+    FLeft = false;
+    FRight = false;
 }
 
 Level1Screen::~Level1Screen()
@@ -22,19 +24,15 @@ void Level1Screen::Init(Game& AGame)
     Map[1]  = "|                                                                              |";
     Map[2]  = "|                                                                              |";
     Map[3]  = "|                                                                              |";
-    Map[4]  = "|                                                                              |";
-    Map[5]  = "|                                                                              |";
-    Map[6]  = "|                                                                              |";
-    Map[7]  = "|                                                                              |";
-    Map[8]  = "|                                                                           H  |";
-    Map[9]  = "|                             $E$                                        ******|";
-    Map[10] = "|                 $                           $  $                     ********|";
-    Map[11] = "|  P        $$$   $    p    *******  $$$     $  $  $         E       **********|";
-    Map[12] = "|     $$$       *****      ********* $$$  ******** $ ****$ $    $ $************|";
-    Map[13] = "################################################################################";
+    Map[4]  = "|  P                                                                        H  |";
+    Map[5]  = "|                             $E$                                        ******|";
+    Map[6]  = "|                 $                           $  $                     ********|";
+    Map[7]  = "|           $$$   $    p    *******  $$$     $  $  $         E       **********|";
+    Map[8]  = "|     $$$       *****      ********* $$$  ******** $ ****$ $    $ $************|";
+    Map[9]  = "################################################################################";
 
     MapWidth = Map[0].length();
-    MapHeight = 14;
+    MapHeight = 10;
 
     Enemies.clear();
 
@@ -60,9 +58,9 @@ void Level1Screen::Init(Game& AGame)
             case '$':
             {
                 Sprite coin;
-                coin.Frames.CurFrame = 0;
-                coin.Frames.MinFrame = 0;
-                coin.Frames.MaxFrame = 10;
+                coin.Frame = 0;
+                coin.StartFrame = 0;
+                coin.EndFrame = 9;
                 coin.Rect.w = TILE_SIZE;
                 coin.Rect.h = TILE_SIZE;
                 coin.Rect.x = row * TILE_SIZE;
@@ -100,12 +98,13 @@ void Level1Screen::HandleEvents(Game& AGame)
             switch (event.key.keysym.sym)
             {
             case SDLK_LEFT:
-                Player.Left();
+                FLeft = true;
                 break;
 
             case SDLK_RIGHT:
-                Player.Right();
+                FRight = true;
                 break;
+
             case SDLK_UP:
                 Player.Jump();
                 break;
@@ -115,8 +114,11 @@ void Level1Screen::HandleEvents(Game& AGame)
             switch (event.key.keysym.sym)
             {
             case SDLK_LEFT:
+                FLeft = false;
+                break;
+
             case SDLK_RIGHT:
-                Player.Stop();
+                FRight = false;
                 break;
             }
             break;
@@ -129,6 +131,19 @@ void Level1Screen::HandleEvents(Game& AGame)
 void Level1Screen::Update(Game& AGame)
 {
     LevelScreen::Update(AGame);
+
+    if (FLeft == true)
+    {
+        Player.Left();
+    }
+    else if (FRight == true)
+    {
+        Player.Right();
+    }
+    else if (FLeft == false && FRight == false)
+    {
+        Player.Stop();
+    }
 
     SDL_Rect Rect = Player.GetRect();
     for (int row = Rect.x / TILE_SIZE; row <= (Rect.x + Rect.w) / TILE_SIZE; ++row) {
@@ -149,10 +164,11 @@ void Level1Screen::Update(Game& AGame)
         enemy->Update();
     }
 
+    Player.Animate();
     Player.Update();
 
     for (auto &coin: Coins)
-      coin.Update();
+      coin.Animate();
     auto localHasIntersection = [this](const Sprite &coin)
         {
             auto tmp = Player.GetRect();
@@ -197,17 +213,29 @@ void Level1Screen::Draw(Game& AGame)
         }
     }
 
-    for (std::vector<Sprite>::iterator it = Coins.begin(); it != Coins.end(); ++it)
+    for (std::vector<Sprite>::iterator coin = Coins.begin(); coin != Coins.end(); ++coin)
     {
-        SDL_Rect Rect = it->Rect;
+        SDL_Rect Rect = coin->Rect;
         Rect.x -= OffsetX;
-        FSpriteSheet.Draw(AGame.GetSurface(), stCoin, it->Frames.CurFrame, &Rect);
+        FSpriteSheet.Draw(AGame.GetSurface(), stCoin, coin->Frame, &Rect);
     }
 
     for (unsigned I = 0; I < Enemies.size(); ++I) {
         SDL_Rect Rect = Enemies[I].Rect;
         Rect.x -= OffsetX;
-        FSpriteSheet.Draw(AGame.GetSurface(), stEnemy, Enemies[I].CurrentFrame, &Rect);
+        switch (Enemies[I].Action) {
+        case eaMoveLeft:
+            FEnemySheet.Draw(AGame.GetSurface(), estLeft, Enemies[I].Frame, &Rect);
+            break;
+        case eaMoveRight:
+            FEnemySheet.Draw(AGame.GetSurface(), estRight, Enemies[I].Frame, &Rect);
+            break;
+        case eaStand:
+            FEnemySheet.Draw(AGame.GetSurface(), estStand, Enemies[I].Frame, &Rect);
+            break;
+        default:
+            break;
+        }
         //Dummy.x -= OffsetX;
         //SDL_FillRect(AGame.GetSurface(), &Dummy, SDL_MapRGB(AGame.GetSurface() -> format, 0, 255, 0));
     }
@@ -215,5 +243,17 @@ void Level1Screen::Draw(Game& AGame)
     SDL_Rect SRect = Player.GetRect();
     SRect.x -= OffsetX;
 
-    FSpriteSheet.Draw(AGame.GetSurface(), stHero, 0, &SRect);
+    switch (Player.Action) {
+    case paMoveLeft:
+        FPlayerSheet.Draw(AGame.GetSurface(), stLeft, Player.Frame, &SRect);
+        break;
+    case paMoveRight:
+        FPlayerSheet.Draw(AGame.GetSurface(), stRight, Player.Frame, &SRect);
+        break;
+    case paStand:
+        FPlayerSheet.Draw(AGame.GetSurface(), stStand, Player.Frame, &SRect);
+        break;
+    default:
+        break;
+    }
 }

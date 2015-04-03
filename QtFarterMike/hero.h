@@ -1,11 +1,14 @@
 #ifndef HERO_H
 #define HERO_H
 
+#include "animation.h"
 #include <SDL2/SDL.h>
 
 class LevelScreen;
 
-class Hero
+enum PlayerAction {paMoveLeft, paMoveRight, paStand};
+
+class Hero: public Animation
 {
 private:
     int FHealth;
@@ -24,6 +27,8 @@ public:
     void Update();
     void SetRect(const SDL_Rect &);
     const SDL_Rect &GetRect() const;
+    int Direction;
+    PlayerAction Action;
 private:
     SDL_Rect FRect;
     float Fx = 0.0f;

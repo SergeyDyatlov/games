@@ -24,7 +24,10 @@ SOURCES += main.cpp \
     scorespritesheet.cpp \
     font.cpp \
     schedule.cpp \
-    conditionlist.cpp
+    conditionlist.cpp \
+    animation.cpp \
+    playerspritesheet.cpp \
+    enemyspritesheet.cpp
 
 include(deployment.pri)
 qtcAddDeployment()
@@ -47,5 +50,8 @@ HEADERS += \
     font.h \
     sprite.h \
     schedule.h \
-    conditionlist.h
+    conditionlist.h \
+    animation.h \
+    playerspritesheet.h \
+    enemyspritesheet.h
 

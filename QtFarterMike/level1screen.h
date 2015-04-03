@@ -1,6 +1,8 @@
 #ifndef LEVEL1SCREEN_H
 #define LEVEL1SCREEN_H
 
+#include "playerspritesheet.h"
+#include "enemyspritesheet.h"
 #include "levelscreen.h"
 #include "level1spritesheet.h"
 #include <iostream>
@@ -10,7 +12,12 @@ class Level1Screen : public LevelScreen
 {
 private:
     SDL_Rect FBgRect;
+    PlayerSpriteSheet FPlayerSheet;
+    EnemySpriteSheet FEnemySheet;
     Level1SpriteSheet FSpriteSheet;
+
+    bool FLeft;
+    bool FRight;
 
 public:
     Level1Screen();

@@ -56,7 +56,12 @@ Enemy::Enemy()
 
     FTarget = NULL;
 
-    CurrentFrame = 0;
+    StartFrame = 0;
+    EndFrame = 6;
+    Frame = 0;
+
+    Direction = 0;
+    Action = eaStand;
 }
 
 void Enemy::Think()
@@ -191,10 +196,10 @@ bool Enemy::InitStand()
 {
     printf("InitStand\n");
 
-    CurrentFrame = 0;
-    FStartTime = SDL_GetTicks();
-
     Direction = rand() % 2;
+
+    StartFrame = 0;
+    EndFrame = 1;
 
     FActionDelay = rand() % 50 + 50;
     return true;
@@ -204,13 +209,15 @@ bool Enemy::Stand()
 {
     printf("Stand\n");
 
+    Action = eaStand;
+
     FActionDelay--;
     if (FActionDelay <= 0)
     {
         return true;
     }
 
-    NextFrame();
+    Animate();
 
     return false;
 }
@@ -219,8 +226,8 @@ bool Enemy::InitWalk()
 {
     printf("InitWalk\n");
 
-    CurrentFrame = 0;
-    FStartTime = SDL_GetTicks();
+    StartFrame = 1;
+    EndFrame = 10;
 
     FActionDelay = rand() % 50 + 50;
     return true;
@@ -238,16 +245,18 @@ bool Enemy::Walk()
 
     switch (Direction) {
     case 0:
+        Action = eaMoveLeft;
         Rect.x -= 2;
         break;
     case 1:
+        Action = eaMoveRight;
         Rect.x += 2;
         break;
     default:
         break;
     }
 
-    NextFrame();
+    Animate();
 
     return false;
 }
@@ -256,8 +265,8 @@ bool Enemy::InitPursuit()
 {
     printf("InitPursuit\n");
 
-    CurrentFrame = 0;
-    FStartTime = SDL_GetTicks();
+    StartFrame = 1;
+    EndFrame = 10;
 
     FActionDelay = rand() % 50 + 50;
     return true;
@@ -284,16 +293,18 @@ bool Enemy::Pursuit()
 
     switch (Direction) {
     case 0:
+        Action = eaMoveLeft;
         Rect.x -= 2;
         break;
     case 1:
+        Action = eaMoveRight;
         Rect.x += 2;
         break;
     default:
         break;
     }
 
-    NextFrame();
+    Animate();
 
     return false;
 }
@@ -301,9 +312,6 @@ bool Enemy::Pursuit()
 bool Enemy::InitAttack()
 {
     printf("InitAttack\n");
-
-    CurrentFrame = 0;
-    FStartTime = SDL_GetTicks();
 
     return true;
 }
@@ -324,24 +332,9 @@ bool Enemy::Attack()
         }
     }
 
-    NextFrame();
+    Animate();
 
     return true;
-}
-
-void Enemy::NextFrame()
-{
-    long Elapsed = (SDL_GetTicks() - FStartTime);
-    if (Elapsed >= 300)
-    {
-        CurrentFrame++;
-        FStartTime = SDL_GetTicks();
-        printf("\t\t\t\t %d \n", Elapsed);
-    }
-    if (CurrentFrame > 7)
-    {
-        CurrentFrame = 0;
-    }
 }
 
 void Enemy::Update()
