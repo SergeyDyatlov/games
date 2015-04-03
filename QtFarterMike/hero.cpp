@@ -71,61 +71,60 @@ void Hero::Jump()
 {
     if (!FDidJump)
     {
-        Fvy -= 20.0f;
+        Fvy -= 30.0f;
         FDidJump = true;
     }
 }
 
-void Hero::Update()
+bool Hero::HasCollision(float x, float y) const
 {
-    auto Dt = 1.0f / 5.0f;
-    auto x = Fx + Fvx * Dt;
-    auto y = Fy + Fvy * Dt;
-    Fvy += 9.81 * Dt;
-    bool hasCollision = false;
     for (int row = y / TILE_SIZE; row <= (y + FRect.h) / TILE_SIZE; ++row)
     {
         if (row < 0 || row >= static_cast<int>(sizeof(Level->Map) / sizeof(*Level->Map)))
-        {
-            hasCollision = true;
-            break;
-        }
+            return true;
         for (int col = x / TILE_SIZE; col <= (x + FRect.w) / TILE_SIZE; ++col)
         {
             if (col < 0 || col >= static_cast<int>(Level->Map[row].size()))
-            {
-                hasCollision = true;
-                break;
-            }
+                return true;
             char ch = Level->Map[row][col];
             switch (ch)
             {
             case '#':
             case '|':
             case '*':
-                hasCollision = true;
-                break;
+                return true;
             default:
                 break;
             }
-            if (hasCollision)
-                break;
         }
-        if (hasCollision)
-            break;
     }
-    if (!hasCollision)
+    return false;
+}
+
+
+void Hero::Update()
+{
+    auto Dt = 1.0f / 5.0f;
+    auto x = Fx + Fvx * Dt;
+    if (HasCollision(x, Fy))
     {
-        Fx = x;
+        x = Fx;
+    }
+    auto y = Fy + Fvy * Dt;
+    Fvy += 9.81 * Dt;
+
+    if (!HasCollision(x, y))
+    {
         Fy = y;
-        FRect.x = Fx;
         FRect.y = Fy;
     }
     else
     {
-        Fvy = -0.5f * Fvy;
+        Fvy = 0.0f;
         FDidJump = false;
     }
+    Fx = x;
+    FRect.x = Fx;
 }
 
 void Hero::SetRect(const SDL_Rect &rect)

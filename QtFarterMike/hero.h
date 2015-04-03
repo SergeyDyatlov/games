@@ -36,6 +36,7 @@ private:
     float Fvx = 0.0f;
     float Fvy = 0.0f;
     bool FDidJump = false;
+    bool HasCollision(float x, float y) const;
 };
 
 #endif // HERO_H
