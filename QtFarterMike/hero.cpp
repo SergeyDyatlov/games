@@ -69,7 +69,7 @@ void Hero::Stop()
 
 void Hero::Jump()
 {
-    if (!FDidJump)
+    if (!FDidJump && HasCollision(Fx, Fy + 4))
     {
         Fvy -= 30.0f;
         FDidJump = true;
