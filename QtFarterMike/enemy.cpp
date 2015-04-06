@@ -89,7 +89,11 @@ void Enemy::SelectNewSchedule()
 {
     switch (FCurrentState) {
     case STATE_STAND:
-        if (FConditions.Contains(CONDITION_SEE_ENEMY))
+        if (FConditions.Contains(CONDITION_CAN_ATTACK))
+        {
+            SetSchedule(SCHEDULE_ATTACK);
+        }
+        else if (FConditions.Contains(CONDITION_SEE_ENEMY))
         {
             SetSchedule(SCHEDULE_PURSUIT);
         }
@@ -103,7 +107,11 @@ void Enemy::SelectNewSchedule()
         }
         break;
     case STATE_WALK:
-        if (FConditions.Contains(CONDITION_SEE_ENEMY) && !FConditions.Contains(CONDITION_OBSTACLE))
+        if (FConditions.Contains(CONDITION_CAN_ATTACK))
+        {
+            SetSchedule(SCHEDULE_ATTACK);
+        }
+        else if (FConditions.Contains(CONDITION_SEE_ENEMY))
         {
             SetSchedule(SCHEDULE_PURSUIT);
         }
@@ -117,7 +125,11 @@ void Enemy::SelectNewSchedule()
         }
         break;
     case STATE_PURSUIT:
-        if (!FConditions.Contains(CONDITION_SEE_ENEMY) || FConditions.Contains(CONDITION_OBSTACLE))
+        if (FConditions.Contains(CONDITION_CAN_ATTACK))
+        {
+            SetSchedule(SCHEDULE_ATTACK);
+        }
+        else if (!FConditions.Contains(CONDITION_SEE_ENEMY) || FConditions.Contains(CONDITION_OBSTACLE))
         {
             SetSchedule(SCHEDULE_STAND);
         }
@@ -127,7 +139,14 @@ void Enemy::SelectNewSchedule()
         }
         break;
     case STATE_ATTACK:
-        SetSchedule(SCHEDULE_ATTACK);
+        if (!FConditions.Contains(CONDITION_CAN_ATTACK) || (FConditions.Contains(CONDITION_OBSTACLE)))
+        {
+            SetSchedule(SCHEDULE_STAND);
+        }
+        else
+        {
+            SetSchedule(SCHEDULE_ATTACK);
+        }
         break;
     default:
         break;
@@ -143,6 +162,7 @@ void Enemy::SetSchedule(int ASchedule)
         {
             FCurrentSchedule = schedule;
             FCurrentSchedule.Reset();
+            break;
         }
     }
 
@@ -185,7 +205,11 @@ void Enemy::Sense()
     int y2 = Level->Player.GetRect().y;
 
     int dist = hypot(x1 - x2, y1 - y2);
-    if (dist < 200)
+    if (dist < 40)
+    {
+        FConditions.Add(CONDITION_CAN_ATTACK);
+    }
+    else if (dist < 200)
     {
         FConditions.Add(CONDITION_SEE_ENEMY);
     }
@@ -321,12 +345,38 @@ bool Enemy::InitAttack()
 {
     printf("InitAttack\n");
 
+    StartFrame = 1;
+    EndFrame = 3;
+
+    SetSpeed(0.0f);
+
     return true;
 }
 
 bool Enemy::Attack()
 {
     printf("Attack\n");
+
+    SDL_Rect Rect = GetRect();
+    if (Level->Player.GetRect().x < Rect.x)
+    {
+        Direction = 0;
+    }
+    else
+    {
+        Direction = 1;
+    }
+
+    switch (Direction) {
+    case 0:
+        Action = eaMoveLeft;
+        break;
+    case 1:
+        Action = eaMoveRight;
+        break;
+    default:
+        break;
+    }
 
     if (FTarget != NULL)
     {

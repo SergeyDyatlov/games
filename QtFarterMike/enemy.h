@@ -6,7 +6,7 @@
 #include <SDL2/SDL.h>
 #include <vector>
 
-const int THINK_DELAY = 1;
+const int THINK_DELAY = 5;
 
 const int STATE_STAND = 0;
 const int STATE_WALK = 1;

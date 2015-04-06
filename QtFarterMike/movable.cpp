@@ -20,6 +20,7 @@ const SDL_Rect &Movable::GetRect() const
 void Movable::SetSpeed(float ASpeed)
 {
     FSpeed = ASpeed;
+    Fvx = 0;
 }
 
 void Movable::MoveLeft()
