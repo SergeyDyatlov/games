@@ -54,8 +54,6 @@ Enemy::Enemy()
     FAlert = false;
     FAlertInterval = 0;
 
-    FTarget = NULL;
-
     StartFrame = 0;
     EndFrame = 6;
     Frame = 0;
@@ -378,16 +376,11 @@ bool Enemy::Attack()
         break;
     }
 
-    if (FTarget != NULL)
+    Level->Player.Hit();
+    if (Level->Player.IsDead())
     {
-        FTarget->Hit();
-
-        if (FTarget->IsDead())
-        {
-            FTarget = NULL;
-            FAlert = false;
-            FAlertInterval = 0;
-        }
+        FAlert = false;
+        FAlertInterval = 0;
     }
 
     Animate();

@@ -16,7 +16,7 @@ Hero::Hero()
 
 void Hero::Hit()
 {
-    FHealth -= 1;
+    FHealth -= 5;
 
     if (FHealth <= 0)
     {

@@ -49,8 +49,6 @@ private:
     bool FAlert;
     int FAlertInterval;
 
-    Hero* FTarget;
-
     void Think();
     void GetConditions();
     void SelectNewSchedule();

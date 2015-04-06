@@ -169,6 +169,11 @@ void Level1Screen::Update(Game& AGame)
     Player.Animate();
     Player.Update();
 
+    if (Player.IsDead())
+    {
+        AGame.SetScoreScreen();
+    }
+
     for (auto &coin: Coins)
       coin.Animate();
     auto localHasIntersection = [this](const Sprite &coin)
