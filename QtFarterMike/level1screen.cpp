@@ -1,5 +1,6 @@
 #include "level1screen.h"
 #include "game.h"
+#include "texture.h"
 
 Level1Screen::Level1Screen()
 {
@@ -15,9 +16,7 @@ void Level1Screen::Init(Game& AGame)
 {
     LevelScreen::Init(AGame);
 
-    FBgRect.x = 0;
-    FBgRect.y = 0;
-    SDL_GetWindowSize(AGame.GetWindow(), &FBgRect.w, &FBgRect.h);
+    FBackground = LoadTexture(AGame.GetRenderer(), "res/Level1Background.png");
 
     FLevelSheet.LoadFromFile(AGame.GetRenderer(), "res/Level1Sprites.png");
     FPlayerSheet.LoadFromFile(AGame.GetRenderer(), "res/PlayerSprites.png");
@@ -190,7 +189,7 @@ void Level1Screen::Update(Game& AGame)
 
 void Level1Screen::Draw(Game& AGame)
 {
-    FLevelSheet.Draw(AGame.GetRenderer(), stBackground, 0, &FBgRect);
+    SDL_RenderCopy(AGame.GetRenderer(), FBackground, NULL, NULL);
 
     int Width;
     int Height;
