@@ -248,7 +248,7 @@ void Level1Screen::Draw(Game& AGame)
             FEnemySheet.Draw(AGame.GetRenderer(), estRight, Enemies[I].Frame, &Rect);
             break;
         case eaAttack:
-            FEnemySheet.Draw(AGame.GetRenderer(), estAttack, Enemies[I].Frame, &Rect);
+            FEnemySheet.Draw(AGame.GetRenderer(), estAttack, Enemies[I].Frame, Enemies[I].Direction, &Rect);
             break;
         default:
             break;

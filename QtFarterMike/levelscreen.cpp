@@ -16,6 +16,9 @@ void LevelScreen::Init(Game& AGame)
 
     Player.SetRect(SDL_Rect{100, 2 * TILE_SIZE, TILE_SIZE, TILE_SIZE * 2});
     Player.Level = this;
+    Player.SetHealth(100);
+    Player.Direction = 1;
+
     AGame.Scores.Coins = 0;
     AGame.Scores.Killed = 0;
 }

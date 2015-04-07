@@ -16,6 +16,7 @@ private:
 
 public:
     Hero();
+    void SetHealth(int AHealth);
     void Hit();
     bool IsDead();
 

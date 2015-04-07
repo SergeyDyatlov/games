@@ -3,15 +3,18 @@
 
 Hero::Hero()
 {
-    FHealth = 100;
-    FDead = false;
-
     StartFrame = 1;
     EndFrame = 2;
     Frame = 0;
 
     Direction = 1;
     Action = paStand;
+}
+
+void Hero::SetHealth(int AHealth)
+{
+    FHealth = AHealth;
+    FDead = false;
 }
 
 void Hero::Hit()

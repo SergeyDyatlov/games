@@ -15,6 +15,7 @@ private:
 public:
     EnemySpriteSheet();
     void Draw(SDL_Renderer *ARenderer, EnemySpriteType Type, int Frame, SDL_Rect* Rect);
+    void Draw(SDL_Renderer *ARenderer, EnemySpriteType Type, int Frame, int Direction, SDL_Rect* Rect);
 };
 
 #endif // ENEMYSPRITESHEET_H
