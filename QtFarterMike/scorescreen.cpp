@@ -11,26 +11,25 @@ ScoreScreen::~ScoreScreen()
 
 void ScoreScreen::Init(Game& AGame)
 {
-    FBackgroundSurface = NULL;
-    const std::string path = "res/ScoreBackground.bmp";
-    FBackgroundSurface = SDL_LoadBMP(path.c_str());
-    if (FBackgroundSurface == NULL)
-    {
-        printf("Unable to load bitmap: ScoreBackground.bmp");
-    }
-    SDL_SetColorKey(FBackgroundSurface, SDL_RLEACCEL, SDL_MapRGB(FBackgroundSurface->format, 255, 255, 255));
+    FBackground = IMG_LoadTexture(AGame.GetRenderer(), "res/ScoreBackground.bmp");
+
+    FScoreSheet.LoadTexture(AGame.GetRenderer(), "res/ScoreSprites.bmp");;
 
     FOptions.clear();
     FOptions.push_back("Select Level");
     FOptions.push_back("Restart Level");
     FOptions.push_back("Next Level");
 
+    int Width;
+    int Height;
+    SDL_GetWindowSize(AGame.GetWindow(), &Width, &Height);
+
     for (unsigned I = 0; I < FOptions.size(); I++)
     {
-        int BWidth = AGame.GetSurface()->w / 6;
-        int BHeight = AGame.GetSurface()->h / 9;
-        int X = ((AGame.GetSurface()->w / 12) + (I * (BWidth * 2)));
-        int Y = (AGame.GetSurface()->h - BHeight * 2);
+        int BWidth = Width / 6;
+        int BHeight = Height / 9;
+        int X = ((Width / 12) + (I * (BWidth * 2)));
+        int Y = (Height - BHeight * 2);
         FButtons[I] = Button(X, Y, BWidth, BHeight);
         FButtons[I].Clicked = false;
     }
@@ -119,42 +118,46 @@ void ScoreScreen::Update(Game& AGame)
 
 void ScoreScreen::Draw(Game& AGame)
 {
-    SDL_BlitScaled(FBackgroundSurface, NULL, AGame.GetSurface(), NULL);
+    SDL_RenderCopy(AGame.GetRenderer(), FBackground, NULL, NULL);
+
+    int Width;
+    int Height;
+    SDL_GetWindowSize(AGame.GetWindow(), &Width, &Height);
 
     SDL_Rect Rect;
-    Rect.x = AGame.GetSurface()->w / 6;
-    Rect.y = AGame.GetSurface()->h / 4;
+    Rect.x = Width / 6;
+    Rect.y = Height / 4;
     Rect.w = 64;
     Rect.h = 64;
-    FSpriteSheet.Draw(AGame.GetSurface(), stCoins, 0, &Rect);
+    FScoreSheet.Draw(AGame.GetRenderer(), stCoins, 0, &Rect);
 
     AGame.Font.Height = 32;
     int x = Rect.x + Rect.w * 2;
-    AGame.Font.DrawText(AGame.GetSurface(), x, 100, std::to_string(AGame.Scores.Coins));
+    AGame.Font.DrawText(AGame.GetRenderer(), x, 100, std::to_string(AGame.Scores.Coins));
 
 
     int Frame;
-    FButtons[0].Draw(AGame.GetSurface());
+    FButtons[0].Draw(AGame.GetRenderer());
     Frame = 0;
     if (FButtons[0].Clicked)
     {
         Frame = 1;
     }
-    FSpriteSheet.Draw(AGame.GetSurface(), stMenu, Frame, &FButtons[0].Rect);
+    FScoreSheet.Draw(AGame.GetRenderer(), stMenu, Frame, &FButtons[0].Rect);
 
-    FButtons[1].Draw(AGame.GetSurface());
+    FButtons[1].Draw(AGame.GetRenderer());
     Frame = 0;
     if (FButtons[1].Clicked)
     {
         Frame = 1;
     }
-    FSpriteSheet.Draw(AGame.GetSurface(), stRestart, Frame, &FButtons[1].Rect);
+    FScoreSheet.Draw(AGame.GetRenderer(), stRestart, Frame, &FButtons[1].Rect);
 
-    FButtons[2].Draw(AGame.GetSurface());
+    FButtons[2].Draw(AGame.GetRenderer());
     Frame = 0;
     if (FButtons[2].Clicked)
     {
         Frame = 1;
     }
-    FSpriteSheet.Draw(AGame.GetSurface(), stNext, Frame, &FButtons[2].Rect);
+    FScoreSheet.Draw(AGame.GetRenderer(), stNext, Frame, &FButtons[2].Rect);
 }

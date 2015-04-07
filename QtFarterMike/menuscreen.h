@@ -4,6 +4,8 @@
 #include "screen.h"
 #include "button.h"
 #include "menuspritesheet.h"
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <vector>
 #include <string>
 #include <map>
@@ -11,7 +13,7 @@
 class MenuScreen : public Screen
 {
 private:
-    SDL_Surface* FBackgroundSurface;
+    SDL_Texture* FBackground;
     std::vector<std::string> FOptions;
     std::map<int, Button> FButtons;
     MenuSpriteSheet FSpriteSheet;

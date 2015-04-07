@@ -15,8 +15,7 @@ void Level2Screen::Init(Game& AGame)
 
     FBgRect.x = 0;
     FBgRect.y = 0;
-    FBgRect.w = AGame.GetSurface()->w;
-    FBgRect.h = AGame.GetSurface()->h;
+    SDL_GetWindowSize(AGame.GetWindow(), &FBgRect.w, &FBgRect.h);
 
     Map[0] = "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
     Map[1] = "|                                                                              |";
@@ -87,9 +86,13 @@ void Level2Screen::Update(Game& AGame)
 
 void Level2Screen::Draw(Game& AGame)
 {
-    FSpriteSheet.Draw(AGame.GetSurface(), stBackground, 0, &FBgRect);
+    FSpriteSheet.Draw(AGame.GetRenderer(), stBackground, 0, &FBgRect);
 
-    for (int row = OffsetX / TILE_SIZE - 1; row < (OffsetX + AGame.GetSurface()->w) / TILE_SIZE ; row++)
+    int Width;
+    int Height;
+    SDL_GetWindowSize(AGame.GetWindow(), &Width, &Height);
+
+    for (int row = OffsetX / TILE_SIZE - 1; row < (OffsetX + Width) / TILE_SIZE ; row++)
     {
         for (int col = 0; col < MapHeight; col++)
         {
@@ -103,19 +106,19 @@ void Level2Screen::Draw(Game& AGame)
             switch (ch)
             {
             case '*':
-                FSpriteSheet.Draw(AGame.GetSurface(), stBlock, 0, &Rect);
+                FSpriteSheet.Draw(AGame.GetRenderer(), stBlock, 0, &Rect);
                 break;
             case '$':
-                FSpriteSheet.Draw(AGame.GetSurface(), stCoin, 0, &Rect);
+                FSpriteSheet.Draw(AGame.GetRenderer(), stCoin, 0, &Rect);
                 break;
             case '~':
-                FSpriteSheet.Draw(AGame.GetSurface(), stWater, 0, &Rect);
+                FSpriteSheet.Draw(AGame.GetRenderer(), stWater, 0, &Rect);
                 break;
             case '#':
-                FSpriteSheet.Draw(AGame.GetSurface(), stGround, 0, &Rect);
+                FSpriteSheet.Draw(AGame.GetRenderer(), stGround, 0, &Rect);
                 break;
             case 'p':
-                FSpriteSheet.Draw(AGame.GetSurface(), stPepper, 0, &Rect);
+                FSpriteSheet.Draw(AGame.GetRenderer(), stPepper, 0, &Rect);
                 break;
             default:
                 break;
@@ -126,11 +129,11 @@ void Level2Screen::Draw(Game& AGame)
     for (unsigned I = 0; I < Enemies.size(); ++I) {
         SDL_Rect Rect = Enemies[I].GetRect();
         Rect.x -= OffsetX;
-        FSpriteSheet.Draw(AGame.GetSurface(), stEnemy, 0, &Rect);
+        FSpriteSheet.Draw(AGame.GetRenderer(), stEnemy, 0, &Rect);
     }
 
     SDL_Rect SRect = Player.GetRect();
     SRect.x -= OffsetX;
 
-    FSpriteSheet.Draw(AGame.GetSurface(), stHero, 0, &SRect);
+    FSpriteSheet.Draw(AGame.GetRenderer(), stHero, 0, &SRect);
 }

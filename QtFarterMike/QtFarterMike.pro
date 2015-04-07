@@ -6,7 +6,7 @@ CONFIG -= qt
 QMAKE_CXXFLAGS += -std=c++1y
 
 INCLUDEPATH += /usr/include/SDL2
-LIBS += -L /usr/lib -lSDL2
+LIBS += -L /usr/lib -lSDL2 -lSDL2_image
 
 SOURCES += main.cpp \
     game.cpp \
@@ -28,7 +28,8 @@ SOURCES += main.cpp \
     animation.cpp \
     playerspritesheet.cpp \
     enemyspritesheet.cpp \
-    movable.cpp
+    movable.cpp \
+    spritesheet.cpp
 
 include(deployment.pri)
 qtcAddDeployment()
@@ -55,5 +56,6 @@ HEADERS += \
     animation.h \
     playerspritesheet.h \
     enemyspritesheet.h \
-    movable.h
+    movable.h \
+    spritesheet.h
 

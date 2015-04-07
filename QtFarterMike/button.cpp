@@ -8,7 +8,7 @@ Button::Button(int X, int Y, int Width, int Height)
     Rect.h = Height;
 }
 
-void Button::Draw(SDL_Surface* ASurface)
+void Button::Draw(SDL_Renderer* ARenderer)
 {
-    SDL_FillRect(ASurface, &Rect, SDL_MapRGB(ASurface -> format, 0, 255, 0));
+//    SDL_FillRect(ASurface, &Rect, SDL_MapRGB(ASurface -> format, 0, 255, 0));
 }

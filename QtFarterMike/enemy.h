@@ -27,7 +27,7 @@ const int SCHEDULE_ATTACK = 3;
 class Hero;
 class LevelScreen;
 
-enum EnemyAction {eaMoveLeft, eaMoveRight, eaStand};
+enum EnemyAction {eaStand, eaMoveLeft, eaMoveRight, eaAttack};
 
 class Enemy: public Animation
 {

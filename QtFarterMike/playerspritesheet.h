@@ -2,12 +2,12 @@
 #define PLAYERSPRITESHEET_H
 
 #include "sprite.h"
-#include <SDL2/SDL.h>
+#include "spritesheet.h"
 #include <map>
 
 enum PlayerSpriteType {stLeft, stRight, stStand};
 
-class PlayerSpriteSheet
+class PlayerSpriteSheet: public SpriteSheet
 {
 private:
     std::map<PlayerSpriteType, Sprite> FSprites;
@@ -15,7 +15,7 @@ private:
 
 public:
     PlayerSpriteSheet();
-    void Draw(SDL_Surface* Surface, PlayerSpriteType Type, int Frame, SDL_Rect* Rect);
+    void Draw(SDL_Renderer *ARenderer, PlayerSpriteType Type, int Frame, SDL_Rect* Rect);
 };
 
 #endif // PLAYERSPRITESHEET_H

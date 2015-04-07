@@ -41,18 +41,13 @@ TFont::TFont()
     Height = 32;
 }
 
-void TFont::LoadFromFile(const std::string &path)
+void TFont::LoadTexture(SDL_Renderer *ARenderer, const std::string &path)
 {
-    FBitmap = NULL;
-    FBitmap = SDL_LoadBMP(path.c_str());
-    if (FBitmap == NULL)
-    {
-        printf("Unable to load bitmap %s! Error: %s\n", path.c_str(), SDL_GetError());
-    };
-    SDL_SetColorKey(FBitmap, SDL_RLEACCEL, SDL_MapRGB(FBitmap->format, 255, 255, 255));
+    FTexture = IMG_LoadTexture(ARenderer, path.c_str());
+    SDL_SetTextureBlendMode(FTexture, SDL_BLENDMODE_BLEND);
 }
 
-void TFont::DrawChar(SDL_Surface* Surface, int X, int Y, int asciicode)
+void TFont::DrawChar(SDL_Renderer *ARenderer, int X, int Y, int asciicode)
 {
     SDL_Rect pick;
     pick.x = ((asciicode % 16) * 16 + 8) - CharWidth[asciicode] / 2;
@@ -65,10 +60,10 @@ void TFont::DrawChar(SDL_Surface* Surface, int X, int Y, int asciicode)
     area.y = Y;
     area.w = CharWidth[asciicode] + (Height / 4);
     area.h = Height;
-    SDL_BlitScaled(FBitmap, &pick, Surface, &area);
+    SDL_RenderCopy(ARenderer, FTexture, &pick, &area);
 }
 
-void TFont::DrawText(SDL_Surface* Surface, int X, int Y, const std::string &text)
+void TFont::DrawText(SDL_Renderer *ARenderer, int X, int Y, const std::string &text)
 {
     int asciicode;
     SDL_Rect rect;
@@ -77,7 +72,7 @@ void TFont::DrawText(SDL_Surface* Surface, int X, int Y, const std::string &text
     for (unsigned int i=0; i<text.length(); i++)
     {
         asciicode = text[i];
-        DrawChar(Surface, rect.x, rect.y, asciicode);
+        DrawChar(ARenderer, rect.x, rect.y, asciicode);
         rect.x = rect.x + CharWidth[asciicode] + (Height / 4);
     }
 }

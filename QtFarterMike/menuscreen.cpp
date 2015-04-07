@@ -11,25 +11,26 @@ MenuScreen::~MenuScreen()
 
 void MenuScreen::Init(Game& AGame)
 {
-    FBackgroundSurface = NULL;
     const std::string path = "res/MenuBackground.bmp";
-    FBackgroundSurface = SDL_LoadBMP(path.c_str());
-    if (FBackgroundSurface == NULL)
-    {
-        printf("Unable to load bitmap: MenuBackground.bmp");
-    }
-    SDL_SetColorKey(FBackgroundSurface, SDL_RLEACCEL, SDL_MapRGB(FBackgroundSurface->format, 255, 255, 255));
+    FBackground = IMG_LoadTexture(AGame.GetRenderer(), path.c_str());
+    SDL_SetTextureBlendMode(FBackground, SDL_BLENDMODE_BLEND);
+
+    FSpriteSheet.LoadTexture(AGame.GetRenderer(), "res/MenuSprites.bmp");
 
     FOptions.clear();
     FOptions.push_back("New Game");
     FOptions.push_back("Exit");
 
+    int Width;
+    int Height;
+    SDL_GetWindowSize(AGame.GetWindow(), &Width, &Height);
+
     for (unsigned I = 0; I < FOptions.size(); I++)
     {
-        int BWidth = AGame.GetSurface()->w / 5;
-        int BHeight = AGame.GetSurface()->h / 9;
-        int X = ((AGame.GetSurface()->w / 2) - (BWidth / 2));
-        int Y = ((AGame.GetSurface()->h / 2) + (I * (BHeight * 2)));
+        int BWidth = Width / 5;
+        int BHeight = Height / 9;
+        int X = ((Width / 2) - (BWidth / 2));
+        int Y = ((Height / 2) + (I * (BHeight * 2)));
         FButtons[I] = Button(X, Y, BWidth, BHeight);
         FButtons[I].Clicked = false;
     }
@@ -109,23 +110,23 @@ void MenuScreen::Update(Game& AGame)
 
 void MenuScreen::Draw(Game& AGame)
 {
-    SDL_BlitScaled(FBackgroundSurface, NULL, AGame.GetSurface(), NULL);
+    SDL_RenderCopy(AGame.GetRenderer(), FBackground, NULL, NULL);
 
     int Frame;
 
-    FButtons[0].Draw(AGame.GetSurface());
+    FButtons[0].Draw(AGame.GetRenderer());
     Frame = 0;
     if (FButtons[0].Clicked)
     {
         Frame = 1;
     }
-    FSpriteSheet.Draw(AGame.GetSurface(), stStart, Frame, &FButtons[0].Rect);
+    FSpriteSheet.Draw(AGame.GetRenderer(), stStart, Frame, &FButtons[0].Rect);
 
-    FButtons[1].Draw(AGame.GetSurface());
+    FButtons[1].Draw(AGame.GetRenderer());
     Frame = 0;
     if (FButtons[1].Clicked)
     {
         Frame = 1;
     }
-    FSpriteSheet.Draw(AGame.GetSurface(), stExit, Frame, &FButtons[1].Rect);
+    FSpriteSheet.Draw(AGame.GetRenderer(), stExit, Frame, &FButtons[1].Rect);
 }

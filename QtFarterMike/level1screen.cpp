@@ -17,8 +17,11 @@ void Level1Screen::Init(Game& AGame)
 
     FBgRect.x = 0;
     FBgRect.y = 0;
-    FBgRect.w = AGame.GetSurface()->w;
-    FBgRect.h = AGame.GetSurface()->h;
+    SDL_GetWindowSize(AGame.GetWindow(), &FBgRect.w, &FBgRect.h);
+
+    FLevelSheet.LoadTexture(AGame.GetRenderer(), "res/Level1Sprites.bmp");
+    FPlayerSheet.LoadTexture(AGame.GetRenderer(), "res/PlayerSprites.bmp");
+    FEnemySheet.LoadTexture(AGame.GetRenderer(), "res/EnemySprites.bmp");
 
     Map[0]  = "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
     Map[1]  = "|                                                                              |";
@@ -187,9 +190,13 @@ void Level1Screen::Update(Game& AGame)
 
 void Level1Screen::Draw(Game& AGame)
 {
-    FSpriteSheet.Draw(AGame.GetSurface(), stBackground, 0, &FBgRect);
+    FLevelSheet.Draw(AGame.GetRenderer(), stBackground, 0, &FBgRect);
 
-    for (int row = OffsetX / TILE_SIZE - 1; row < (OffsetX + AGame.GetSurface()->w) / TILE_SIZE ; row++)
+    int Width;
+    int Height;
+    SDL_GetWindowSize(AGame.GetWindow(), &Width, &Height);
+
+    for (int row = OffsetX / TILE_SIZE - 1; row < (OffsetX + Width) / TILE_SIZE ; row++)
     {
         for (int col = 0; col < MapHeight; col++)
         {
@@ -203,16 +210,16 @@ void Level1Screen::Draw(Game& AGame)
             switch (ch)
             {
             case '*':
-                FSpriteSheet.Draw(AGame.GetSurface(), stBlock, 0, &Rect);
+                FLevelSheet.Draw(AGame.GetRenderer(), stBlock, 0, &Rect);
                 break;
             case '~':
-                FSpriteSheet.Draw(AGame.GetSurface(), stWater, 0, &Rect);
+                FLevelSheet.Draw(AGame.GetRenderer(), stWater, 0, &Rect);
                 break;
             case '#':
-                FSpriteSheet.Draw(AGame.GetSurface(), stGround, 0, &Rect);
+                FLevelSheet.Draw(AGame.GetRenderer(), stGround, 0, &Rect);
                 break;
             case 'p':
-                FSpriteSheet.Draw(AGame.GetSurface(), stPepper, 0, &Rect);
+                FLevelSheet.Draw(AGame.GetRenderer(), stPepper, 0, &Rect);
                 break;
             default:
                 break;
@@ -224,21 +231,24 @@ void Level1Screen::Draw(Game& AGame)
     {
         SDL_Rect Rect = coin->Rect;
         Rect.x -= OffsetX;
-        FSpriteSheet.Draw(AGame.GetSurface(), stCoin, coin->Frame, &Rect);
+        FLevelSheet.Draw(AGame.GetRenderer(), stCoin, coin->Frame, &Rect);
     }
 
     for (unsigned I = 0; I < Enemies.size(); ++I) {
         SDL_Rect Rect = Enemies[I].GetRect();
         Rect.x -= OffsetX;
         switch (Enemies[I].Action) {
+        case eaStand:
+            FEnemySheet.Draw(AGame.GetRenderer(), estStand, Enemies[I].Frame, &Rect);
+            break;
         case eaMoveLeft:
-            FEnemySheet.Draw(AGame.GetSurface(), estLeft, Enemies[I].Frame, &Rect);
+            FEnemySheet.Draw(AGame.GetRenderer(), estLeft, Enemies[I].Frame, &Rect);
             break;
         case eaMoveRight:
-            FEnemySheet.Draw(AGame.GetSurface(), estRight, Enemies[I].Frame, &Rect);
+            FEnemySheet.Draw(AGame.GetRenderer(), estRight, Enemies[I].Frame, &Rect);
             break;
-        case eaStand:
-            FEnemySheet.Draw(AGame.GetSurface(), estStand, Enemies[I].Frame, &Rect);
+        case eaAttack:
+            FEnemySheet.Draw(AGame.GetRenderer(), estAttack, Enemies[I].Frame, &Rect);
             break;
         default:
             break;
@@ -252,13 +262,13 @@ void Level1Screen::Draw(Game& AGame)
 
     switch (Player.Action) {
     case paMoveLeft:
-        FPlayerSheet.Draw(AGame.GetSurface(), stLeft, Player.Frame, &SRect);
+        FPlayerSheet.Draw(AGame.GetRenderer(), stLeft, Player.Frame, &SRect);
         break;
     case paMoveRight:
-        FPlayerSheet.Draw(AGame.GetSurface(), stRight, Player.Frame, &SRect);
+        FPlayerSheet.Draw(AGame.GetRenderer(), stRight, Player.Frame, &SRect);
         break;
     case paStand:
-        FPlayerSheet.Draw(AGame.GetSurface(), stStand, Player.Frame, &SRect);
+        FPlayerSheet.Draw(AGame.GetRenderer(), stStand, Player.Frame, &SRect);
         break;
     default:
         break;

@@ -2,19 +2,20 @@
 #define FONT_H
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <string>
 
 class TFont
 {
 private:
-    SDL_Surface* FBitmap;
+    SDL_Texture *FTexture;
 
 public:
     TFont();
     int Height;
-    void LoadFromFile(const std::string &path);
-    void DrawChar(SDL_Surface* Surface, int X, int Y, int asciicode);
-    void DrawText(SDL_Surface* Surface, int X, int Y, const std::string &text);
+    void LoadTexture(SDL_Renderer *ARenderer, const std::string &path);
+    void DrawChar(SDL_Renderer *ARenderer, int X, int Y, int asciicode);
+    void DrawText(SDL_Renderer *ARenderer, int X, int Y, const std::string &text);
     int TextWidth(const std::string &text);
 };
 

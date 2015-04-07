@@ -2,20 +2,19 @@
 #define ENEMYSPRITESHEET_H
 
 #include "sprite.h"
-#include <SDL2/SDL.h>
+#include "spritesheet.h"
 #include <map>
 
-enum EnemySpriteType {estLeft, estRight, estStand};
+enum EnemySpriteType {estStand, estLeft, estRight, estAttack};
 
-class EnemySpriteSheet
+class EnemySpriteSheet: public SpriteSheet
 {
 private:
     std::map<EnemySpriteType, Sprite> FSprites;
-    SDL_Surface* FSurface;
 
 public:
     EnemySpriteSheet();
-    void Draw(SDL_Surface* Surface, EnemySpriteType Type, int Frame, SDL_Rect* Rect);
+    void Draw(SDL_Renderer *ARenderer, EnemySpriteType Type, int Frame, SDL_Rect* Rect);
 };
 
 #endif // ENEMYSPRITESHEET_H

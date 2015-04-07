@@ -11,14 +11,7 @@ SelectLevelScreen::~SelectLevelScreen()
 
 void SelectLevelScreen::Init(Game& AGame)
 {
-    FBackgroundSurface = NULL;
-    const std::string path = "res/SelectLevelBackground.bmp";
-    FBackgroundSurface = SDL_LoadBMP(path.c_str());
-    if (FBackgroundSurface == NULL)
-    {
-        printf("Unable to load bitmap: SelectLevelBackground.bmp");
-    }
-    SDL_SetColorKey(FBackgroundSurface, SDL_RLEACCEL, SDL_MapRGB(FBackgroundSurface->format, 255, 255, 255));
+    FBackground = IMG_LoadTexture(AGame.GetRenderer(), "res/SelectLevelBackground.bmp");
 
     FOptions.clear();
     FOptions.push_back(1);
@@ -28,24 +21,22 @@ void SelectLevelScreen::Init(Game& AGame)
     FOptions.push_back(0);
     FOptions.push_back(0);
 
+    int Width;
+    int Height;
+    SDL_GetWindowSize(AGame.GetWindow(), &Width, &Height);
+
     for (unsigned I = 0; I < FOptions.size(); I++)
     {
-        int BWidth = AGame.GetSurface()->w / 16;
-        int BHeight = AGame.GetSurface()->h / 9;
-        int X = ((AGame.GetSurface()->w / 6) + (I * BWidth * 2));
-        int Y = ((AGame.GetSurface()->h / 6) + (BHeight * 2));
+        int BWidth = Width / 16;
+        int BHeight = Height / 9;
+        int X = ((Width / 6) + (I * BWidth * 2));
+        int Y = ((Height / 6) + (BHeight * 2));
         FButtons[I] = Button(X, Y, BWidth, BHeight);
         FButtons[I].Clicked = false;
     }
 
-    FSurface = NULL;
-    const std::string spritespath = "res/SelectLevelSprites.bmp";
-    FSurface = SDL_LoadBMP(spritespath.c_str());
-    if (FSurface == NULL)
-    {
-        printf("Unable to load bitmap: SelectLevelSprites.bmp");
-    }
-    SDL_SetColorKey(FSurface, SDL_RLEACCEL, SDL_MapRGB(FSurface->format, 255, 255, 255));
+    FTexture = IMG_LoadTexture(AGame.GetRenderer(), "res/SelectLevelSprites.bmp");
+    SDL_SetTextureBlendMode(FTexture, SDL_BLENDMODE_BLEND);
 
     printf("SelectLevelScreen Init Successful\n");
 }
@@ -138,11 +129,11 @@ void SelectLevelScreen::Update(Game& AGame)
 
 void SelectLevelScreen::Draw(Game& AGame)
 {
-    SDL_BlitScaled(FBackgroundSurface, NULL, AGame.GetSurface(), NULL);
+    SDL_RenderCopy(AGame.GetRenderer(), FBackground, NULL, NULL);
 
     for (unsigned I = 0; I < FOptions.size(); I++)
     {
-        FButtons[I].Draw(AGame.GetSurface());
+        FButtons[I].Draw(AGame.GetRenderer());
 
         SDL_Rect Pick;
         Pick.x = 0;
@@ -159,6 +150,6 @@ void SelectLevelScreen::Draw(Game& AGame)
 
         Pick.w = 32;
         Pick.h = 32;
-        SDL_BlitScaled(FSurface, &Pick, AGame.GetSurface(), &FButtons[I].Rect);
+        SDL_RenderCopy(AGame.GetRenderer(), FTexture, &Pick, &FButtons[I].Rect);
     }
 }

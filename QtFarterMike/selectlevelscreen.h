@@ -10,10 +10,10 @@
 class SelectLevelScreen : public Screen
 {
 private:
-    SDL_Surface* FBackgroundSurface;
+    SDL_Texture *FBackground;
     std::vector<int> FOptions;
     std::map<int, Button> FButtons;
-    SDL_Surface* FSurface;
+    SDL_Texture *FTexture;
 
 public:
     SelectLevelScreen();

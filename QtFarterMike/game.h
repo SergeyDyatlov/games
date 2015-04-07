@@ -18,7 +18,6 @@ private:
     bool FRunning;
     SDL_Window* FWindow;
     SDL_Renderer* FRenderer;
-    SDL_Surface* FSurface;
 
     MenuScreen FMenuScreen;
     SelectLevelScreen FLevelSelectionScreen;
@@ -51,9 +50,14 @@ public:
 
     void Clean();
 
-    SDL_Surface* GetSurface()
+    SDL_Window* GetWindow()
     {
-        return FSurface;
+        return FWindow;
+    }
+
+    SDL_Renderer* GetRenderer()
+    {
+        return FRenderer;
     }
 
     bool IsRunning()

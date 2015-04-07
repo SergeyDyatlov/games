@@ -376,6 +376,8 @@ bool Enemy::Attack()
         break;
     }
 
+    Action = eaAttack;
+
     Level->Player.Hit();
     if (Level->Player.IsDead())
     {

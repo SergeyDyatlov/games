@@ -46,22 +46,13 @@ Level1SpriteSheet::Level1SpriteSheet()
     ASprite.Rect.w = 128;
     ASprite.Rect.h = 128;
     FSprites[stBackground] = ASprite;
-
-    FSurface = NULL;
-    const std::string path = "res/Level1Sprites_.bmp";
-    FSurface = SDL_LoadBMP(path.c_str());
-    if (FSurface == NULL)
-    {
-        printf("Unable to load bitmap: Level1Sprites.bmp");
-    }
-    SDL_SetColorKey(FSurface, SDL_RLEACCEL, SDL_MapRGB(FSurface->format, 255, 255, 255));
 }
 
-void Level1SpriteSheet::Draw(SDL_Surface* Surface, SpriteType Type, int Frame, SDL_Rect* Rect)
+void Level1SpriteSheet::Draw(SDL_Renderer *ARenderer, SpriteType Type, int Frame, SDL_Rect* Rect)
 {
     Sprite Pick = FSprites.at(Type);
 
     Pick.Rect.x += Frame * 32;
 
-    SDL_BlitScaled(FSurface, &Pick.Rect, Surface, Rect);
+    SDL_RenderCopy(ARenderer, Texture, &Pick.Rect, Rect);
 }

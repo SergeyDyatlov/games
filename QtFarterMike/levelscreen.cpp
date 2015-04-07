@@ -32,9 +32,13 @@ void LevelScreen::HandleEvents(Game& AGame)
 
 void LevelScreen::Update(Game& AGame)
 {
-    if (Player.GetRect().x > AGame.GetSurface()->w / 2) {
-        if (Player.GetRect().x < ((MapWidth * TILE_SIZE) - AGame.GetSurface()->w / 2)) {
-            OffsetX = Player.GetRect().x - AGame.GetSurface()->w / 2;
+    int Width;
+    int Height;
+    SDL_GetWindowSize(AGame.GetWindow(), &Width, &Height);
+
+    if (Player.GetRect().x > Width / 2) {
+        if (Player.GetRect().x < ((MapWidth * TILE_SIZE) - Width / 2)) {
+            OffsetX = Player.GetRect().x - Width / 2;
             OffsetX += Player.GetRect().w / 2;
         }
     }

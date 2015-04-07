@@ -11,10 +11,10 @@
 class ScoreScreen : public Screen
 {
 private:
-    SDL_Surface* FBackgroundSurface;
+    SDL_Texture *FBackground;
     std::vector<std::string> FOptions;
     std::map<int, Button> FButtons;
-    ScoreSpriteSheet FSpriteSheet;
+    ScoreSpriteSheet FScoreSheet;
 
 public:
     ScoreScreen();

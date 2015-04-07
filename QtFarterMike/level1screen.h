@@ -14,7 +14,7 @@ private:
     SDL_Rect FBgRect;
     PlayerSpriteSheet FPlayerSheet;
     EnemySpriteSheet FEnemySheet;
-    Level1SpriteSheet FSpriteSheet;
+    Level1SpriteSheet FLevelSheet;
 
     bool FLeft;
     bool FRight;

@@ -16,9 +16,8 @@ void Game::Init(const char* Caption, int Width, int Height)
                 Height,
                 SDL_WINDOW_SHOWN);
     FRenderer = SDL_CreateRenderer(FWindow, -1, SDL_RENDERER_SOFTWARE);
-    FSurface = SDL_CreateRGBSurface(0, Width, Height, 32, 0, 0, 0, 0);
 
-    Font.LoadFromFile("res/font.bmp");
+    Font.LoadTexture(FRenderer, "res/font.bmp");
 
     FRunning = true;
 
@@ -76,13 +75,9 @@ void Game::Update()
 void Game::Draw()
 {
     SDL_RenderClear(FRenderer);
-    SDL_FillRect(FSurface, NULL, SDL_MapRGB(FSurface -> format, 255, 255, 255));
 
     CurrentScreen->Draw(*this);
 
-    SDL_Texture* Texture = SDL_CreateTextureFromSurface(FRenderer, FSurface);
-    SDL_RenderCopy(FRenderer, Texture, NULL, NULL);
-    SDL_DestroyTexture(Texture);
     SDL_RenderPresent(FRenderer);
     SDL_Delay(30);
 }
@@ -94,7 +89,6 @@ void Game::Quit()
 
 void Game::Clean()
 {
-    SDL_FreeSurface(FSurface);
     SDL_DestroyRenderer(FRenderer);
     SDL_DestroyWindow(FWindow);
     SDL_Quit();
