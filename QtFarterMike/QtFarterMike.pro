@@ -29,7 +29,8 @@ SOURCES += main.cpp \
     playerspritesheet.cpp \
     enemyspritesheet.cpp \
     movable.cpp \
-    spritesheet.cpp
+    spritesheet.cpp \
+    texture.cpp
 
 include(deployment.pri)
 qtcAddDeployment()
@@ -57,5 +58,6 @@ HEADERS += \
     playerspritesheet.h \
     enemyspritesheet.h \
     movable.h \
-    spritesheet.h
+    spritesheet.h \
+    texture.h
 

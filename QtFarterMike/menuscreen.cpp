@@ -1,5 +1,6 @@
 #include "menuscreen.h"
 #include "game.h"
+#include "texture.h"
 
 MenuScreen::MenuScreen()
 {
@@ -12,10 +13,10 @@ MenuScreen::~MenuScreen()
 void MenuScreen::Init(Game& AGame)
 {
     const std::string path = "res/MenuBackground.bmp";
-    FBackground = IMG_LoadTexture(AGame.GetRenderer(), path.c_str());
+    FBackground = LoadTexture(AGame.GetRenderer(), path.c_str());
     SDL_SetTextureBlendMode(FBackground, SDL_BLENDMODE_BLEND);
 
-    FSpriteSheet.LoadTexture(AGame.GetRenderer(), "res/MenuSprites.bmp");
+    FSpriteSheet.LoadFromFile(AGame.GetRenderer(), "res/MenuSprites.bmp");
 
     FOptions.clear();
     FOptions.push_back("New Game");

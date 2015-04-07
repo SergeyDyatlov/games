@@ -1,4 +1,5 @@
 #include "font.h"
+#include "texture.h"
 
 int CharWidth[256] =
 {
@@ -41,10 +42,9 @@ TFont::TFont()
     Height = 32;
 }
 
-void TFont::LoadTexture(SDL_Renderer *ARenderer, const std::string &path)
+void TFont::LoadFromFile(SDL_Renderer *ARenderer, const std::string &path)
 {
-    FTexture = IMG_LoadTexture(ARenderer, path.c_str());
-    SDL_SetTextureBlendMode(FTexture, SDL_BLENDMODE_BLEND);
+    FTexture = LoadTexture(ARenderer, path.c_str());
 }
 
 void TFont::DrawChar(SDL_Renderer *ARenderer, int X, int Y, int asciicode)
@@ -79,5 +79,5 @@ void TFont::DrawText(SDL_Renderer *ARenderer, int X, int Y, const std::string &t
 
 int TFont::TextWidth(const std::string &text)
 {
-
+    return 0;
 }

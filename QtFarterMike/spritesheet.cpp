@@ -1,11 +1,11 @@
 #include "spritesheet.h"
+#include "texture.h"
 
 SpriteSheet::SpriteSheet()
 {
 }
 
-void SpriteSheet::LoadTexture(SDL_Renderer *ARenderer, const std::string &path)
+void SpriteSheet::LoadFromFile(SDL_Renderer *ARenderer, const std::string &path)
 {
-    Texture = IMG_LoadTexture(ARenderer, path.c_str());
-    SDL_SetTextureBlendMode(Texture, SDL_BLENDMODE_BLEND);
+    Texture = LoadTexture(ARenderer, path.c_str());
 }
