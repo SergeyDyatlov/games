@@ -19,9 +19,9 @@ void Level1Screen::Init(Game& AGame)
     FBgRect.y = 0;
     SDL_GetWindowSize(AGame.GetWindow(), &FBgRect.w, &FBgRect.h);
 
-    FLevelSheet.LoadFromFile(AGame.GetRenderer(), "res/Level1Sprites.bmp");
-    FPlayerSheet.LoadFromFile(AGame.GetRenderer(), "res/PlayerSprites.bmp");
-    FEnemySheet.LoadFromFile(AGame.GetRenderer(), "res/EnemySprites.bmp");
+    FLevelSheet.LoadFromFile(AGame.GetRenderer(), "res/Level1Sprites.png");
+    FPlayerSheet.LoadFromFile(AGame.GetRenderer(), "res/PlayerSprites.png");
+    FEnemySheet.LoadFromFile(AGame.GetRenderer(), "res/EnemySprites.png");
 
     Map[0]  = "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
     Map[1]  = "|                                                                              |";
