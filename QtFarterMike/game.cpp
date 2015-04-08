@@ -15,7 +15,7 @@ void Game::Init(const char* Caption, int Width, int Height)
                 Width,
                 Height,
                 SDL_WINDOW_SHOWN);
-    FRenderer = SDL_CreateRenderer(FWindow, -1, SDL_RENDERER_SOFTWARE);
+    FRenderer = SDL_CreateRenderer(FWindow, -1, SDL_RENDERER_ACCELERATED);
 
     Font.LoadFromFile(FRenderer, "res/font.png");
 
