@@ -1,4 +1,5 @@
 #include "game.h"
+#include "getresourcepath.h"
 
 Game::Game()
 {
@@ -17,7 +18,7 @@ void Game::Init(const char* Caption, int Width, int Height)
                 SDL_WINDOW_SHOWN);
     FRenderer = SDL_CreateRenderer(FWindow, -1, SDL_RENDERER_SOFTWARE);
 
-    Font.LoadFromFile(FRenderer, "res/font.png");
+    Font.LoadFromFile(FRenderer, getResourcePath() + "/font.png");
 
     FRunning = true;
 

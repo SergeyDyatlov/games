@@ -1,6 +1,7 @@
 #include "scorescreen.h"
 #include "game.h"
 #include "texture.h"
+#include "getresourcepath.h"
 
 ScoreScreen::ScoreScreen()
 {
@@ -12,9 +13,9 @@ ScoreScreen::~ScoreScreen()
 
 void ScoreScreen::Init(Game& AGame)
 {
-    FBackground = LoadTexture(AGame.GetRenderer(), "res/ScoreBackground.png");
+    FBackground = LoadTexture(AGame.GetRenderer(), getResourcePath() + "/ScoreBackground.png");
 
-    FScoreSheet.LoadFromFile(AGame.GetRenderer(), "res/ScoreSprites.png");;
+    FScoreSheet.LoadFromFile(AGame.GetRenderer(), getResourcePath() + "/ScoreSprites.png");;
 
     FOptions.clear();
     FOptions.push_back("Select Level");

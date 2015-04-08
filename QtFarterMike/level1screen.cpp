@@ -1,5 +1,6 @@
 #include "level1screen.h"
 #include "game.h"
+#include "getresourcepath.h"
 
 Level1Screen::Level1Screen()
 {
@@ -19,9 +20,9 @@ void Level1Screen::Init(Game& AGame)
     FBgRect.y = 0;
     SDL_GetWindowSize(AGame.GetWindow(), &FBgRect.w, &FBgRect.h);
 
-    FLevelSheet.LoadFromFile(AGame.GetRenderer(), "res/Level1Sprites.png");
-    FPlayerSheet.LoadFromFile(AGame.GetRenderer(), "res/PlayerSprites.png");
-    FEnemySheet.LoadFromFile(AGame.GetRenderer(), "res/EnemySprites.png");
+    FLevelSheet.LoadFromFile(AGame.GetRenderer(), getResourcePath() + "/Level1Sprites.png");
+    FPlayerSheet.LoadFromFile(AGame.GetRenderer(), getResourcePath() + "/PlayerSprites.png");
+    FEnemySheet.LoadFromFile(AGame.GetRenderer(), getResourcePath() + "/EnemySprites.png");
 
     Map[0]  = "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
     Map[1]  = "|                                                                              |";

@@ -1,6 +1,7 @@
 #include "selectlevelscreen.h"
 #include "game.h"
 #include "texture.h"
+#include "getresourcepath.h"
 
 SelectLevelScreen::SelectLevelScreen()
 {
@@ -12,7 +13,7 @@ SelectLevelScreen::~SelectLevelScreen()
 
 void SelectLevelScreen::Init(Game& AGame)
 {
-    FBackground = LoadTexture(AGame.GetRenderer(), "res/SelectLevelBackground.png");
+    FBackground = LoadTexture(AGame.GetRenderer(), getResourcePath() + "/SelectLevelBackground.png");
 
     FOptions.clear();
     FOptions.push_back(1);
@@ -36,7 +37,7 @@ void SelectLevelScreen::Init(Game& AGame)
         FButtons[I].Clicked = false;
     }
 
-    FTexture = LoadTexture(AGame.GetRenderer(), "res/SelectLevelSprites.png");
+    FTexture = LoadTexture(AGame.GetRenderer(), getResourcePath() + "/SelectLevelSprites.png");
     SDL_SetTextureBlendMode(FTexture, SDL_BLENDMODE_BLEND);
 
     printf("SelectLevelScreen Init Successful\n");
