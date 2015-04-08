@@ -1,6 +1,7 @@
 #include "menuscreen.h"
 #include "game.h"
 #include "texture.h"
+#include "getresourcepath.h"
 
 MenuScreen::MenuScreen()
 {
@@ -12,11 +13,11 @@ MenuScreen::~MenuScreen()
 
 void MenuScreen::Init(Game& AGame)
 {
-    const std::string path = "res/MenuBackground.png";
+    const std::string path = getResourcePath() + "/MenuBackground.png";
     FBackground = LoadTexture(AGame.GetRenderer(), path.c_str());
     SDL_SetTextureBlendMode(FBackground, SDL_BLENDMODE_BLEND);
 
-    FSpriteSheet.LoadFromFile(AGame.GetRenderer(), "res/MenuSprites.png");
+    FSpriteSheet.LoadFromFile(AGame.GetRenderer(), getResourcePath() + "/MenuSprites.png");
 
     FOptions.clear();
     FOptions.push_back("New Game");
