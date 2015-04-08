@@ -13,6 +13,17 @@ LevelScreen::~LevelScreen()
 
 void LevelScreen::Init(Game& AGame)
 {
+    int Width;
+    int Height;
+    SDL_GetWindowSize(AGame.GetWindow(), &Width, &Height);
+
+    FButtons[btLeft] = Button(50, Height - 100, 50, 50);
+    FButtons[btLeft].Clicked = false;
+    FButtons[btRight] = Button(150, Height - 100, 50, 50);
+    FButtons[btRight].Clicked = false;
+    FButtons[btJump] = Button(Width - 100, Height - 100, 50, 50);
+    FButtons[btJump].Clicked = false;
+
     MapWidth = Map[0].length();
     MapHeight = 10;
 
@@ -77,12 +88,70 @@ void LevelScreen::HandleEvents(Game& AGame)
 {
     SDL_Event event;
 
+    int mx = 0;
+    int my = 0;
+
     while (SDL_PollEvent(&event))
     {
         switch (event.type)
         {
         case SDL_QUIT:
             AGame.Quit();
+            break;
+
+        case SDL_MOUSEBUTTONDOWN:
+            mx = event.button.x;
+            my = event.button.y;
+            for (unsigned I = 0; I < FButtons.size(); I++)
+            {
+                FButtons[I].Clicked = false;
+                if ((mx > FButtons[I].Rect.x) && (mx < FButtons[I].Rect.x + FButtons[I].Rect.w))
+                {
+                    if ((my > FButtons[I].Rect.y) && (my < FButtons[I].Rect.y + FButtons[I].Rect.h))
+                    {
+                        FButtons[I].Clicked = true;
+                        if ((I == 0) && (FButtons[I].Clicked))
+                        {
+                            FLeft = true;
+                        }
+                        if ((I == 1) && (FButtons[I].Clicked))
+                        {
+                            FRight = true;
+                        }
+                        if ((I == 2) && (FButtons[I].Clicked))
+                        {
+                            Player.Jump();
+                        }
+                    }
+                }
+            }
+            break;
+
+        case SDL_MOUSEBUTTONUP:
+            mx = event.button.x;
+            my = event.button.y;
+            for (unsigned I = 0; I < FButtons.size(); I++)
+            {
+                if ((mx > FButtons[I].Rect.x) && (mx < FButtons[I].Rect.x + FButtons[I].Rect.w))
+                {
+                    if ((my > FButtons[I].Rect.y) && (my < FButtons[I].Rect.y + FButtons[I].Rect.h))
+                    {
+                        if ((I == 0) && (FButtons[I].Clicked))
+                        {
+                            FLeft = false;
+                        }
+                        if ((I == 1) && (FButtons[I].Clicked))
+                        {
+                            FRight = false;
+                        }
+                        if ((I == 2) && (FButtons[I].Clicked))
+                        {
+
+                        }
+                    }
+                }
+                FButtons[I].Clicked = false;
+            }
             break;
 
         case SDL_KEYDOWN:
@@ -261,5 +330,11 @@ void LevelScreen::Draw(Game& AGame)
         break;
     default:
         break;
+    }
+
+    for (unsigned I = 0; I < FButtons.size(); I++)
+    {
+        FButtons[I].Draw(AGame.GetRenderer());
+        SDL_RenderCopy(AGame.GetRenderer(), Background, NULL, &FButtons[I].Rect);
     }
 }

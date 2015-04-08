@@ -8,6 +8,7 @@
 #include "playerspritesheet.h"
 #include "enemyspritesheet.h"
 #include "level1spritesheet.h"
+#include "button.h"
 #include <string>
 #include <vector>
 
@@ -18,11 +19,15 @@ struct TScores {
 
 const int TILE_SIZE = 36;
 
+enum ButtonTypes {btLeft, btRight, btJump};
+
 class LevelScreen : public Screen
 {
 private:
     bool FLeft;
     bool FRight;
+
+    std::map<int, Button> FButtons;
 
 public:
     LevelScreen();
