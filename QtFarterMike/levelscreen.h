@@ -5,6 +5,9 @@
 #include "hero.h"
 #include "enemy.h"
 #include "sprite.h"
+#include "playerspritesheet.h"
+#include "enemyspritesheet.h"
+#include "level1spritesheet.h"
 #include <string>
 #include <vector>
 
@@ -17,6 +20,10 @@ const int TILE_SIZE = 36;
 
 class LevelScreen : public Screen
 {
+private:
+    bool FLeft;
+    bool FRight;
+
 public:
     LevelScreen();
     ~LevelScreen();
@@ -32,6 +39,11 @@ public:
     int MapHeight;
 
     float OffsetX;
+
+    SDL_Texture *Background;
+    PlayerSpriteSheet PlayerSheet;
+    EnemySpriteSheet EnemySheet;
+    Level1SpriteSheet LevelSheet;
 
     std::vector<Enemy> Enemies;
     Hero Player;

@@ -10,15 +10,6 @@
 
 class Level1Screen : public LevelScreen
 {
-private:
-    SDL_Texture *FBackground;
-    PlayerSpriteSheet FPlayerSheet;
-    EnemySpriteSheet FEnemySheet;
-    Level1SpriteSheet FLevelSheet;
-
-    bool FLeft;
-    bool FRight;
-
 public:
     Level1Screen();
     ~Level1Screen();
