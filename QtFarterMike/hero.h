@@ -6,7 +6,7 @@
 
 class LevelScreen;
 
-enum PlayerAction {paMoveLeft, paMoveRight, paStand};
+enum PlayerAction {paStand, paMove};
 
 class Hero: public Animation
 {

@@ -250,7 +250,7 @@ bool Enemy::InitWalk()
     printf("InitWalk\n");
 
     StartFrame = 1;
-    EndFrame = 10;
+    EndFrame = 9;
 
     SetSpeed(10.0f);
 
@@ -268,13 +268,13 @@ bool Enemy::Walk()
         return true;
     }
 
+    Action = eaMove;
+
     switch (Direction) {
     case 0:
-        Action = eaMoveLeft;
         MoveLeft();
         break;
     case 1:
-        Action = eaMoveRight;
         MoveRight();
         break;
     default:
@@ -292,7 +292,7 @@ bool Enemy::InitPursuit()
     printf("InitPursuit\n");
 
     StartFrame = 1;
-    EndFrame = 10;
+    EndFrame = 9;
 
     SetSpeed(15.0f);
 
@@ -320,13 +320,13 @@ bool Enemy::Pursuit()
         Direction = 1;
     }
 
+    Action = eaMove;
+
     switch (Direction) {
     case 0:
-        Action = eaMoveLeft;
         MoveLeft();
         break;
     case 1:
-        Action = eaMoveRight;
         MoveRight();
         break;
     default:
@@ -363,17 +363,6 @@ bool Enemy::Attack()
     else
     {
         Direction = 1;
-    }
-
-    switch (Direction) {
-    case 0:
-        Action = eaMoveLeft;
-        break;
-    case 1:
-        Action = eaMoveRight;
-        break;
-    default:
-        break;
     }
 
     Action = eaAttack;

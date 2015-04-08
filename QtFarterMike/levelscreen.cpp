@@ -19,6 +19,9 @@ void LevelScreen::Init(Game& AGame)
     Player.SetHealth(100);
     Player.Direction = 1;
 
+    Enemies.clear();
+    Coins.clear();
+
     AGame.Scores.Coins = 0;
     AGame.Scores.Killed = 0;
 }
