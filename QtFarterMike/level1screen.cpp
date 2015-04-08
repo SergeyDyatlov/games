@@ -17,7 +17,7 @@ void Level1Screen::Init(Game& AGame)
 {
     LevelScreen::Init(AGame);
 
-    FBackground = LoadTexture(AGame.GetRenderer(), "res/Level1Background.png");
+    FBackground = LoadTexture(AGame.GetRenderer(), getResourcePath() + "/Level1Background.png");
 
     FLevelSheet.LoadFromFile(AGame.GetRenderer(), getResourcePath() + "/Level1Sprites.png");
     FPlayerSheet.LoadFromFile(AGame.GetRenderer(), getResourcePath() + "/PlayerSprites.png");
