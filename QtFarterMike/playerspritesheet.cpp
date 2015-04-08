@@ -8,15 +8,11 @@ PlayerSpriteSheet::PlayerSpriteSheet()
 
     ASprite.Rect.x = 0;
     ASprite.Rect.y = 0;
-    FSprites[stRight] = ASprite;
+    FSprites[stStand] = ASprite;
 
     ASprite.Rect.x = 0;
     ASprite.Rect.y = 64;
-    FSprites[stLeft] = ASprite;
-
-    ASprite.Rect.x = 0;
-    ASprite.Rect.y = 128;
-    FSprites[stStand] = ASprite;
+    FSprites[stMove] = ASprite;
 }
 
 void PlayerSpriteSheet::Draw(SDL_Renderer *ARenderer, PlayerSpriteType Type, int Frame, SDL_Rect* Rect)
@@ -26,4 +22,19 @@ void PlayerSpriteSheet::Draw(SDL_Renderer *ARenderer, PlayerSpriteType Type, int
     Pick.Rect.x += Frame * 44;
 
     SDL_RenderCopy(ARenderer, Texture, &Pick.Rect, Rect);
+}
+
+void PlayerSpriteSheet::Draw(SDL_Renderer *ARenderer, PlayerSpriteType Type, int Frame, int Direction, SDL_Rect* Rect)
+{
+    Sprite Pick = FSprites.at(Type);
+
+    Pick.Rect.x += Frame * 44;
+
+    SDL_RendererFlip Flip = SDL_FLIP_NONE;
+    if (Direction == 1)
+    {
+        Flip = SDL_FLIP_HORIZONTAL;
+    }
+
+    SDL_RenderCopyEx(ARenderer, Texture, &Pick.Rect, Rect, 0, NULL, Flip);
 }

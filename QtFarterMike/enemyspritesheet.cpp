@@ -7,16 +7,12 @@ EnemySpriteSheet::EnemySpriteSheet()
     ASprite.Rect.h = 71 - 1;
 
     ASprite.Rect.x = 0;
-    ASprite.Rect.y = 71;
+    ASprite.Rect.y = 0;
     FSprites[estStand] = ASprite;
 
     ASprite.Rect.x = 0;
-    ASprite.Rect.y = 0;
-    FSprites[estRight] = ASprite;
-
-    ASprite.Rect.x = 0;
     ASprite.Rect.y = 71;
-    FSprites[estLeft] = ASprite;
+    FSprites[estMove] = ASprite;
 
     ASprite.Rect.x = 0;
     ASprite.Rect.y = 71;

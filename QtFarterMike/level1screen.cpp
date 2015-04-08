@@ -1,6 +1,7 @@
 #include "level1screen.h"
 #include "game.h"
 #include "getresourcepath.h"
+#include "texture.h"
 
 Level1Screen::Level1Screen()
 {
@@ -16,9 +17,7 @@ void Level1Screen::Init(Game& AGame)
 {
     LevelScreen::Init(AGame);
 
-    FBgRect.x = 0;
-    FBgRect.y = 0;
-    SDL_GetWindowSize(AGame.GetWindow(), &FBgRect.w, &FBgRect.h);
+    FBackground = LoadTexture(AGame.GetRenderer(), "res/Level1Background.png");
 
     FLevelSheet.LoadFromFile(AGame.GetRenderer(), getResourcePath() + "/Level1Sprites.png");
     FPlayerSheet.LoadFromFile(AGame.GetRenderer(), getResourcePath() + "/PlayerSprites.png");
@@ -37,10 +36,6 @@ void Level1Screen::Init(Game& AGame)
 
     MapWidth = Map[0].length();
     MapHeight = 10;
-
-    Enemies.clear();
-
-    Coins.clear();
 
     for (int row = 0; row < MapWidth; ++row) {
         for (int col = 0; col < MapHeight; ++col) {
@@ -191,7 +186,7 @@ void Level1Screen::Update(Game& AGame)
 
 void Level1Screen::Draw(Game& AGame)
 {
-    FLevelSheet.Draw(AGame.GetRenderer(), stBackground, 0, &FBgRect);
+    SDL_RenderCopy(AGame.GetRenderer(), FBackground, NULL, NULL);
 
     int Width;
     int Height;
@@ -240,13 +235,10 @@ void Level1Screen::Draw(Game& AGame)
         Rect.x -= OffsetX;
         switch (Enemies[I].Action) {
         case eaStand:
-            FEnemySheet.Draw(AGame.GetRenderer(), estStand, Enemies[I].Frame, &Rect);
+            FEnemySheet.Draw(AGame.GetRenderer(), estStand, Enemies[I].Frame, Enemies[I].Direction, &Rect);
             break;
-        case eaMoveLeft:
-            FEnemySheet.Draw(AGame.GetRenderer(), estLeft, Enemies[I].Frame, &Rect);
-            break;
-        case eaMoveRight:
-            FEnemySheet.Draw(AGame.GetRenderer(), estRight, Enemies[I].Frame, &Rect);
+        case eaMove:
+            FEnemySheet.Draw(AGame.GetRenderer(), estMove, Enemies[I].Frame, Enemies[I].Direction, &Rect);
             break;
         case eaAttack:
             FEnemySheet.Draw(AGame.GetRenderer(), estAttack, Enemies[I].Frame, Enemies[I].Direction, &Rect);
@@ -262,14 +254,11 @@ void Level1Screen::Draw(Game& AGame)
     SRect.x -= OffsetX;
 
     switch (Player.Action) {
-    case paMoveLeft:
-        FPlayerSheet.Draw(AGame.GetRenderer(), stLeft, Player.Frame, &SRect);
-        break;
-    case paMoveRight:
-        FPlayerSheet.Draw(AGame.GetRenderer(), stRight, Player.Frame, &SRect);
-        break;
     case paStand:
-        FPlayerSheet.Draw(AGame.GetRenderer(), stStand, Player.Frame, &SRect);
+        FPlayerSheet.Draw(AGame.GetRenderer(), stStand, Player.Frame, Player.Direction, &SRect);
+        break;
+    case paMove:
+        FPlayerSheet.Draw(AGame.GetRenderer(), stMove, Player.Frame, Player.Direction, &SRect);
         break;
     default:
         break;

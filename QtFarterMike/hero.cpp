@@ -3,11 +3,12 @@
 
 Hero::Hero()
 {
+    Direction = 1;
+
     StartFrame = 1;
     EndFrame = 2;
     Frame = 0;
 
-    Direction = 1;
     Action = paStand;
 }
 
@@ -38,35 +39,31 @@ void Hero::Left()
 {
     Fvx = -20.0f;
     Direction = 0;
+
     StartFrame = 0;
     EndFrame = 6;
-    Action = paMoveLeft;
+
+    Action = paMove;
 }
 
 void Hero::Right()
 {
     Fvx = 20.0f;
     Direction = 1;
+
     StartFrame = 0;
     EndFrame = 6;
-    Action = paMoveRight;
+
+    Action = paMove;
 }
 
 void Hero::Stop()
 {
     Fvx = 0;
-    switch (Direction) {
-    case 0:
-        StartFrame = 1;
-        EndFrame = 2;
-        break;
-    case 1:
-        StartFrame = 0;
-        EndFrame = 1;
-        break;
-    default:
-        break;
-    }
+
+    StartFrame = 0;
+    EndFrame = 1;
+
     Action = paStand;
 }
 

@@ -5,7 +5,7 @@
 #include "spritesheet.h"
 #include <map>
 
-enum EnemySpriteType {estStand, estLeft, estRight, estAttack};
+enum EnemySpriteType {estStand, estMove, estAttack};
 
 class EnemySpriteSheet: public SpriteSheet
 {
