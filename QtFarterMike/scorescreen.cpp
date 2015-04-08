@@ -12,9 +12,9 @@ ScoreScreen::~ScoreScreen()
 
 void ScoreScreen::Init(Game& AGame)
 {
-    FBackground = LoadTexture(AGame.GetRenderer(), "res/ScoreBackground.bmp");
+    FBackground = LoadTexture(AGame.GetRenderer(), "res/ScoreBackground.png");
 
-    FScoreSheet.LoadFromFile(AGame.GetRenderer(), "res/ScoreSprites.bmp");;
+    FScoreSheet.LoadFromFile(AGame.GetRenderer(), "res/ScoreSprites.png");;
 
     FOptions.clear();
     FOptions.push_back("Select Level");

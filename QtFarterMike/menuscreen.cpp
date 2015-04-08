@@ -12,11 +12,11 @@ MenuScreen::~MenuScreen()
 
 void MenuScreen::Init(Game& AGame)
 {
-    const std::string path = "res/MenuBackground.bmp";
+    const std::string path = "res/MenuBackground.png";
     FBackground = LoadTexture(AGame.GetRenderer(), path.c_str());
     SDL_SetTextureBlendMode(FBackground, SDL_BLENDMODE_BLEND);
 
-    FSpriteSheet.LoadFromFile(AGame.GetRenderer(), "res/MenuSprites.bmp");
+    FSpriteSheet.LoadFromFile(AGame.GetRenderer(), "res/MenuSprites.png");
 
     FOptions.clear();
     FOptions.push_back("New Game");
