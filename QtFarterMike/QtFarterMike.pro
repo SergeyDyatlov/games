@@ -31,7 +31,8 @@ SOURCES += main.cpp \
     movable.cpp \
     spritesheet.cpp \
     texture.cpp \
-    stb_image.cpp
+    stb_image.cpp \
+    getresourcepath.cpp
 
 include(deployment.pri)
 qtcAddDeployment()
@@ -61,5 +62,6 @@ HEADERS += \
     movable.h \
     spritesheet.h \
     texture.h \
-    stb_image.hpp
+    stb_image.hpp \
+    getresourcepath.h
 
